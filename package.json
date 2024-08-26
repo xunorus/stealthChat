@@ -1,0 +1,18 @@
+{
+  "name": "stealthChat",
+  "version": "1.0.0",
+  "description": "A sovereign chat integrated with a wallet that maximizes privacy and reduces transaction traceability.",
+  "main": "index.js",
+  "repository": "git@github.com:xunorus/stealthChat.git",
+  "author": "xunorus <xunorus@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@xmtp/xmtp-js": "^12.1.0",
+    "ethers": "^6.13.2",
+    "parcel": "^2.12.0",
+    "parcel-reporter-static-files-copy": "^1.5.3"
+  },
+    "staticFiles": {
+    "staticPath": "src/static"
+  }
+}

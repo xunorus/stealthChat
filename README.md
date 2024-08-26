@@ -1,16 +1,25 @@
-Elastic SVG Elements
+stealthChat
 =========
 
-Adding elasticity with SVG shape animations for enhanced UI interactions.
+A sovereign chat integrated with a wallet that maximizes privacy and reduces transaction traceability.
 
-[Article on Codrops](http://tympanus.net/codrops/?p=21555)
+[Demo](https://)
 
-[Demo](http://tympanus.net/Development/ElasticSVGElements/)
+# INSTALL
+```
+nvm use 20
+yarn                              
+```
 
-Integrate or build upon it for free in your personal or commercial projects. Don't republish, redistribute or sell "as-is". 
+# RUN
+```
+yarn parcel src/index.html  --port 6161 --https
+```
 
-Read more here: [License](http://tympanus.net/codrops/licensing/)
+## Description
+This project integrates Ethereum address-based chat functionality with a self-custodial burner wallet, allowing users to connect and conduct transactions with enhanced privacy. Stealth addresses are employed to ensure that every transaction remains secure and untraceable, providing a private communication and transaction experience for peers
 
-Follow us: [Twitter](http://www.twitter.com/codrops), [Facebook](http://www.facebook.com/pages/Codrops/159107397912), [Google+](https://plus.google.com/101095823814290637419), [GitHub](https://github.com/codrops), [Pinterest](http://www.pinterest.com/codrops/)
-
-[© Codrops 2014](http://www.codrops.com)
+## How its made
+We began by forking a well-crafted UI from the Codrops repository to serve as the foundation of our interface. 
+Next, we integrated the XMTP open protocol to enable secure chat communication. 
+Ethers.js was used to develop a self-custodial burner wallet, allowing peers to initiate sovereign chat sessions. All transactions are conducted using stealth addresses to ensure privacy.
