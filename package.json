@@ -6,13 +6,23 @@
   "repository": "git@github.com:xunorus/stealthChat.git",
   "author": "xunorus <xunorus@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "start": "yarn parcel src/index.html  --port 6161 --https"
+  },
   "dependencies": {
     "@xmtp/xmtp-js": "^12.1.0",
     "ethers": "^6.13.2",
     "parcel": "^2.12.0",
     "parcel-reporter-static-files-copy": "^1.5.3"
   },
-    "staticFiles": {
+  "staticFiles": {
     "staticPath": "src/static"
+  },
+  "devDependencies": {
+    "buffer": "^5.5.0||^6.0.0"
+  },
+  "type": "module",
+  "@parcel/resolver-default": {
+    "packageExports": true
   }
 }
