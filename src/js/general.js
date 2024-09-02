@@ -444,15 +444,11 @@
     
         // Define the plToggle function
         function plToggle(event) {
-        //   console.log("TOOGLE NAVBAR", event);
-          navBtn.classList.toggle("is-active");
-    
-          // Toggle classes for elements with class 'content', 'sidebar', and 'overlay'
-          document.querySelector(".sidebar").classList.toggle("isOpen");
-          document.querySelector(".overlay").classList.toggle("overlayisOpen");
-    
-          // Get the container element with class 'sidebar'
-          var container = document.querySelector(".sidebar");
+            console.log('plToggle()')
+        //   navBtn.classList.toggle("is-active");
+        //   document.querySelector(".sidebar").classList.toggle("isOpen");
+        //   document.querySelector(".overlay").classList.toggle("overlayisOpen");
+        //   var container = document.querySelector(".sidebar");
         }
     
         // Add a click event listener to the overlay element
@@ -793,34 +789,7 @@
     }
      
     
-    /////////////////////////////
-    // ESTO VA EN OTRO LADO
     
-                /////////////////////////////
-                // 2- SHOW QR WITH DID LINK
-                /////////////////////////////
-    
-                // console.warn('EVM ADDRESS (getSigner): ', signer.address)
-                // setAddress(signer.address)
-                // let balance= await checkERC20Balance(signer.address) 
-                // let gasBalance= await checkGasBalance(signer.address) 
-                // userData.innerHTML = `		
-                // 	<svg  class="rounded rounded-circle " width="40px"  height="40px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" onclick="event.stopPropagation();openModalId('#defaultTokenModal')" style=" position: absolute; left: 0; "> <path fill='#d17c78' d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"/></svg>
-            
-                // <a id="" target="_blank" rel="noopener noreferrer" href="${optionsList[0].EXPLORER}/address/${optionsList[0].ERC20_TOKEN_ADDRESS }">Balance: ${balance}
-                // 	</a>
-                // 	<svg class='hoverIcon' xmlns="http://www.w3.org/2000/svg"  width="18" height="16" viewBox="0 0 512 512" id='reloadBalance'  onclick="event.stopPropagation();reloadBalance()"> <path  fill='#d17c78' d="M463.5 224H472c13.3 0 24-10.7 24-24V72c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2L413.4 96.6c-87.6-86.5-228.7-86.2-315.8 1c-87.5 87.5-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3c62.2-62.2 162.7-62.5 225.3-1L327 183c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H463.5z"/></svg> 
-                // <br>
-                // <div id="miniversion">
-                // <a  target="_blank" rel="noopener noreferrer" href="${optionsList[0].EXPLORER}/address/${signer.address}">gas: ${gasBalance}
-                // 	</a>
-                // </div>
-                // `;
-             
-                // await loadDID( signer)
-    
-    // FIN ESTO VA EN OTRO LADO
-    /////////////////////////////
     
                 return signer
                 
@@ -986,7 +955,7 @@
                 //QR
                 // width: `${qrSize}`, height: `${qrSize}`, type: "png", data: addr, image: `./logo4.png`,
                 const qrCode = new QRCodeStyling({
-                    width: `${qrSize}`, height: `${qrSize}`, type: "png", data: addr, image: `./logowhite.png`,
+                    width: `${qrSize}`, height: `${qrSize}`, type: "png", data: addr, image: `./LOGOSTEALTHCHATv3.png`,
                     dotsOptions: { color: `${qrColor}`, type: "extra-rounded" },
                     backgroundOptions: { color: "var(--qrbackground)", },
                     imageOptions: { crossOrigin: "anonymous", margin: 0 }
@@ -4059,7 +4028,9 @@
                 let userAddress= addr
     
     
-            userData.innerHTML = ` <svg  class="rounded rounded-circle " width="40px"  height="40px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" onclick="event.stopPropagation();openModalId('#defaultTokenModal')" style=" position: absolute; left: 0; "> <path fill='#d17c78' d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"/></svg> <a id="" target="_blank" rel="noopener noreferrer" href="${explorer}/address/${tokenAddress }">Balance: ${balance} </a> <svg class='hoverIcon' xmlns="http://www.w3.org/2000/svg"  width="18" height="16" viewBox="0 0 512 512" id='reloadBalance'  onclick="event.stopPropagation();reloadBalance()"> <path  fill='#d17c78' d="M463.5 224H472c13.3 0 24-10.7 24-24V72c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2L413.4 96.6c-87.6-86.5-228.7-86.2-315.8 1c-87.5 87.5-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3c62.2-62.2 162.7-62.5 225.3-1L327 183c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H463.5z"/></svg> <br> <div id="miniversion"> <a  target="_blank" rel="noopener noreferrer" href="${explorer}/address/${userAddress}">gas: ${gasBalance} </a> </div> `;
+                // <svg  class="rounded rounded-circle " width="40px"  height="40px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" onclick="event.stopPropagation();openModalId('#defaultTokenModal')" style=" position: absolute; left: 0; "> <path fill='#d17c78' d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"/></svg> 
+            userData.innerHTML = ` 
+            <a id="" target="_blank" rel="noopener noreferrer" href="${explorer}/address/${tokenAddress }">Balance: ${balance} </a> <svg class='hoverIcon' xmlns="http://www.w3.org/2000/svg"  width="18" height="16" viewBox="0 0 512 512" id='reloadBalance'  onclick="event.stopPropagation();reloadBalance()"> <path  fill='#d17c78' d="M463.5 224H472c13.3 0 24-10.7 24-24V72c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2L413.4 96.6c-87.6-86.5-228.7-86.2-315.8 1c-87.5 87.5-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3c62.2-62.2 162.7-62.5 225.3-1L327 183c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H463.5z"/></svg> <br> <div id="miniversion"> <a  target="_blank" rel="noopener noreferrer" href="${explorer}/address/${userAddress}">gas: ${gasBalance} </a> </div> `;
         
             }
     
@@ -4347,9 +4318,7 @@
                     let tokenName =preferredToken.tokenName
                     let userAddress= addr
                     // <svg  class="rounded rounded-circle " width="40px"  height="40px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" onclick="event.stopPropagation();openModalId('#defaultTokenModal')" style=" position: absolute; left: 0; "> <path fill='#d17c78' d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"/></svg>
-                    userData.innerHTML = ` 
-                    
-                    <a id="" target="_blank" rel="noopener noreferrer" href="${explorer}/address/${tokenAddress }">Balance: ${erc20Balance} ${tokenName}</a> <svg class='hoverIcon' xmlns="http://www.w3.org/2000/svg"  width="18" height="16" viewBox="0 0 512 512" id='reloadBalance'  onclick="event.stopPropagation();reloadBalance()"> <path  fill='#d17c78' d="M463.5 224H472c13.3 0 24-10.7 24-24V72c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2L413.4 96.6c-87.6-86.5-228.7-86.2-315.8 1c-87.5 87.5-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3c62.2-62.2 162.7-62.5 225.3-1L327 183c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H463.5z"/></svg> <br> <div id="miniversion"> <a  target="_blank" rel="noopener noreferrer" href="${explorer}/address/${userAddress}">gas: ${gasBalance} </a> </div> `;
+                    userData.innerHTML = ` <a id="" target="_blank" rel="noopener noreferrer" href="${explorer}/address/${tokenAddress }">Balance: ${erc20Balance} ${tokenName}</a> <svg class='hoverIcon' xmlns="http://www.w3.org/2000/svg"  width="18" height="16" viewBox="0 0 512 512" id='reloadBalance'  onclick="event.stopPropagation();reloadBalance()"> <path  fill='#d17c78' d="M463.5 224H472c13.3 0 24-10.7 24-24V72c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2L413.4 96.6c-87.6-86.5-228.7-86.2-315.8 1c-87.5 87.5-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3c62.2-62.2 162.7-62.5 225.3-1L327 183c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H463.5z"/></svg> <br> <div id="miniversion"> <a  target="_blank" rel="noopener noreferrer" href="${explorer}/address/${userAddress}">gas: ${gasBalance} </a> </div> `;
                     
                     // ..............................
                     // FIN Carga el token

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="400"
+   height="400"
+   viewBox="0 0 105.83333 105.83334"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (b8e25be8, 2022-02-05)"
+   sodipodi:docname="logoSTEALTHCHAT.svg"
+   inkscape:export-filename="/Users/xunorus/LOGOMETERCHAT.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     units="px"
+     inkscape:zoom="0.46043601"
+     inkscape:cx="-14.117054"
+     inkscape:cy="242.16177"
+     inkscape:window-width="1280"
+     inkscape:window-height="719"
+     inkscape:window-x="0"
+     inkscape:window-y="1145"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       id="path2660"
+       style="fill:#d17c78;fill-opacity:1;stroke-width:0.677397"
+       d="M 202.00977 13.263672 C 106.2258 13.263672 28.595703 76.32918 28.595703 154.16211 C 28.595703 184.71272 40.586288 212.95873 60.908203 235.99023 C 59.621198 252.58646 53.186043 267.35483 46.412109 278.59961 C 42.618673 284.83167 38.892582 289.84347 36.115234 293.23047 C 34.692696 294.99171 33.542009 296.27892 32.796875 297.0918 C 32.390425 297.56595 32.119354 297.83771 31.916016 298.04102 L 31.712891 298.24414 C 28.664588 301.36016 27.716663 305.96687 29.410156 310.03125 C 31.103649 314.09563 35.032473 316.73633 39.435547 316.73633 C 58.87687 316.73633 78.453413 310.709 94.710938 303.66406 C 110.29106 296.8901 123.43117 288.82889 131.49219 282.93555 C 153.03342 290.7256 176.87833 295.06055 202.00977 295.06055 C 297.79373 295.06055 375.42383 231.99504 375.42383 154.16211 C 375.42383 76.32918 297.79373 13.263672 202.00977 13.263672 z M 204.37891 63.617188 C 215.9297 63.742766 227.33178 68.667361 234.25586 78.806641 C 249.90979 97.445445 245.31702 131.33505 220.40234 139.41602 C 227.72714 167.87695 239.706 195.65318 240.40234 225.41602 C 216.41875 225.40808 192.24456 221.09609 168.40234 225.41602 C 166.18812 212.58861 172.72697 199.95989 175.22266 187.56055 C 178.44267 169.36677 195.22736 145.30189 176.51562 130.71484 C 161.47741 119.03685 159.79318 96.03095 170.83008 81.083984 C 178.00476 69.497003 191.28801 63.474865 204.37891 63.617188 z "
+       transform="scale(0.26458333)" />
+    <text
+       xml:space="preserve"
+       style="font-weight:200;font-size:12.6337px;line-height:1.25;font-family:Montserrat;-inkscape-font-specification:'Montserrat Ultra-Light';fill:#d17c78;fill-opacity:0.980392;stroke-width:0.164073"
+       x="5.0896783"
+       y="101.4248"
+       id="text781"><tspan
+         sodipodi:role="line"
+         id="tspan779"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Stinger Fit Trial';-inkscape-font-specification:'Stinger Fit Trial';fill:#d17c78;fill-opacity:0.980392;stroke-width:0.164073"
+         x="5.0896783"
+         y="101.4248"
+         dx="0 0 0 0 0 0 0 0 -2.6458333">STEALTH CHAT</tspan></text>
+  </g>
+</svg>
