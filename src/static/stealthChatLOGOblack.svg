@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="512"
+   height="512"
+   viewBox="0 0 135.46666 135.46667"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (b8e25be8, 2022-02-05)"
+   sodipodi:docname="stealthChatLOGOblack.svg"
+   inkscape:export-filename="/Users/xunorus/xunserver/HACKATHONS/stealthChat/src/static/stlogoblack.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     units="px"
+     inkscape:zoom="0.55678311"
+     inkscape:cx="320.59162"
+     inkscape:cy="87.107528"
+     inkscape:window-width="1312"
+     inkscape:window-height="819"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g1053"
+       transform="translate(0,19.738132)">
+      <path
+         id="path2660-7"
+         style="fill:#000000;fill-opacity:1;stroke-width:0.179228"
+         d="m 67.735797,-1.079711 c -25.34284,0 -45.882474,16.686082 -45.882474,37.279377 0,8.083183 3.172509,15.556606 8.549349,21.650357 -0.34052,4.391086 -2.043155,8.29855 -3.835425,11.273728 -1.00368,1.6489 -1.989541,2.97494 -2.724381,3.87109 -0.37638,0.46599 -0.680833,0.80656 -0.877983,1.02164 -0.107539,0.12545 -0.17926,0.19735 -0.23306,0.25115 l -0.05374,0.0537 c -0.80653,0.82445 -1.057335,2.0433 -0.609265,3.11867 0.44807,1.07537 1.487571,1.77405 2.652551,1.77405 5.14385,0 10.323477,-1.59473 14.624948,-3.4587 4.12224,-1.79228 7.59889,-3.92514 9.7317,-5.48442 5.69946,2.06112 12.00842,3.20807 18.65778,3.20807 25.34284,0 45.882473,-16.686079 45.882473,-37.279375 0,-20.593295 -20.539633,-37.279377 -45.882473,-37.279377 z m 0.62683,13.3227 c 3.05615,0.03323 6.07295,1.336192 7.90495,4.018877 4.14176,4.931516 2.92659,13.898141 -3.66541,16.036231 1.93801,7.530287 5.10742,14.879415 5.29166,22.754166 -6.34566,-0.0021 -12.74174,-1.142981 -19.05,0 -0.58584,-3.393919 1.14423,-6.735267 1.80454,-10.015926 0.85197,-4.813771 5.29292,-11.180937 0.3421,-15.040427 -3.97886,-3.089802 -4.42448,-9.176779 -1.5043,-13.131498 1.8983,-3.065722 5.41283,-4.659079 8.87646,-4.621423 z" />
+      <text
+         xml:space="preserve"
+         style="font-weight:200;font-size:12.6337px;line-height:1.25;font-family:Montserrat;-inkscape-font-specification:'Montserrat Ultra-Light';fill:#000000;fill-opacity:0.980392;stroke-width:0.164073"
+         x="19.906345"
+         y="96.835739"
+         id="text781-0"><tspan
+           sodipodi:role="line"
+           id="tspan779-3"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Stinger Fit Trial';-inkscape-font-specification:'Stinger Fit Trial';fill:#000000;fill-opacity:0.980392;stroke-width:0.164073"
+           x="19.906345"
+           y="96.835739"
+           dx="0 0 0 0 0 0 0 0 -2.6458333">STEALTH CHAT</tspan></text>
+    </g>
+  </g>
+</svg>

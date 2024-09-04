@@ -14,6 +14,9 @@
 		
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+		
+		<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" /> -->
+
 
 		<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.2.0/css/font-awesome.min.css" />
 		<link rel="stylesheet" type="text/css" href="css/demo.css" />
@@ -27,7 +30,9 @@
   		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]--><script>document.documentElement.className = 'js';</script>
 	</head>
-	<body class="theme-1 demo-1">
+	<!-- <body class="theme-1 demo-1"> -->
+		<!-- <body class="demo-1"> -->
+			<body class="theme-1">
 	
 	
 	
@@ -38,7 +43,8 @@
 	 .) LOCK UNLOCK BANNER
 	 **********************************************************************************************/ -->
 	 <div id='lockscreen' class="cover-container" style="display: none;" >
-		<img src="img/logo.png" alt="Cover Image" class="cover-image"  >
+		<img src="img/logo.png" alt="Cover Image" class="cover-image"  id="logoLockscreen" >
+
 		<button id="unlockButton" class="btn btn-primary btn-unlock" onclick="event.stopPropagation();unlockLocalwallet()" >Unlock</button>
 	  </div>
 	  
@@ -54,57 +60,58 @@
 				<button class="menu__handle"><span>Menu</span></button>
 				<div class="menu__inner">
  
+					<ul>
+						<!-- <li><a href="#"><i class="fa fa-fw fa-user"></i><span>Add +<span></a></li> -->
+						<li>
 
-					<div class="card p-3 bg-transparent border-0">
-						<div class="d-flex align-items-center">
-						  <div class="me-3">
-							  <input name="avatarIMG" id="avatarIMGfile" type="file" style="display:none" accept="image/*" /> 
-							<img id="avatarIMG" src="img/anonym.jpg" alt="Avatar" class="rounded-circle avatar-img">
-						  </div>
-						  <div>
-							<h5 class="mb-0">John Doe</h5>
-						  </div>
-						</div>
-					  </div>
+							<div class="card p-3 bg-transparent border-0">
+								<div class="d-flex align-items-center">
+								  <div class="me-3">
+									  <input name="avatarIMG" id="avatarIMGfile" type="file" style="display:none" accept="image/*" /> 
+									<img id="avatarIMG" src="img/anonym.jpg" alt="Avatar" class="rounded-circle avatar-img">
+								  </div>
+								  <div>
+									<h5 class="mb-0">Carlos Castaneda</h5>
+								  </div>
+								</div>
+							  </div>
+
+
+							  <div class="row">
+								<div class="col text-center" id="configButtons">
+								  
+									<button type="button" id="" class="btn btn-primary" onclick="event.stopPropagation();addAddress()">
+									<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512">
+									  <path
+										d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM504 312V248H440c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V136c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H552v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
+									</svg>
+								  </button>
+								  <button type="button" id="" class="btn btn-danger" onclick="event.stopPropagation(); scanAddress()">
+									<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
+									  <path
+										d="M0 80C0 53.5 21.5 32 48 32h96c26.5 0 48 21.5 48 48v96c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V80zM64 96v64h64V96H64zM0 336c0-26.5 21.5-48 48-48h96c26.5 0 48 21.5 48 48v96c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V336zm64 16v64h64V352H64zM304 32h96c26.5 0 48 21.5 48 48v96c0 26.5-21.5 48-48 48H304c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48zm80 64H320v64h64V96zM256 304c0-8.8 7.2-16 16-16h64c8.8 0 16 7.2 16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s7.2-16 16-16s16 7.2 16 16v96c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16s-7.2-16-16-16s-16 7.2-16 16v64c0 8.8-7.2 16-16 16H272c-8.8 0-16-7.2-16-16V304zM368 480a16 16 0 1 1 0-32 16 16 0 1 1 0 32zm64 0a16 16 0 1 1 0-32 16 16 0 1 1 0 32z" />
+									</svg>
+								  </button>
+								  <button type="button" id="" class="btn btn-success" onclick="event.stopPropagation(); settings()">
+									<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512">
+									  <path
+										d="M495.9 166.6c3.2 8.7 .5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6c-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2c-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8c-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6 .3-24.5-6.8c-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3c-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6c4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2c5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5 0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8c8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336a80 80 0 1 0 0-160 80 80 0 1 0 0 160z" />
+									</svg>
+								  </button>
+								</div>
+							  </div>
+
+							  
+						</li>
+					</ul>
+
 					 
 
- 
-	   <div class=" ">
-		 <div class="row">
-		   <div class="col text-center" id="configButtons">
-			 
-			   <button type="button" id="" class="btn btn-primary" onclick="event.stopPropagation();addAddress()">
-			   <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512">
-				 <path
-				   d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM504 312V248H440c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V136c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H552v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
-			   </svg>
-			 </button>
-			 <button type="button" id="" class="btn btn-danger" onclick="event.stopPropagation(); scanAddress()">
-			   <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
-				 <path
-				   d="M0 80C0 53.5 21.5 32 48 32h96c26.5 0 48 21.5 48 48v96c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V80zM64 96v64h64V96H64zM0 336c0-26.5 21.5-48 48-48h96c26.5 0 48 21.5 48 48v96c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V336zm64 16v64h64V352H64zM304 32h96c26.5 0 48 21.5 48 48v96c0 26.5-21.5 48-48 48H304c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48zm80 64H320v64h64V96zM256 304c0-8.8 7.2-16 16-16h64c8.8 0 16 7.2 16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s7.2-16 16-16s16 7.2 16 16v96c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16s-7.2-16-16-16s-16 7.2-16 16v64c0 8.8-7.2 16-16 16H272c-8.8 0-16-7.2-16-16V304zM368 480a16 16 0 1 1 0-32 16 16 0 1 1 0 32zm64 0a16 16 0 1 1 0-32 16 16 0 1 1 0 32z" />
-			   </svg>
-			 </button>
-			 <button type="button" id="" class="btn btn-success" onclick="event.stopPropagation(); settings()">
-			   <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512">
-				 <path
-				   d="M495.9 166.6c3.2 8.7 .5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6c-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2c-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8c-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6 .3-24.5-6.8c-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3c-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6c4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2c5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5 0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8c8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336a80 80 0 1 0 0-160 80 80 0 1 0 0 160z" />
-			   </svg>
-			 </button>
-		   </div>
-		 </div>
-	   </div>
-   
-	  
-	   <button class="btn btn-primary fullwidth" style="display: none;" id="updateOnchain" onclick="event.stopPropagation(); updateOnchainDID()" disabled> Update
-	   </button>
+  
 	   
 	   <ul id="cwContacts" class="nav"> </ul>
 
 
-					<ul>
-						<li><a href="#"><i class="fa fa-fw fa-user"></i><span>Add +<span></a></li>
-					</ul>
 
 				</div>
 				<div class="morph-shape" data-morph-open="M300-10c0,0,295,164,295,410c0,232-295,410-295,410" data-morph-close="M300-10C300-10,5,154,5,400c0,232,295,410,295,410">
@@ -112,7 +119,6 @@
 						<path fill="none" d="M300-10c0,0,0,164,0,410c0,232,0,410,0,410"/>
 					</svg>
 				</div>
-				<button class="" id="mintOrUpdate" onclick="event.stopPropagation(); mintOrUpdate()" disabled> Mint </button>
 
 
 			</nav>
@@ -121,44 +127,33 @@
 .) FIN NAV
 **********************************************************************************************/ -->
 
-
-
-
-
-<div class="">
-	<!-- <div class="main"> -->
+<header class="codrops-header main-wrap">
+		
 	
-	
-	<header class="codrops-header">
-		
-		<!-- <img id="avatarIMG" src="img/anonym.jpg" alt="Avatar" class="">  -->
-		<!-- <img id="avatarIMG" src="img/anonym.jpg" alt="Avatar" class="rounded-circle float-end img-fluid"> -->
-		
-		
-		<h1 >StealthChat 
-			<span id="userData">A sovereign chat </span>
-			
-		</h1>
-			 
-						<div id="address"></div>
-						<div id="data"></div>
-		
-					
-		
-						<span class="badge bg-primary" id="chatBadge">-</span>
+	<h1 >StealthChat <span id="userData">A sovereign chat </span> </h1>
 		 
-		
-						<!-- =================== -->
-						<div id="qrtroqcontainer" class=" container swiperSlide">
-						 <div class=" responsive-svg" id="canvas"></div>
-					 </div>
-					 <pre id="yourAddress"> </pre>
-					 <div id="qrresult"> </div>
-					 <!-- ======================= -->
-				</header>
+					<div id="address"></div>
+					<div id="data"></div>
+	
+				
+	
+					<span class="badge bg-primary" id="chatBadge">-</span>
+	 
+	
+					<!-- =================== -->
+					<div id="qrtroqcontainer" class=" container swiperSlide">
+					 <div class=" responsive-svg" id="canvas"></div>
+				 </div>
+				 <pre id="yourAddress"> </pre>
+				 <div id="qrresult"> </div>
+				 <!-- ======================= -->
+			</header>
+
+
 
  
-          
+
+
    
    
 	   <!-----------------------------
@@ -197,16 +192,6 @@
    
 		   
 		   
-		   <!-- <main class="main-wrap"> -->
-		 
-    
-   
-	   <!-- <div class="bottom-nav">
-		   <nav class="codrops-demos">
-			   <span>v4.08 </span>
-		   </nav>
-	   </div> -->
-   
    <!-- FIN UI -->
       
 
@@ -259,12 +244,6 @@
 </div><!-- /search chat-->
 
 
-
-   <!-- </main> -->
-   
-
-   
-			</div><!-- /main -->
 		</div><!-- /container -->
 		<script src="js/classie.js"></script>
 
@@ -301,12 +280,21 @@
 					var self = this;
 
 					if( this.isOpen ) {
+						console.warn('MENU OPEN')
 						classie.remove( self.el, 'menu--anim' );
-						setTimeout( function() { classie.remove( self.el, 'menu--open' );	}, 250 );
+						setTimeout( function() { 
+							document.querySelector(".overlay").classList.remove("overlayisOpen");
+							classie.remove( self.el, 'menu--open' );	
+						}, 250 );
 					}
 					else {
+						console.warn('MENU CLOSE?')
+						
 						classie.add( self.el, 'menu--anim' );
-						setTimeout( function() { classie.add( self.el, 'menu--open' );	}, 250 );
+						setTimeout( function() { 
+							document.querySelector(".overlay").classList.add("overlayisOpen");
+							classie.add( self.el, 'menu--open' );	
+						}, 250 );
 					}
 					this.pathEl.stop().animate( { 'path' : this.isOpen ? this.paths.close : this.paths.open }, 350, mina.easeout, function() {
 						self.pathEl.stop().animate( { 'path' : self.paths.reset }, 800, mina.elastic );
@@ -325,6 +313,191 @@
 .) MODALS
 **********************************************************************************************/ -->
 
+
+	<!-- SETTINGS MODAL -->
+	<div class="modal fade" id="settingsModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="settingsModalLabel">SETTINGS </h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+
+
+				<div class="modal-body" id="settingsCardContainer">
+
+	<!-- ----------------------------- -->
+	<h4>Mint</h4>
+
+
+	<button type="button"  class="btn btn-primary"   id="mintOrUpdate" onclick="event.stopPropagation(); mintOrUpdate()" disabled>
+		<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512">
+			<path fill="currentColor"
+				d="M512 32c0 113.6-84.6 207.5-194.2 222c-7.1-53.4-30.6-101.6-65.3-139.3C290.8 46.3 364 0 448 0h32c17.7 0 32 14.3 32 32zM0 96C0 78.3 14.3 64 32 64H64c123.7 0 224 100.3 224 224v32V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V320C100.3 320 0 219.7 0 96z" />
+		</svg> Mint </button>
+
+<br>
+	<br>
+	<hr>
+
+		<!-- ----------------------------- -->
+
+
+					<h4>Keys management</h4>
+
+					<button type="button" id="" class="btn btn-primary" onclick="event.stopPropagation(); backup()">
+						<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512">
+							<path fill="currentColor"
+								d="M512 32c0 113.6-84.6 207.5-194.2 222c-7.1-53.4-30.6-101.6-65.3-139.3C290.8 46.3 364 0 448 0h32c17.7 0 32 14.3 32 32zM0 96C0 78.3 14.3 64 32 64H64c123.7 0 224 100.3 224 224v32V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V320C100.3 320 0 219.7 0 96z" />
+						</svg> Backup </button>
+
+					<button type="button" id="" class="btn btn-primary"
+						onclick="event.stopPropagation(); restoreWallet()"> <svg xmlns="http://www.w3.org/2000/svg"
+							height="16" width="16" viewBox="0 0 512 512">
+							<path fill="currentColor"
+								d="M174.7 45.1C192.2 17 223 0 256 0s63.8 17 81.3 45.1l38.6 61.7 27-15.6c8.4-4.9 18.9-4.2 26.6 1.7s11.1 15.9 8.6 25.3l-23.4 87.4c-3.4 12.8-16.6 20.4-29.4 17l-87.4-23.4c-9.4-2.5-16.3-10.4-17.6-20s3.4-19.1 11.8-23.9l28.4-16.4L283 79c-5.8-9.3-16-15-27-15s-21.2 5.7-27 15l-17.5 28c-9.2 14.8-28.6 19.5-43.6 10.5c-15.3-9.2-20.2-29.2-10.7-44.4l17.5-28zM429.5 251.9c15-9 34.4-4.3 43.6 10.5l24.4 39.1c9.4 15.1 14.4 32.4 14.6 50.2c.3 53.1-42.7 96.4-95.8 96.4L320 448v32c0 9.7-5.8 18.5-14.8 22.2s-19.3 1.7-26.2-5.2l-64-64c-9.4-9.4-9.4-24.6 0-33.9l64-64c6.9-6.9 17.2-8.9 26.2-5.2s14.8 12.5 14.8 22.2v32l96.2 0c17.6 0 31.9-14.4 31.8-32c0-5.9-1.7-11.7-4.8-16.7l-24.4-39.1c-9.5-15.2-4.7-35.2 10.7-44.4zm-364.6-31L36 204.2c-8.4-4.9-13.1-14.3-11.8-23.9s8.2-17.5 17.6-20l87.4-23.4c12.8-3.4 26 4.2 29.4 17L182 241.2c2.5 9.4-.9 19.3-8.6 25.3s-18.2 6.6-26.6 1.7l-26.5-15.3L68.8 335.3c-3.1 5-4.8 10.8-4.8 16.7c-.1 17.6 14.2 32 31.8 32l32.2 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-32.2 0C42.7 448-.3 404.8 0 351.6c.1-17.8 5.1-35.1 14.6-50.2l50.3-80.5z" />
+						</svg> Restore </button>
+
+					<br>
+					<br>
+					<hr>
+
+					<!-- -------------------------- -->
+					<h4>WALLET</h4>
+
+			<!-- Radio Buttons -->
+
+			<div class="form-check">
+				<input class="form-check-input" type="radio" name="tokenType" id="inactiveOption" value="inactive">
+				<label class="form-check-label" for="inactiveOption">Inactive</label>
+			  </div>
+			<div class="form-check">
+				<input class="form-check-input" type="radio" name="tokenType" id="erc20Option" value="erc20">
+				<label class="form-check-label" for="erc20Option">ERC-20</label>
+			  </div>
+			  <div class="form-check">
+				<input class="form-check-input" type="radio" name="tokenType" id="ethOption" value="eth">
+				<label class="form-check-label" for="ethOption">ETH</label>
+			  </div>
+			  <div class="form-check">
+				<input class="form-check-input" type="radio" name="tokenType" id="btcOption" value="btc" disabled>
+				<label class="form-check-label" for="btcOption">BTC</label>
+			  </div>
+
+			  <div class="form-check">
+				<input class="form-check-input" type="radio" name="tokenType" id="moneroOption" value="monero" disabled>
+				<label class="form-check-label" for="moneroOption">MONERO</label>
+			  </div>
+	
+			  <!-- ERC-20 Options -->
+			  <div id="erc20Options" class="mt-3" style="display: none;">
+	
+				<!-- Contract Address Selector -->
+				<label for="erc20Selector" class="form-label">Select ERC-20 Contract</label>
+				<select class="form-select mb-3" id="erc20Selector"> </select>
+	
+				<!-- Add, Remove, Info Buttons -->
+	
+				<button type="button" class="btn btn-primary mt-2" id="" onclick="addToken()">+ Add</button>
+				<button type="button" class="btn btn-danger mt-2" id="removeErc20Address">Remove</button>
+				<button type="button" class="btn btn-info mt-2" id="infoErc20Address">Info</button>
+			</div>
+	
+				<br>
+				<br>
+				<hr>
+
+
+				
+					<!-- ----------------------------- -->
+					<h4>Language</h4>
+
+					<div class="options">
+						<select class="form-select form-select-sm w-auto " id="langswitch">
+							<option value="en">English</option>
+							<option value="fr">Français</option>
+							<option value="es">Español</option>
+						  </select>
+						  
+					</div>
+					<div style="display: block;">
+						<hr>
+	
+					<!-- ----------------------------- -->
+	
+							<h4>Contacts</h4>
+							<button  class="btn btn-primary" onclick="event.stopPropagation();saveContacts()"><svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"  >
+								<path fill="currentColor" d="M64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-242.7c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32L64 32zm0 96c0-17.7 14.3-32 32-32l192 0c17.7 0 32 14.3 32 32l0 64c0 17.7-14.3 32-32 32L96 224c-17.7 0-32-14.3-32-32l0-64zM224 288a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg> Save</button>
+							
+							
+								<button  class="btn btn-primary" onclick="event.stopPropagation();importContacts()">
+									<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"  >
+										<path fill="currentColor"  d="M128 64c0-35.3 28.7-64 64-64L352 0l0 128c0 17.7 14.3 32 32 32l128 0 0 288c0 35.3-28.7 64-64 64l-256 0c-35.3 0-64-28.7-64-64l0-112 174.1 0-39 39c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l39 39L128 288l0-224zm0 224l0 48L24 336c-13.3 0-24-10.7-24-24s10.7-24 24-24l104 0zM512 128l-128 0L384 0 512 128z"/></svg>
+									Import</button>
+								<input type="file" id="fileInput" accept=".json" style="display: none;">
+
+
+							<br>
+					
+						</div>
+
+					<div style="display: none;">
+					<hr>
+				
+				
+					<!-- ----------------------------- -->
+
+						<h4>Signatures to broadcast</h4>
+						
+						<ul class="options" id="sig2Broadcast">
+							<li>lkasdmfklnsfdlkgnsdfpgioenpwnglkfdsxnclkdsnklfdnsalkfnldksanflksndfl</li>
+							<li>nrew,nernpnvopxcoivopcxiovidopixcopvioxcpvocxipvoickxpvoicxopviocpx</li>
+							
+							
+							<button  class="btn btn-primary">publish</button>
+							<span>
+								<input type="checkbox" id="muteCheckbox" name="muteCheckbox">
+								<label for="muteCheckbox">AutoPublish(when its connected to the internet)</label>
+							</span>
+
+						</ul>
+					</div>
+
+					<hr>
+			
+					<!-- ----------------------------- -->
+
+					<h4>Chats</h4>
+
+					<button type="button" id="" class="btn btn-primary"
+					onclick="event.stopPropagation(); createGroupChat()" disabled> 
+				
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"  height="16" width="16" >
+						<path fill="currentColor" d="M72 88a56 56 0 1 1 112 0A56 56 0 1 1 72 88zM64 245.7C54 256.9 48 271.8 48 288s6 31.1 16 42.3V245.7zm144.4-49.3C178.7 222.7 160 261.2 160 304c0 34.3 12 65.8 32 90.5V416c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V389.2C26.2 371.2 0 332.7 0 288c0-61.9 50.1-112 112-112h32c24 0 46.2 7.5 64.4 20.3zM448 416V394.5c20-24.7 32-56.2 32-90.5c0-42.8-18.7-81.3-48.4-107.7C449.8 183.5 472 176 496 176h32c61.9 0 112 50.1 112 112c0 44.7-26.2 83.2-64 101.2V416c0 17.7-14.3 32-32 32H480c-17.7 0-32-14.3-32-32zm8-328a56 56 0 1 1 112 0A56 56 0 1 1 456 88zM576 245.7v84.7c10-11.3 16-26.1 16-42.3s-6-31.1-16-42.3zM320 32a64 64 0 1 1 0 128 64 64 0 1 1 0-128zM240 304c0 16.2 6 31 16 42.3V261.7c-10 11.3-16 26.1-16 42.3zm144-42.3v84.7c10-11.3 16-26.1 16-42.3s-6-31.1-16-42.3zM448 304c0 44.7-26.2 83.2-64 101.2V448c0 17.7-14.3 32-32 32H288c-17.7 0-32-14.3-32-32V405.2c-37.8-18-64-56.5-64-101.2c0-61.9 50.1-112 112-112h32c61.9 0 112 50.1 112 112z"/></svg>
+
+					QR groupe Invite</button>
+					<!-- scan this qr to be added to this group -->
+
+				</div>
+
+
+			
+				<div class="modal-footer d-flex justify-content-center">
+					<button type="button" class="btn btn-primary btn-lg" onclick="lock()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"  width="18" height="16">
+						<path fill="currentColor" d="M144 144l0 48 160 0 0-48c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192l0-48C80 64.5 144.5 0 224 0s144 64.5 144 144l0 48 16 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 256c0-35.3 28.7-64 64-64l16 0z"/></svg>LOCK</button>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<!-- SETTINGS SETTINGS -->
+
+
+
+
+
+
+	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.29/Tone.min.js"></script>
 <script src="js/ethers-6.12.1.umd.min.js" type="application/javascript"></script>
 	

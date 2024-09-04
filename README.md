@@ -15,6 +15,7 @@ yarn
 ```
 yarn parcel src/index.html  --port 6161 --https
 ```
+<!-- yarn parcel  src/test.html  src/p2pencrypt.html src/stealth.html  --port 6161 --https -->
 
 ## Description
 This project integrates Ethereum address-based chat functionality with a self-custodial burner wallet, allowing users to connect and conduct transactions with enhanced privacy. Stealth addresses are employed to ensure that every transaction remains secure and untraceable, providing a private communication and transaction experience for peers

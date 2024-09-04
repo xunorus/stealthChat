@@ -70,7 +70,7 @@
     async function initstealth(signer){
         
  
-                        console.log('init()')
+                        console.warn('initstealth()')
         
                         reloadTranslations()
                         // await loadContacts()
@@ -121,7 +121,7 @@
     
                             // POPULATE TOKEN SELECTORS
                         populateSelectInput()
-                        populateSelectInput('tokenType');//populate selec input inside wallet send
+                        // populateSelectInput('tokenType');//populate selec input inside wallet send
     
     
                         
@@ -438,22 +438,17 @@
         .)  SIDEBAR
         **********************************************************************************************/
     
-        // Get the navigation button and add a click event listener
-        var navBtn = document.querySelector(".hamburger");
-        navBtn.addEventListener("click", plToggle);
-    
         // Define the plToggle function
         function plToggle(event) {
             console.log('plToggle()')
-        //   navBtn.classList.toggle("is-active");
-        //   document.querySelector(".sidebar").classList.toggle("isOpen");
-        //   document.querySelector(".overlay").classList.toggle("overlayisOpen");
-        //   var container = document.querySelector(".sidebar");
+          document.querySelector(".overlay").classList.toggle("overlayisOpen");
+            const button = document.querySelector('.menu__handle');
+            button.click();
         }
     
         // Add a click event listener to the overlay element
         document.querySelector(".overlay").addEventListener("click", function (event) {
-          console.log("clickeado en nav li");
+          console.warn("clickeado en nav li");
           plToggle();
         });
     
@@ -2380,11 +2375,12 @@
     localStorage.removeItem('toAddress')
     
     // GOT TO CHAT TAB
-    openChat()
+    // openChat()
+    closeSearch()
     
     //clear UI
     chatAddress.innerHTML = ''
-    document.getElementById('chatBox').innerHTML=`<div class="container"> <div class="row justify-content-center"> <div class="col-10"> <div id="svg-container"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"> <image href="./logoius.svg" width="100%" height="100%"></image> </svg> <button type="button" id="" class="btn btn-primary " style="display: inline;" onclick="event.stopPropagation(); openChat()"> CHAT </button> </div> </div> </div> </div> `
+    document.getElementById('chatBox').innerHTML=`<div class="container"> <div class="row justify-content-center"> <div class="col-10"> <div id="svg-container"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"> <image href="./LOGOSTEALTHCHAT.png" width="100%" height="100%"></image> </svg> <button type="button" id="" class="btn btn-primary " style="display: inline;" onclick="event.stopPropagation(); openChat()"> CHAT </button> </div> </div> </div> </div> `
     // DEACTIVATE BUTTONS
     document.getElementById('chatTextInput').disabled = true;
     document.getElementById('send-button').disabled = true;
