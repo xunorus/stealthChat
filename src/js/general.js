@@ -184,7 +184,8 @@
                         openChat()
                         
                         // check if has did
-                            const regexDID = /^did:ius:0x[a-fA-F0-9]{40}$/;
+                            // const regexDID = /^did:ius:0x[a-fA-F0-9]{40}$/;
+                            const regexDID = /^0x[a-fA-F0-9]{40}$/;
                             const regexAddress = /^0x[a-fA-F0-9]{40}$/;
                             if (regexDID.test(chatValue)) {
     
@@ -664,132 +665,289 @@
     
     // ---------------------------------------------
     
-    async function getSigner(){
-                console.warn('*** getSigner() ***')
+/*********************************************************************************************
+.)  getSigner
+**********************************************************************************************/
+async function getSigner(){
+    console.warn('*** getSigner() ***')
+
+    let signer;
+// 1- GET  PRIV KEY(IF not CREATE IT)
+const chatETHPrivKey = localStorage.getItem('chatETHPrivKey');
+if (!chatETHPrivKey) {
+console.warn('No chatETHPrivKey found. Checking for unbackedWallet.');
+
+// 2- NO PRIV KEY, IS UNBACKEDWALLET?
+const unbackedWallet = localStorage.getItem('unbackedWallet');
+if (!unbackedWallet) {
+console.warn('No unbackedWallet found. Checking for encryptedWallet.');
+
+// 3-  NO UNBACKED WALLET, is JSONWALLET?
+const encryptedWallet = localStorage.getItem('encryptedWallet');
+if (!encryptedWallet) {
+    console.warn('No encryptedWallet found.');
+    // CREATE UNBACKED WALLET
+    try { signer = await ethers.Wallet.createRandom() }
+    catch (error) { console.log(error.message); 
+    fixedToast.fire('Error', error.message, "error"); }
+    console.warn('RANDOM WALLET CREATED!:', signer.address, 'mnemonic:', signer.mnemonic.phrase, 'privkey:', signer.privateKey)
+    localStorage.setItem('unbackedWallet', JSON.stringify(signer.mnemonic.phrase))
+    
+    setTimeout(() => {
+    console.warn('ADDING REMEMBER TO BACKUP WALLET TO HEADERNOTES ^^^^^^^^^^')
+
+        headerNotes.innerHTML = `
+            <div class="alert alert-warning alert-dismissible fade show headerNotes">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <strong>Alert!</strong> Remember to backup your wallet.
+                <button type="button" class="btn btn-primary" onclick="backup()">Backup Now</button>
+            </div>
+            `;
+    }, 5000);
+
+    // return signer; // Return the signer here
+
+} else {
+    // Handle encryptedWallet
+    console.warn('3- encryptedWallet found. Checking for jsonWalletPassword.');
+    const jsonWalletPassword = sessionStorage.getItem('password');
+    if (!jsonWalletPassword) {
+        console.warn('No jsonWalletPassword found.');
+
+        // 1. get and form address from json wallet
+        let addr =JSON.parse(encryptedWallet).address;
+        const checksumAddress = toChecksumAddress(`0x${addr}`);
+
+        // 2. shot it into qr
+        setAddress(checksumAddress)
+        
+        // 3. display UI in lock mode
+        document.getElementById("loader").style.display = "none";//flex
+        lockscreen.style.display='flex'
+
+        return false
+
+    } else {
+        // Handle encryptedWallet and jsonWalletPassword
+        console.log('encryptedWallet and jsonWalletPassword found.',jsonWalletPassword);
+        // FIX1?: catch the signer here?
+        // let signer;
+        try {
+            signer = await ethers.Wallet.fromEncryptedJson(encryptedWallet, jsonWalletPassword)
+            console.warn('SIGNER GLOBAL HERE ***')
             
-                let signer;
-    // 1- GET  PRIV KEY(IF not CREATE IT)
-    const chatETHPrivKey = localStorage.getItem('chatETHPrivKey');
-    if (!chatETHPrivKey) {
-        console.warn('No chatETHPrivKey found. Checking for unbackedWallet.');
-    
-    // 2- NO PRIV KEY, IS UNBACKEDWALLET?
-        const unbackedWallet = localStorage.getItem('unbackedWallet');
-        if (!unbackedWallet) {
-            console.warn('No unbackedWallet found. Checking for encryptedWallet.');
-    
-    // 3-  NO UNBACKED WALLET, is JSONWALLET?
-            const encryptedWallet = localStorage.getItem('encryptedWallet');
-            if (!encryptedWallet) {
-                console.warn('No encryptedWallet found.');
-                // CREATE UNBACKED WALLET
-                try { signer = await ethers.Wallet.createRandom() }
-                catch (error) { console.log(error.message); 
-                fixedToast.fire('Error', error.message, "error"); }
-                console.warn('RANDOM WALLET CREATED!:', signer.address, 'mnemonic:', signer.mnemonic.phrase, 'privkey:', signer.privateKey)
-                localStorage.setItem('unbackedWallet', JSON.stringify(signer.mnemonic.phrase))
-                
-                setTimeout(() => {
-                console.warn('ADDING REMEMBER TO BACKUP WALLET TO HEADERNOTES ^^^^^^^^^^')
-    
-                    headerNotes.innerHTML = `
-                        <div class="alert alert-warning alert-dismissible fade show headerNotes">
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                            <strong>Alert!</strong> Remember to backup your wallet.
-                            <button type="button" class="btn btn-primary" onclick="backup()">Backup Now</button>
-                        </div>
-                        `;
-                }, 5000);
-            
-                // return signer; // Return the signer here
-    
-            } else {
-                // Handle encryptedWallet
-                console.warn('3- encryptedWallet found. Checking for jsonWalletPassword.');
-                const jsonWalletPassword = sessionStorage.getItem('password');
-                if (!jsonWalletPassword) {
-                    console.warn('No jsonWalletPassword found.');
-    
-                    // 1. get and form address from json wallet
-                    let addr =JSON.parse(encryptedWallet).address;
-                    const checksumAddress = toChecksumAddress(`0x${addr}`);
-    
-                    // 2. shot it into qr
-                    setAddress(checksumAddress)
-                    
-                    // 3. display UI in lock mode
-                    document.getElementById("loader").style.display = "none";//flex
-                    lockscreen.style.display='flex'
-    
-                    return false
-    
-                } else {
-                    // Handle encryptedWallet and jsonWalletPassword
-                    console.log('encryptedWallet and jsonWalletPassword found.',jsonWalletPassword);
-                    // FIX1?: catch the signer here?
-                    // let signer;
-                    try {
-                        signer = await ethers.Wallet.fromEncryptedJson(encryptedWallet, jsonWalletPassword)
-                        console.warn('SIGNER GLOBAL HERE ***')
-                        
-                    } catch (error) {
-                         console.warn(error.message, 'ERROR WALLET!'); 
-                        fixedToast.fire({ icon: 'error', title: error.message });
-                        sessionStorage.removeItem('password')
-                        return false
-                    }
-                    // return signer; // Return the signer here
-    
-                }
-    
-            }
-    
-    
-        } 
-        else {
-            // Handle unbackedWallet
-        console.warn('2- YES unbackedWallet', unbackedWallet)
-        const walletData = JSON.parse(unbackedWallet);
-        try{ 
-            signer = ethers.Wallet.fromPhrase(walletData);
-            setTimeout(() => {
-                console.warn('ADDING REMEMBER TO BACKUP WALLET TO HEADERNOTES ****************^^^^^^^^^^')
-                    headerNotes.innerHTML = `
-                        <div class="alert alert-warning alert-dismissible fade show headerNotes">
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                            <strong>Alert!</strong> Remember to backup your wallet.
-                            <button type="button" class="btn btn-primary" onclick="backup()">Backup Now</button>
-                        </div>
-                        `;
-                }, 5000);
+        } catch (error) {
+             console.warn(error.message, 'ERROR WALLET!'); 
+            fixedToast.fire({ icon: 'error', title: error.message });
+            sessionStorage.removeItem('password')
+            return false
         }
-        catch (error) { console.warn(error.message, 'ERROR WALLET!'); localStorage.removeItem('unbackedWallet'); }
-    
-    
-        }
-    
-    } // fin chatETHPrivKey
-    else {
-        // Handle chatETHPrivKey
-        console.warn('1- YES chatETHPrivKey', chatETHPrivKey)
-            try { 
-                signer = await new ethers.Wallet(chatETHPrivKey) 
-    
-            }
-            catch (error) { 
-                console.log(error.message);  
-                    document.getElementById("loader").style.display = "none";//flex
-                    lockscreen.style.display='flex';
-             }
+        // return signer; // Return the signer here
+
     }
+
+}
+
+
+} 
+else {
+// Handle unbackedWallet
+console.warn('2- YES unbackedWallet', unbackedWallet)
+const walletData = JSON.parse(unbackedWallet);
+try{ 
+signer = ethers.Wallet.fromPhrase(walletData);
+setTimeout(() => {
+    console.warn('ADDING REMEMBER TO BACKUP WALLET TO HEADERNOTES ****************^^^^^^^^^^')
+        headerNotes.innerHTML = `
+            <div class="alert alert-warning alert-dismissible fade show headerNotes">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <strong>Alert!</strong> Remember to backup your wallet.
+                <button type="button" class="btn btn-primary" onclick="backup()">Backup Now</button>
+            </div>
+            `;
+    }, 5000);
+}
+catch (error) { console.warn(error.message, 'ERROR WALLET!'); localStorage.removeItem('unbackedWallet'); }
+
+
+}
+
+} // fin chatETHPrivKey
+else {
+// Handle chatETHPrivKey
+console.warn('1- YES chatETHPrivKey', chatETHPrivKey)
+try { 
+    signer = await new ethers.Wallet(chatETHPrivKey) 
+
+}
+catch (error) { 
+    console.log(error.message);  
+        document.getElementById("loader").style.display = "none";//flex
+        lockscreen.style.display='flex';
+ }
+}
+
+
+    /////////////////////////////
+    // 2- SHOW QR WITH DID LINK
+    /////////////////////////////
+
+    console.warn('EVM ADDRESS (getSigner): ', signer.address)
+    setAddress(signer.address)
+    let balance= await checkERC20Balance(signer.address) 
+    let gasBalance= await checkGasBalance(signer.address) 
+    // <svg  class="rounded rounded-circle " width="40px"  height="40px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" onclick="event.stopPropagation();openModalId('#defaultTokenModal')" style=" position: absolute; left: 0; "> <path fill='#d17c78' d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"/></svg>
+    userData.innerHTML = `		
+        <a id="" target="_blank" rel="noopener noreferrer" href="${optionsList[0].EXPLORER}/address/${optionsList[0].ERC20_TOKEN_ADDRESS }">Balance: ${balance}
+            </a>
+            <svg class='hoverIcon' xmlns="http://www.w3.org/2000/svg"  width="18" height="16" viewBox="0 0 512 512" id='reloadBalance'  onclick="event.stopPropagation();reloadBalance()"> <path  fill='#d17c78' d="M463.5 224H472c13.3 0 24-10.7 24-24V72c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2L413.4 96.6c-87.6-86.5-228.7-86.2-315.8 1c-87.5 87.5-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3c62.2-62.2 162.7-62.5 225.3-1L327 183c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H463.5z"/></svg> 
+    <br>
+    <div id="miniversion">
+    <a  target="_blank" rel="noopener noreferrer" href="${optionsList[0].EXPLORER}/address/${signer.address}">gas: ${gasBalance}
+        </a>
+    </div>
+    `;
+
+ 
+    await loadDID( signer)
+    
+    return signer	
+ 
+}
+
+// checkGasBalance
+// checkERC20Balance
+// loadDID
+// setAddress
+// toChecksumAddress
+// createXMPTchat
+
+    // async function getSigner(){
+    //             console.warn('*** getSigner() INSIDE GENERAL.JS ***')
+            
+    //             let signer;
+    // // 1- GET  PRIV KEY(IF not CREATE IT)
+    // const chatETHPrivKey = localStorage.getItem('chatETHPrivKey');
+    // if (!chatETHPrivKey) {
+    //     console.warn('No chatETHPrivKey found. Checking for unbackedWallet.');
+    
+    // // 2- NO PRIV KEY, IS UNBACKEDWALLET?
+    //     const unbackedWallet = localStorage.getItem('unbackedWallet');
+    //     if (!unbackedWallet) {
+    //         console.warn('No unbackedWallet found. Checking for encryptedWallet.');
+    
+    // // 3-  NO UNBACKED WALLET, is JSONWALLET?
+    //         const encryptedWallet = localStorage.getItem('encryptedWallet');
+    //         if (!encryptedWallet) {
+    //             console.warn('No encryptedWallet found.');
+    //             // CREATE UNBACKED WALLET
+    //             try { signer = await ethers.Wallet.createRandom() }
+    //             catch (error) { console.log(error.message); 
+    //             fixedToast.fire('Error', error.message, "error"); }
+    //             console.warn('RANDOM WALLET CREATED!:', signer.address, 'mnemonic:', signer.mnemonic.phrase, 'privkey:', signer.privateKey)
+    //             localStorage.setItem('unbackedWallet', JSON.stringify(signer.mnemonic.phrase))
+                
+    //             setTimeout(() => {
+    //             console.warn('ADDING REMEMBER TO BACKUP WALLET TO HEADERNOTES ^^^^^^^^^^')
+    
+    //                 headerNotes.innerHTML = `
+    //                     <div class="alert alert-warning alert-dismissible fade show headerNotes">
+    //                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    //                         <strong>Alert!</strong> Remember to backup your wallet.
+    //                         <button type="button" class="btn btn-primary" onclick="backup()">Backup Now</button>
+    //                     </div>
+    //                     `;
+    //             }, 5000);
+            
+    //             // return signer; // Return the signer here
+    
+    //         } else {
+    //             // Handle encryptedWallet
+    //             console.warn('3- encryptedWallet found. Checking for jsonWalletPassword.');
+    //             const jsonWalletPassword = sessionStorage.getItem('password');
+    //             if (!jsonWalletPassword) {
+    //                 console.warn('No jsonWalletPassword found.');
+    
+    //                 // 1. get and form address from json wallet
+    //                 let addr =JSON.parse(encryptedWallet).address;
+    //                 const checksumAddress = toChecksumAddress(`0x${addr}`);
+    
+    //                 // 2. shot it into qr
+    //                 setAddress(checksumAddress)
+                    
+    //                 // 3. display UI in lock mode
+    //                 document.getElementById("loader").style.display = "none";//flex
+    //                 lockscreen.style.display='flex'
+    
+    //                 return false
+    
+    //             } else {
+    //                 // Handle encryptedWallet and jsonWalletPassword
+    //                 console.log('encryptedWallet and jsonWalletPassword found.',jsonWalletPassword);
+    //                 // FIX1?: catch the signer here?
+    //                 // let signer;
+    //                 try {
+    //                     signer = await ethers.Wallet.fromEncryptedJson(encryptedWallet, jsonWalletPassword)
+    //                     console.warn('SIGNER GLOBAL HERE ***')
+                        
+    //                 } catch (error) {
+    //                      console.warn(error.message, 'ERROR WALLET!'); 
+    //                     fixedToast.fire({ icon: 'error', title: error.message });
+    //                     sessionStorage.removeItem('password')
+    //                     return false
+    //                 }
+    //                 // return signer; // Return the signer here
+    
+    //             }
+    
+    //         }
+    
+    
+    //     } 
+    //     else {
+    //         // Handle unbackedWallet
+    //     console.warn('2- YES unbackedWallet', unbackedWallet)
+    //     const walletData = JSON.parse(unbackedWallet);
+    //     try{ 
+    //         signer = ethers.Wallet.fromPhrase(walletData);
+    //         setTimeout(() => {
+    //             console.warn('ADDING REMEMBER TO BACKUP WALLET TO HEADERNOTES ****************^^^^^^^^^^')
+    //                 headerNotes.innerHTML = `
+    //                     <div class="alert alert-warning alert-dismissible fade show headerNotes">
+    //                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    //                         <strong>Alert!</strong> Remember to backup your wallet.
+    //                         <button type="button" class="btn btn-primary" onclick="backup()">Backup Now</button>
+    //                     </div>
+    //                     `;
+    //             }, 5000);
+    //     }
+    //     catch (error) { console.warn(error.message, 'ERROR WALLET!'); localStorage.removeItem('unbackedWallet'); }
+    
+    
+    //     }
+    
+    // } // fin chatETHPrivKey
+    // else {
+    //     // Handle chatETHPrivKey
+    //     console.warn('1- YES chatETHPrivKey', chatETHPrivKey)
+    //         try { 
+    //             signer = await new ethers.Wallet(chatETHPrivKey) 
+    
+    //         }
+    //         catch (error) { 
+    //             console.log(error.message);  
+    //                 document.getElementById("loader").style.display = "none";//flex
+    //                 lockscreen.style.display='flex';
+    //          }
+    // }
      
     
     
     
-                return signer
+    //             return signer
                 
              
-    }
+    // }
     
     
             /*********************************************************************************************
@@ -964,7 +1122,8 @@
     
     
                 async function loadDID( signer){
-                    let did = `did:ius:${signer.address}`
+                    // let did = `did:ius:${signer.address}`
+                    let did = signer.address
     
                         // IF. READ DID 
                         console.log('💬 READ YOUR DID:', did)
@@ -1046,7 +1205,8 @@
                 var baseUrl = window.location.protocol + '//' + window.location.host + '/';
                 // var baseUrl = 'https://192.168.43.129:4343' + '/';
                 // var baseUrl = 'https://iusnaturalis.web.app' + '/';
-                let did = `did:ius:${userAddress}`
+                // let did = `did:ius:${userAddress}`
+                let did = userAddress;
                 const parameters = { chat: did };
                 const urlParams = createURLParams(parameters);
                 const url = `${baseUrl}?${urlParams}`;
@@ -1144,7 +1304,8 @@
                     // await chatWith(chatValue)
     
                         //  CREATE AND RESOLVE DID
-                        let did = `did:ius:${chatValue}`
+                        // let did = `did:ius:${chatValue}`
+                        let did = chatValue;
     
                         let didData = await fetchDID(did)
                         console.log( 'didData', didData)
@@ -1356,7 +1517,8 @@
           } else {
     
             // const didresult = await readDIDRecord(did);
-            let did = `did:ius:${toAddr}`;
+            // let did = `did:ius:${toAddr}`;
+            let did = toAddr;
             const didresult = await readDIDRecord(did);
             const avtr = didresult.data.avatar;
            
@@ -1660,7 +1822,8 @@
                         contactInfo = `<span>${shortAddr} <span>`;
                     }
     
-                    let did = `did:ius:${el.address}`;
+                    // let did = `did:ius:${el.address}`;
+                    let did = el.address;
     
                     // Add each asynchronous operation to the promises array
                     promises.push(
@@ -3833,7 +3996,8 @@
                                 let provider = new ethers.JsonRpcProvider(`${optionsList[0].API}`); //v5
                                 let signer = presigner.connect(provider);
                                 console.log('SIGNER!:', signer);
-                                let did = `did:ius:${signer.address}`
+                                // let did = `did:ius:${signer.address}`
+                                let did = signer.address;
                                 console.log('DID: ', did)
     
                                 // ---------------
@@ -4487,7 +4651,7 @@
         // DEFAULT TOKEN
     
         document.addEventListener('DOMContentLoaded', function () {
-            console.log('listen DOMContentLoaded')
+            console.warn('listen DOMContentLoaded')
           const erc20Option = document.getElementById('erc20Option');
           const erc20Options = document.getElementById('erc20Options');
           const addErc20Address = document.getElementById('addErc20Address');
@@ -4835,14 +4999,24 @@
           // Check if no tokens are stored, and add a default token if necessary
           if (storedData.length === 0) {
             console.log('There are no tokens (ERC20_TOKENS)  in localstorage')
-            const defaultToken = {
-              tokenName: "TROK",
-              chainName: "Arbitrum Sepolia",
-              chainId: 421614,
-              contractAddr: "0x3723A0d04ABDFA902d47426973E0cb49C2fC3B86",  // Example contract address
-              rpcs: ["https://sepolia-rollup.arbitrum.io/rpc"],   // Example RPC endpoint
-              explorers: [{ "name": "Arbitrum Sepolia Rollup Testnet Explorer", "url": "https://sepolia-explorer.arbitrum.io", "standard": "EIP3091" }] // Example explorer
-            };
+            
+                const defaultToken = {
+                tokenName: "USDC",
+                chainName: "Arbitrum Sepolia",
+                chainId: 421614,
+                contractAddr: "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d",  // Example contract address
+                rpcs: ["https://sepolia-rollup.arbitrum.io/rpc"],   // Example RPC endpoint
+                explorers: [{ "name": "Arbitrum Sepolia Rollup Testnet Explorer", "url": "https://sepolia-explorer.arbitrum.io", "standard": "EIP3091" }] // Example explorer
+              };
+          
+            // const defaultToken = {
+            //   tokenName: "TROK",
+            //   chainName: "Arbitrum Sepolia",
+            //   chainId: 421614,
+            //   contractAddr: "0x3723A0d04ABDFA902d47426973E0cb49C2fC3B86",  // Example contract address
+            //   rpcs: ["https://sepolia-rollup.arbitrum.io/rpc"],   // Example RPC endpoint
+            //   explorers: [{ "name": "Arbitrum Sepolia Rollup Testnet Explorer", "url": "https://sepolia-explorer.arbitrum.io", "standard": "EIP3091" }] // Example explorer
+            // };
             storedData.push(defaultToken);
             localStorage.setItem('ERC20_TOKENS', JSON.stringify(storedData));
           }

@@ -10,7 +10,9 @@
     "start": "yarn parcel src/index.html  --port 6161 --https"
   },
   "dependencies": {
+    "@noble/secp256k1": "^2.1.0",
     "@polybase/client": "^0.6.6",
+    "@xmtp/message-kit": "^0.0.12",
     "@xmtp/xmtp-js": "^12.1.0",
     "eth-crypto": "^2.6.0",
     "ethers": "^6.13.2",
