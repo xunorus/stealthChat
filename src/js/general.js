@@ -180,7 +180,8 @@
     
                     const chatValue = urlParams.get('chat');
                     if (chatValue !== null) {
-                        console.warn(`chat FOUND! TRYING TO CHAT WITH: ${chatValue}`);
+					console.warn(`( ⤵️⤵️⤵️⤵️comes from a  link)chat FOUND! TRYING TO CHAT WITH: ${chatValue}`);
+
                         openChat()
                         
                         // check if has did
@@ -213,13 +214,9 @@
                                     if (didData.data.avatar != '') {
                                         console.warn( ' HAS AAVATAR!');
                                         avatar = didData.data.avatar;
-                                        console.warn('%%%%%%% LOADPEERAVATAR')
-                                        // loadPeerAvatar(avatar)
-                                        // return didresult
                                     } else {
                                         console.log( ' DOESN\'T HAVE A AVATAR ');
                                         avatar = "./anonym.jpg"
-    
                                     }
                                 
                                 console.warn( ` alias: ${didData.data.alias}`);
@@ -233,14 +230,45 @@
                                 SaveContactsToLocalStorage(contact);
         
                                         try { await chatWith(evmAddr, JSON.parse(avatar) ) } 
-                                            catch (error) { Toast.fire('Error', error.message, "error"); }
+                                            catch (error) { Toast.fire('Error X', error.message, "error"); }
     
         
                             } 
                             else if (regexAddress.test(chatValue)) {
-                                console.warn('⭐ chatValue is and ETH ADDress in the correct format.');
-                                await chatWith(chatValue,avatar)
-        
+                                // console.warn('⭐ chatValue is and ETH ADDress in the correct format.');
+                                // await chatWith(chatValue,avatar)
+        			// IF THIS IS AN ADDRESS
+							console.warn('(⭐ THIS IS AN ADDRES ⭐ )chatValue is and ETH ADDress in the correct format.',chatValue);
+							
+// quizas tendria que ser al releaseEvents, primero chat y luego async fetchDID
+							let didData = await fetchDID(chatValue)
+							dd=didData
+							let avatar;
+							let chatavatar;
+								if (didData.data.avatar != '') {
+									console.log( ' HAS AAVATAR!');
+									avatar = didData.data.avatar;
+									chatavatar= JSON.parse(avatar) 
+								} else {
+									console.warn( ' DOESN\'T HAVE A AVATAR ');
+									avatar = "anonym.jpg"
+									chatavatar = avatar
+								}
+							
+							console.warn( ` alias: ${didData.data.alias}`);
+
+							let contact = { address: didData.data.alias, username: null, avatar: avatar, did: chatValue }
+							console.warn('CONTACTO POR URL!',contact)
+							SaveContactsToLocalStorage(contact);
+
+								console.warn('chatWith()', chatValue, chatavatar )
+									try { await chatWith(chatValue, chatavatar ) } 
+									catch (error) { Toast.fire('Error', error.message, "error"); }
+
+
+
+
+
                             }
         
                             else {
@@ -1471,8 +1499,6 @@ catch (error) {
     
                 console.log('ESTABLISHING NEW CHAT WITH', toAddr)
                 headerNotes.innerHTML = ``
-                // document.getElementById('headerNotes').innerHTML = ``
-                console.warn('CLEANING HEARDERNOTES #############################')
     
                 document.getElementById("chatBox").innerHTML='';//clear chat window
                 console.log('clear chatBox window')
@@ -1500,24 +1526,23 @@ catch (error) {
             updateBadge()
     
     
-            // if (imgsrc != null){
-            // 	console.log('YES IMAGE SOURCE')
+             
     
-            // 	avatar = imgsrc;
-            // } else {
-            // 	console.log('NO IMAGE SOURCE')
-            // 	avatar = "./anonym.jpg"
-                
-            // }
-    
-    
+           
             if (imgsrc != null) {
-            console.log('YES IMAGE SOURCE');
-            avatar = imgsrc;
-          } else {
+                try {
+                    // Validate if imgsrc is a valid URL
+                    new URL(imgsrc);
+                    console.log('YES IMAGE SOURCE: Valid URL', imgsrc);
+                    avatar = imgsrc;  // Assign if valid
+                } catch (e) {
+                    console.log('Invalid image source URL', imgsrc);
+                    avatar = 'anonym.jpg';  // Use a default image if invalid
+                }
+
+
+            }  else {
     
-            // const didresult = await readDIDRecord(did);
-            // let did = `did:ius:${toAddr}`;
             let did = toAddr;
             const didresult = await readDIDRecord(did);
             const avtr = didresult.data.avatar;
@@ -1528,17 +1553,8 @@ catch (error) {
             } else {
             console.log('NO IMAGE SOURCE or avatar data is empty');
             avatar = "./anonym.jpg";
+            }
     }
-    }
-    // if (avtr) {
-            //   console.log('Avatar found in DID record');
-            //   avatar = JSON.parse(avtr);
-            // } else {
-            //   console.log('NO IMAGE SOURCE and avatar data is empty');
-            //   avatar = "./anonym.jpg";
-            // }
-    
-    
     
             // add address in UI
             let htmlData = `<address>${toAddr} <svg id="" onclick="event.stopPropagation();customcopy2clipboard('${toAddr}')" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"> <path  fill="currentColor" d="M433.941 65.941l-51.882-51.882A48 48 0 0 0 348.118 0H176c-26.51 0-48 21.49-48 48v48H48c-26.51 0-48 21.49-48 48v320c0 26.51 21.49 48 48 48h224c26.51 0 48-21.49 48-48v-48h80c26.51 0 48-21.49 48-48V99.882a48 48 0 0 0-14.059-33.941zM266 464H54a6 6 0 0 1-6-6V150a6 6 0 0 1 6-6h74v224c0 26.51 21.49 48 48 48h96v42a6 6 0 0 1-6 6zm128-96H182a6 6 0 0 1-6-6V54a6 6 0 0 1 6-6h106v88c0 13.255 10.745 24 24 24h88v202a6 6 0 0 1-6 6zm6-256h-64V48h9.632c1.591 0 3.117.632 4.243 1.757l48.368 48.368a6 6 0 0 1 1.757 4.243V112z" ></path></svg> </address><br><p>no info available</p>`;
@@ -1548,8 +1564,6 @@ catch (error) {
                 <img src='${avatar}' alt="avatar" class="rounded rounded-circle img-thumbnail" width='40px' id='avatarImage'  onclick="event.stopPropagation();openCard('${toAddr}','${avatar}')">
                 <strong onclick="event.stopPropagation();openCard('${toAddr}','${avatar}')">${shortAddr}</strong>
                 </div>`;
-    
-    
     
     
             // -------------------
@@ -4496,8 +4510,9 @@ catch (error) {
           // "https://chainid.network/chains.json"
     
         const autoCompleteJS = new autoComplete({
-          data: {
-            src: async () => {
+            data: {
+                src: async () => {
+                console.log('AUTOCOMPLETE')
               try {
                 document
                   .getElementById("autoComplete")

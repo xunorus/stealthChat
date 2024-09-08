@@ -1634,7 +1634,8 @@ body.swal2-height-auto {
         }
 
 #chatContainer{
-    z-index: 3;
+    /* z-index: 3; */
+    z-index: 102!important
 }
 
 #mintOrUpdate,#updateOnchain{

@@ -130,7 +130,7 @@
 <header class="codrops-header main-wrap">
 		
 	
-	<h1 >StealthChat <span id="userData">A sovereign chat </span> </h1>
+	<h1 >StealthChat <span id="userData">A sovereign chat  v1.1</span> </h1>
 		 
 					<div id="address"></div>
 					<div id="data"></div>
@@ -729,7 +729,10 @@
 	
 	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.29/Tone.min.js"></script>
-<script src="js/ethers-6.12.1.umd.min.js" type="application/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/autoComplete.min.js"></script>
+
+<!-- <script src="js/ethers-6.12.1.umd.min.js" type="application/javascript"></script> -->
+<script src="js/ethers-6.13.2.umd.min.js"></script>
 	
 <script src="js/sweetalert2.all.min.js"></script>
 <script src="js/qr-code-styling.js"></script>
@@ -803,21 +806,21 @@ async function init(signer){
 
     console.log('init()')
 
-	if (typeof signer === 'undefined') {
-						console.warn('No signer passed at init()');
+	// if (typeof signer === 'undefined') {
+	// 					console.warn('No signer passed at init()');
 
-						let signer = await getSigner()
-						if (signer === false) {
-							console.log("The function returned false.");
-							return
-						}
+	// 					let signer = await getSigner()
+	// 					if (signer === false) {
+	// 						console.log("The function returned false.");
+	// 						return
+	// 					}
 	
-						await createXMPTchat(signer)
-					} else {
-						// console.log('Signer provided:', signer);
-						console.warn("SIGNER:",signer)
-						await createXMPTchat(signer)
-					}
+	// 					await createXMPTchat(signer)
+	// 				} else {
+	// 					// console.log('Signer provided:', signer);
+	// 					console.warn("SIGNER:",signer)
+	// 					await createXMPTchat(signer)
+	// 				}
 
     }
     
@@ -1013,12 +1016,14 @@ async function init(signer){
     
                     const chatValue = urlParams.get('chat');
                     if (chatValue !== null) {
-                        console.warn(`chat FOUND! TRYING TO CHAT WITH: ${chatValue}`);
+                        // console.warn(`chat FOUND! TRYING TO CHAT WITH: ${chatValue}`);
+					console.warn(`( ⤵️⤵️⤵️⤵️comes from a  link)chat FOUND! TRYING TO CHAT WITH: ${chatValue}`);
+
                         openChat()
                         
                         // check if has did
-                            // const regexDID = /^did:ius:0x[a-fA-F0-9]{40}$/;
-                            const regexDID = /^0x[a-fA-F0-9]{40}$/;
+                            const regexDID = /^did:0x[a-fA-F0-9]{40}$/;
+                            // const regexDID = /^0x[a-fA-F0-9]{40}$/;
                             const regexAddress = /^0x[a-fA-F0-9]{40}$/;
                             if (regexDID.test(chatValue)) {
     
@@ -1071,8 +1076,38 @@ async function init(signer){
         
                             } 
                             else if (regexAddress.test(chatValue)) {
-                                console.warn('⭐ chatValue is and ETH ADDress in the correct format.');
-                                await chatWith(chatValue,avatar)
+                                // console.warn('⭐ chatValue is and ETH ADDress in the correct format.');
+                                // await chatWith(chatValue,avatar)
+
+                                	// IF THIS IS AN ADDRESS
+							console.warn('(⭐ THIS IS AN ADDRES ⭐ )chatValue is and ETH ADDress in the correct format.',chatValue);
+							
+
+
+                            // PUT FETCH AFTER CHATWITH (falta resolver lo del await)
+							let avatar;
+							let chatavatar;
+							let didData = await fetchDID(chatValue)
+								if (didData.data.avatar != '') {
+									console.log( ' HAS AAVATAR!');
+									avatar = didData.data.avatar;
+									chatavatar= JSON.parse(avatar) 
+								} else {
+									console.warn( ' DOESN\'T HAVE A AVATAR ');
+									avatar = "anonym.jpg"
+									chatavatar = avatar
+								}
+							
+							console.warn( ` alias: ${didData.data.alias}`);
+
+							let contact = { address: didData.data.alias, username: null, avatar: avatar, did: chatValue }
+							console.warn('CONTACTO POR URL!',contact)
+							SaveContactsToLocalStorage(contact);
+
+								// console.warn('chatWith()', chatValue, chatavatar )
+									try { await chatWith(chatValue, chatavatar ) } 
+									catch (error) { Toast.fire('Error', error.message, "error"); }
+
         
                             }
         
@@ -1108,7 +1143,7 @@ async function init(signer){
                     }
                     initstealth()
                     
-        
+        // return
             
                             // var isFullscreen = false;
                 var body = document.querySelector('body');
@@ -1654,134 +1689,7 @@ catch (error) {
 // setAddress
 // toChecksumAddress
 // createXMPTchat
-
-    // async function getSigner(){
-    //             console.warn('*** getSigner() INSIDE GENERAL.JS ***')
-            
-    //             let signer;
-    // // 1- GET  PRIV KEY(IF not CREATE IT)
-    // const chatETHPrivKey = localStorage.getItem('chatETHPrivKey');
-    // if (!chatETHPrivKey) {
-    //     console.warn('No chatETHPrivKey found. Checking for unbackedWallet.');
-    
-    // // 2- NO PRIV KEY, IS UNBACKEDWALLET?
-    //     const unbackedWallet = localStorage.getItem('unbackedWallet');
-    //     if (!unbackedWallet) {
-    //         console.warn('No unbackedWallet found. Checking for encryptedWallet.');
-    
-    // // 3-  NO UNBACKED WALLET, is JSONWALLET?
-    //         const encryptedWallet = localStorage.getItem('encryptedWallet');
-    //         if (!encryptedWallet) {
-    //             console.warn('No encryptedWallet found.');
-    //             // CREATE UNBACKED WALLET
-    //             try { signer = await ethers.Wallet.createRandom() }
-    //             catch (error) { console.log(error.message); 
-    //             fixedToast.fire('Error', error.message, "error"); }
-    //             console.warn('RANDOM WALLET CREATED!:', signer.address, 'mnemonic:', signer.mnemonic.phrase, 'privkey:', signer.privateKey)
-    //             localStorage.setItem('unbackedWallet', JSON.stringify(signer.mnemonic.phrase))
-                
-    //             setTimeout(() => {
-    //             console.warn('ADDING REMEMBER TO BACKUP WALLET TO HEADERNOTES ^^^^^^^^^^')
-    
-    //                 headerNotes.innerHTML = `
-    //                     <div class="alert alert-warning alert-dismissible fade show headerNotes">
-    //                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    //                         <strong>Alert!</strong> Remember to backup your wallet.
-    //                         <button type="button" class="btn btn-primary" onclick="backup()">Backup Now</button>
-    //                     </div>
-    //                     `;
-    //             }, 5000);
-            
-    //             // return signer; // Return the signer here
-    
-    //         } else {
-    //             // Handle encryptedWallet
-    //             console.warn('3- encryptedWallet found. Checking for jsonWalletPassword.');
-    //             const jsonWalletPassword = sessionStorage.getItem('password');
-    //             if (!jsonWalletPassword) {
-    //                 console.warn('No jsonWalletPassword found.');
-    
-    //                 // 1. get and form address from json wallet
-    //                 let addr =JSON.parse(encryptedWallet).address;
-    //                 const checksumAddress = toChecksumAddress(`0x${addr}`);
-    
-    //                 // 2. shot it into qr
-    //                 setAddress(checksumAddress)
-                    
-    //                 // 3. display UI in lock mode
-    //                 document.getElementById("loader").style.display = "none";//flex
-    //                 lockscreen.style.display='flex'
-    
-    //                 return false
-    
-    //             } else {
-    //                 // Handle encryptedWallet and jsonWalletPassword
-    //                 console.log('encryptedWallet and jsonWalletPassword found.',jsonWalletPassword);
-    //                 // FIX1?: catch the signer here?
-    //                 // let signer;
-    //                 try {
-    //                     signer = await ethers.Wallet.fromEncryptedJson(encryptedWallet, jsonWalletPassword)
-    //                     console.warn('SIGNER GLOBAL HERE ***')
-                        
-    //                 } catch (error) {
-    //                      console.warn(error.message, 'ERROR WALLET!'); 
-    //                     fixedToast.fire({ icon: 'error', title: error.message });
-    //                     sessionStorage.removeItem('password')
-    //                     return false
-    //                 }
-    //                 // return signer; // Return the signer here
-    
-    //             }
-    
-    //         }
-    
-    
-    //     } 
-    //     else {
-    //         // Handle unbackedWallet
-    //     console.warn('2- YES unbackedWallet', unbackedWallet)
-    //     const walletData = JSON.parse(unbackedWallet);
-    //     try{ 
-    //         signer = ethers.Wallet.fromPhrase(walletData);
-    //         setTimeout(() => {
-    //             console.warn('ADDING REMEMBER TO BACKUP WALLET TO HEADERNOTES ****************^^^^^^^^^^')
-    //                 headerNotes.innerHTML = `
-    //                     <div class="alert alert-warning alert-dismissible fade show headerNotes">
-    //                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    //                         <strong>Alert!</strong> Remember to backup your wallet.
-    //                         <button type="button" class="btn btn-primary" onclick="backup()">Backup Now</button>
-    //                     </div>
-    //                     `;
-    //             }, 5000);
-    //     }
-    //     catch (error) { console.warn(error.message, 'ERROR WALLET!'); localStorage.removeItem('unbackedWallet'); }
-    
-    
-    //     }
-    
-    // } // fin chatETHPrivKey
-    // else {
-    //     // Handle chatETHPrivKey
-    //     console.warn('1- YES chatETHPrivKey', chatETHPrivKey)
-    //         try { 
-    //             signer = await new ethers.Wallet(chatETHPrivKey) 
-    
-    //         }
-    //         catch (error) { 
-    //             console.log(error.message);  
-    //                 document.getElementById("loader").style.display = "none";//flex
-    //                 lockscreen.style.display='flex';
-    //          }
-    // }
-     
-    
-    
-    
-    //             return signer
-                
-             
-    // }
-    
+ 
     
             /*********************************************************************************************
             .)  BAKCUP
@@ -2031,7 +1939,7 @@ catch (error) {
             }
     
             function setAddress(userAddress) {
-                console.log('setAddress()',userAddress)
+                console.log('🎯 setAddress()',userAddress)
     
                 // v1
                 // var currentURL = window.location.href;
@@ -2304,13 +2212,9 @@ catch (error) {
     
                 console.log('ESTABLISHING NEW CHAT WITH', toAddr)
                 headerNotes.innerHTML = ``
-                // document.getElementById('headerNotes').innerHTML = ``
-                console.warn('CLEANING HEARDERNOTES #############################')
     
                 document.getElementById("chatBox").innerHTML='';//clear chat window
                 console.log('clear chatBox window')
-    
-                // return 
     
                 let userAddress  =document.getElementById('yourAddress').getAttribute('address');
     
@@ -2344,9 +2248,19 @@ catch (error) {
             // }
     
     
-            if (imgsrc != null) {
-            console.log('YES IMAGE SOURCE');
-            avatar = imgsrc;
+            console.log('🌟🌟🌟CHECK IMAGE🌟🌟🌟')
+          
+		if (imgsrc != null) {
+                try {
+                // Validate if imgsrc is a valid URL
+                new URL(imgsrc);
+                console.log('YES IMAGE SOURCE: Valid URL',imgsrc);
+                avatar = imgsrc;  // Assign if valid
+                } catch (e) {
+                console.log('Invalid image source URL',imgsrc);
+                avatar = 'anonym.jpg';  // Use a default image if invalid
+                }
+
           } else {
     
             // const didresult = await readDIDRecord(did);

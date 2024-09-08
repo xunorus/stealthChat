@@ -3,12 +3,22 @@ stealthChat
 
 A sovereign chat integrated with a wallet that maximizes privacy and reduces transaction traceability.
 
-[Demo](https://)
+[Demo](https://stealthchat-x.web.app)
 
 # INSTALL
 ```
 nvm use 20
 yarn                              
+```
+
+ 
+
+# deploy hack to firebase
+
+```
+nvm use 20
+yarn parcel src/index.html --dist-dir public  --public-url ./
+firebase deploy --only hosting:stealthchat-x
 ```
 
 # RUN
@@ -25,7 +35,7 @@ We began by forking a well-crafted UI from the Codrops repository to serve as th
 Next, we integrated the XMTP open protocol to enable secure chat communication. 
 Ethers.js was used to develop a self-custodial burner wallet, allowing peers to initiate sovereign chat sessions. 
 We also use  @noble/secp256k1 for extra operations.
-All transactions are conducted using stealth addresses to ensure privacy.
+All transactions are conducted using stealth addresses to ensure  unlinkability and enhance privacy.
 
 
 
@@ -40,3 +50,7 @@ Corresponding private keys for the stealth addresses are computed through:
 ```
 b + hs
 ```
+
+# log
+v1.1 
+v1.0 chat works
