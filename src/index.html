@@ -21,6 +21,8 @@
 		<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.2.0/css/font-awesome.min.css" />
 		<link rel="stylesheet" type="text/css" href="css/demo.css" />
 		<link rel="stylesheet" type="text/css" href="css/sidebar.css" />
+		<link rel="stylesheet" type="text/css" href="css/cropper.css" />
+
 		<link rel="stylesheet" type="text/css" href="css/dapp.css" />
 		<link rel="stylesheet" type="text/css" href="css/buttons.css" />
 
@@ -57,6 +59,8 @@
 	.) NAV
 	**********************************************************************************************/ -->
 			<nav id="menu" class="menu">
+					<span class="badge bg-primary" id="chatBadge">-</span>
+
 				<button class="menu__handle"><span>Menu</span></button>
 				<div class="menu__inner">
  
@@ -71,7 +75,7 @@
 									<img id="avatarIMG" src="img/anonym.jpg" alt="Avatar" class="rounded-circle avatar-img">
 								  </div>
 								  <div>
-									<h5 class="mb-0">Carlos Castaneda</h5>
+									<h5 class="mb-0" id="avatarUserName">Carlos Castaneda</h5>
 								  </div>
 								</div>
 							  </div>
@@ -130,14 +134,14 @@
 <header class="codrops-header main-wrap">
 		
 	
-	<h1 >StealthChat <span id="userData">A sovereign chat  v1.1</span> </h1>
+	<h1 >StealthChat <span id="userData">A sovereign chat  v1.6</span> </h1>
 		 
 					<div id="address"></div>
 					<div id="data"></div>
 	
 				
 	
-					<span class="badge bg-primary" id="chatBadge">-</span>
+					<!-- <span class="badge bg-primary" id="chatBadge">-</span> -->
 	 
 	
 					<!-- =================== -->
@@ -326,21 +330,22 @@
 
 				<div class="modal-body" id="settingsCardContainer">
 
+                    	<!-- ----------------------------- -->
+
+
+
+					<h4>Stealth Addresses</h4>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="stealthAddressCheckbox" name="stealthAddress">
+                        <label class="form-check-label" for="stealthAddressCheckbox">Stealth Address</label>
+                      </div>
+
+					<br>
+					<br>
+					<hr>
+
 	<!-- ----------------------------- -->
-	<h4>Mint</h4>
 
-
-	<button type="button"  class="btn btn-primary"   id="mintOrUpdate" onclick="event.stopPropagation(); mintOrUpdate()" disabled>
-		<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512">
-			<path fill="currentColor"
-				d="M512 32c0 113.6-84.6 207.5-194.2 222c-7.1-53.4-30.6-101.6-65.3-139.3C290.8 46.3 364 0 448 0h32c17.7 0 32 14.3 32 32zM0 96C0 78.3 14.3 64 32 64H64c123.7 0 224 100.3 224 224v32V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V320C100.3 320 0 219.7 0 96z" />
-		</svg> Mint </button>
-
-<br>
-	<br>
-	<hr>
-
-		<!-- ----------------------------- -->
 
 
 					<h4>Keys management</h4>
@@ -367,16 +372,22 @@
 
 			<!-- Radio Buttons -->
 
-			<div class="form-check">
-				<input class="form-check-input" type="radio" name="tokenType" id="inactiveOption" value="inactive">
-				<label class="form-check-label" for="inactiveOption">Inactive</label>
-			  </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="tokenType" id="arbitrumSepoliaOption" value="arbitrumSepolia" >
+                <label class="form-check-label" for="arbitrumSepoliaOption">ETH(Arbitrum Sepolia)</label>
+              </div>
+
+              <!-- <div class="form-check">
+                <input class="form-check-input" type="radio" name="tokenType" id="nativeOption" value="native" >
+                <label class="form-check-label" for="nativeOption">ETH (Arbitrum Sepolia)</label>
+              </div> -->
+         
 			<div class="form-check">
 				<input class="form-check-input" type="radio" name="tokenType" id="erc20Option" value="erc20">
 				<label class="form-check-label" for="erc20Option">ERC-20</label>
 			  </div>
 			  <div class="form-check">
-				<input class="form-check-input" type="radio" name="tokenType" id="ethOption" value="eth">
+				<input class="form-check-input" type="radio" name="tokenType" id="ethOption" value="eth" disabled>
 				<label class="form-check-label" for="ethOption">ETH</label>
 			  </div>
 			  <div class="form-check">
@@ -443,8 +454,21 @@
 
 					<div style="display: none;">
 					<hr>
+		<!-- ----------------------------- -->
 				
-				
+					<h4>Mint</h4>
+
+
+	<button type="button"  class="btn btn-primary"   id="mintOrUpdate" onclick="event.stopPropagation(); mintOrUpdate()" disabled>
+		<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512">
+			<path fill="currentColor"
+				d="M512 32c0 113.6-84.6 207.5-194.2 222c-7.1-53.4-30.6-101.6-65.3-139.3C290.8 46.3 364 0 448 0h32c17.7 0 32 14.3 32 32zM0 96C0 78.3 14.3 64 32 64H64c123.7 0 224 100.3 224 224v32V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V320C100.3 320 0 219.7 0 96z" />
+		</svg> Mint </button>
+
+<br>
+	<br>
+	<hr>
+
 					<!-- ----------------------------- -->
 
 						<h4>Signatures to broadcast</h4>
@@ -678,8 +702,16 @@
 					  <form id="transactionForm">
 						<div class="mb-3">
 						  <label for="recipientAddress" class="form-label">Recipient Address</label>
-						  <input type="text" class="form-control" id="recipientAddress" placeholder="0x..." required>
+						  <!-- <input type="text" class="form-control" id="recipientAddress" placeholder="0x..." required> -->
+                          <input type="text" class="form-control" id="recipientAddress" placeholder="0x..." required readonly>
+
 						</div>
+                       
+                        <div class="mb-3" id="stealthInfo" >
+                            <label for="sarecipientAddress" class="form-label">Stealth Address Recipient </label>
+                            <input type="text" class="form-control" id="sarecipientAddress" placeholder="0x..." readonly>
+                          </div>
+
 						<div class="mb-3">
 						  <label for="amount" class="form-label">Amount</label>
 						  <input type="number" class="form-control" id="amount" placeholder="Amount to send" step="0.01" min="0" required="">
@@ -691,6 +723,7 @@
 						<div class="mb-3">
 						  <label for="tokenType" class="form-label">Token</label>
 						  <select class="form-select" id="tokenType"> </select>
+                          <span id="fixedtokenType" style="display: none;"> </span>
 						</div>
 						<div id="erc20Details" class="mb-3 d-none">
 						  <label for="erc20ContractAddress" class="form-label">ERC-20 Contract Address</label>
@@ -727,6 +760,101 @@
 		<!-- fin SEND WALLET-->
 	
 	
+  <!-- ---------------------------------------------- -->
+  <!--  Modal addNewToken -->
+  <!-- ---------------------------------------------- -->
+  <div class="modal fade" id="addNewTokenModal" tabindex="-1" aria-labelledby="addNewTokenModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addNewTokenModalLabel">Add Token</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+
+          <div class="mb-3">
+            <label for="autoComplete" class="form-label">Select EVM chain</label>
+            <div class="input-group">
+              <span class="input-group-text">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#d17c78" class="bi bi-search"
+                  viewBox="0 0 16 16">
+                  <path
+                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.415l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                </svg>
+              </span>
+              <input type="search" class="form-control" id="autoComplete" placeholder="Enter search term" tabindex="1">
+            </div>
+          </div>
+
+
+
+          <div class="selection"></div>
+
+            <div class="alert alert-warning alert-dismissible fade show" id="selectionResult" style="display: none;"> </div>
+
+          <!-- ERC-20 Options -->
+          <div id="erc20SetContract" class="mt-3" style="display: none;">
+
+            <!-- Contract Address Selector -->
+            <div class="mb-3">
+              <label for="contractAddress" class="form-label">Smart Contract Address</label>
+              <input type="text" class="form-control" id="contractAddress" placeholder="0x..." required
+                pattern="^0x[a-fA-F0-9]{40}$">
+              <div class="invalid-feedback">
+                Please provide a valid Ethereum smart contract address (0x followed by 40 hex characters).
+              </div>
+              <div class="valid-feedback">
+                Looks good!
+                <span id="validLink"></span>
+              </div>
+            </div>
+
+            <button type="button" class="btn btn-primary" id="addERC20contract" onclick="addConctract()"
+              style="display: none;">Add ERC-20</button>
+          </div>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- ---------------------------------------------- -->
+  <!--  Modal defaultToken -->
+  <!-- ---------------------------------------------- -->
+  <div class="modal fade" id="defaultTokenModal" tabindex="-1" aria-labelledby="defaultTokenModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="defaultTokenModalLabel">Default Token</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- /*********************************************************************************************
+  .) FIN MODALS
+  **********************************************************************************************/ -->
+
+	
 	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.29/Tone.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/autoComplete.min.js"></script>
@@ -750,21 +878,26 @@
 	window.Polybase = Polybase; //make global
 
 
+    	import QrScanner from "qr-scanner/qr-scanner.min.js";
+    window.QrScanner = QrScanner; //make global
+    QrScanner.hasCamera(); // test
 
 		// import EthCrypto from 'eth-crypto';
         // window.EthCrypto = EthCrypto;
 
 		// CROPPER		
-		// import Cropper from 'cropperjs'
-		// window.Cropper = Cropper;
-		// import { throttle } from '@github/mini-throttle'
-		// window.throttle = throttle; 
+		import Cropper from 'cropperjs'
+		window.Cropper = Cropper;
+		import { throttle } from '@github/mini-throttle'
+		window.throttle = throttle; 
 
 
-	// 	import QrScanner from "qr-scanner/qr-scanner.min.js";
-	// window.QrScanner = QrScanner; //make global
-	// QrScanner.hasCamera(); // test
 
+        import { getPublicKey, utils } from '@noble/secp256k1';
+        import * as secp from '@noble/secp256k1';
+        window.getPublicKey = getPublicKey;
+        window.utils = utils;
+        window.secp = secp;
 
  
 	// import EthCrypto from 'eth-crypto';
@@ -806,6 +939,41 @@ async function init(signer){
 
     console.log('init()')
 
+//     const stealthAddressActive = localStorage.getItem('stealthAddressActive');
+
+// // If not present in localStorage, check the box and add to localStorage
+// if (!stealthAddressActive) {
+//   document.getElementById('stealthAddressCheckbox').checked = true;
+//   localStorage.setItem('stealthAddressActive', 'true');
+//   console.warn('Stealth Address set to active by default and stored in localStorage');
+// }
+
+// // Optionally, you can also add an event listener to update localStorage when the checkbox is toggled
+// document.getElementById('stealthAddressCheckbox').addEventListener('change', function() {
+//   if (this.checked) {
+//     localStorage.setItem('stealthAddressActive', 'true');
+//     console.warn('Stealth Address enabled and stored in localStorage');
+//   } else {
+//     localStorage.setItem('stealthAddressActive', 'false');
+//     console.warn('Stealth Address disabled and stored in localStorage');
+//   }
+// });
+
+// // const stealthAddressActive = localStorage.getItem('stealthAddressActive');
+
+// // Perform some action if stealth address is active
+// if (stealthAddressActive === 'true') {
+// console.log('Stealth address is active. Performing related actions...');
+// // Your code to handle when stealth address is active
+// // For example:
+// document.getElementById('stealthInfo').style.display = 'block'; // Example action
+// } else {
+// console.log('Stealth address is inactive.');
+// // Handle the case when stealth address is not active
+// document.getElementById('stealthInfo').style.display = 'none'; // Example action
+// }
+
+
 	// if (typeof signer === 'undefined') {
 	// 					console.warn('No signer passed at init()');
 
@@ -840,7 +1008,16 @@ async function init(signer){
 		// https://sepolia.etherscan.io/address/0xc4bF5CbDaBE595361438F8c6a187bDc330539c60#code
 
 		**********************************************************************************************/
+        // "API": 'https://arbitrum-sepolia.blockpi.network/v1/rpc/public',
 		window.optionsList = [
+        {
+                    "TOKEN_CHAIN_NAME": 'ARBITRUM(SEPOLIA)',
+                    "TOKEN_NAME": "ETH(arbitrum - sepolia)",
+                    "SYMBOL": "ETH (arb-sep)",
+                "API": 'https://arbitrum-sepolia.infura.io/v3/9219faae2bac4d24b95c2d967b22005a',
+                    "TOKEN_CHAINID": '421614',
+                    "EXPLORER": 'https://sepolia.arbiscan.io/'
+                },
             {
                     "ERC20_TOKEN_ADDRESS": "0x3723A0d04ABDFA902d47426973E0cb49C2fC3B86",//trok arb sepolia
                     "ERC20_TOKEN_ABI": 'troktoken',
@@ -848,7 +1025,7 @@ async function init(signer){
                     "TOKEN_CHAIN_NAME": 'ARBITRUM(SEPOLIA)',
                     "TOKEN_NAME": "TROK",
                     "SYMBOL": "TROK",
-                    "API": 'https://arbitrum-sepolia.blockpi.network/v1/rpc/public',
+                "API": 'https://arbitrum-sepolia.infura.io/v3/9219faae2bac4d24b95c2d967b22005a',
                     "TOKEN_CHAINID": '421614',
                     "EXPLORER": 'https://sepolia.arbiscan.io/',
                     "POLYBASE_DB" :"https://explorer.testnet.polybase.xyz/studio/pk%2F0x97eab0841786aeae14135af5e26750626e46e2e15a412b6a319dd2ce7f323c805d67fcfb0f8ea1f27959e486e11e49926fbf4b1c2b9252daa20283e200e3b1b3%2FSTARKID/collections/STARKID",
@@ -938,28 +1115,31 @@ async function init(signer){
                             console.warn("SIGNER:", signer);
                         }
     
+
+                        // POPULATE TOKEN SELECTORS
+                        populateSelectInput()
+                        populateSelectInput('tokenType');//populate selec input inside wallet send
+    
+
                         // LOAD BALANCE
                         let currentTokenContract = await loadToken(signer.address)
                         console.log("currentTokenContract()",currentTokenContract)
     
                             // let  addr  =document.getElementById('yourAddress').getAttribute('address');
                         console.warn('USER ADDRESS',signer.address)
-                        loadContacts(signer.address)
+                        // loadContacts(signer.address)
     
                         // LOAD BALANCES
                     
                         console.warn('EVM ADDRESS (getSigner): ', signer.address)
                             setAddress(signer.address)
+                            loadToken(signer.address)
                             // let balance= await checkERC20Balance(signer.address) 
                             // let gasBalance= await checkGasBalance(signer.address) 
                             // userData.innerHTML = ` <svg  class="rounded rounded-circle " width="40px"  height="40px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" onclick="event.stopPropagation();openModalId('#defaultTokenModal')" style=" position: absolute; left: 0; "> <path fill='#d17c78' d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"/></svg> <a id="" target="_blank" rel="noopener noreferrer" href="${optionsList[0].EXPLORER}/address/${optionsList[0].ERC20_TOKEN_ADDRESS }">Balance: ${balance} </a> <svg class='hoverIcon' xmlns="http://www.w3.org/2000/svg"  width="18" height="16" viewBox="0 0 512 512" id='reloadBalance'  onclick="event.stopPropagation();reloadBalance()"> <path  fill='#d17c78' d="M463.5 224H472c13.3 0 24-10.7 24-24V72c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2L413.4 96.6c-87.6-86.5-228.7-86.2-315.8 1c-87.5 87.5-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3c62.2-62.2 162.7-62.5 225.3-1L327 183c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H463.5z"/></svg> <br> <div id="miniversion"> <a  target="_blank" rel="noopener noreferrer" href="${optionsList[0].EXPLORER}/address/${signer.address}">gas: ${gasBalance} </a> </div> `;
                         
     
-                            // POPULATE TOKEN SELECTORS
-                        populateSelectInput()
-                        // populateSelectInput('tokenType');//populate selec input inside wallet send
-    
-    
+                     
                         
                             // LOAD DID
                         await loadDID( signer)
@@ -967,14 +1147,10 @@ async function init(signer){
     
                         // CREATE CHAT
                         await createXMPTchat(signer);
-    
-                        // populateSelectInput()
-                        // populateSelectInput('tokenType');//populate selec input inside wallet send
-    
-                        // let currentTokenContract = await loadToken(signer.address)
-                        // console.log("currentTokenContract()",currentTokenContract)
-    
-    
+                        // make contacts clickable
+                    // HERE MAKE CONTACTS CLICKABLE
+                    console.warn('🙊 🙊 NOW THAT createXMPTchat is loaded we load the contacts')
+                    loadContacts(signer.address)
                     // -----------------------------------------
                     // CHECK IF USER IS ARROBED
                     // -----------------------------------------
@@ -1017,7 +1193,7 @@ async function init(signer){
                     const chatValue = urlParams.get('chat');
                     if (chatValue !== null) {
                         // console.warn(`chat FOUND! TRYING TO CHAT WITH: ${chatValue}`);
-					console.warn(`( ⤵️⤵️⤵️⤵️comes from a  link)chat FOUND! TRYING TO CHAT WITH: ${chatValue}`);
+					console.warn(`( ⤵️⤵️⤵️⤵️ Comes from a  link)chat FOUND! TRYING TO CHAT WITH: ${chatValue}`);
 
                         openChat()
                         
@@ -1059,6 +1235,8 @@ async function init(signer){
                                         avatar = "./anonym.jpg"
     
                                     }
+
+                                    // didData.data.publicKey ==> PUBLIC KEY
                                 
                                 console.warn( ` alias: ${didData.data.alias}`);
     
@@ -1069,15 +1247,13 @@ async function init(signer){
                                 let contact = { address: didData.data.alias, username: null, avatar: didData.data.avatar, did: chatValue }
                                 console.warn('CONTACTO POR URL!',contact)
                                 SaveContactsToLocalStorage(contact);
-        
-                                        try { await chatWith(evmAddr, JSON.parse(avatar) ) } 
-                                            catch (error) { Toast.fire('Error', error.message, "error"); }
     
+                                    try { await chatWith(evmAddr, JSON.parse(avatar) ) } 
+                                        catch (error) { Toast.fire('Error', error.message, "error"); }
+
         
                             } 
                             else if (regexAddress.test(chatValue)) {
-                                // console.warn('⭐ chatValue is and ETH ADDress in the correct format.');
-                                // await chatWith(chatValue,avatar)
 
                                 	// IF THIS IS AN ADDRESS
 							console.warn('(⭐ THIS IS AN ADDRES ⭐ )chatValue is and ETH ADDress in the correct format.',chatValue);
@@ -1104,7 +1280,6 @@ async function init(signer){
 							console.warn('CONTACTO POR URL!',contact)
 							SaveContactsToLocalStorage(contact);
 
-								// console.warn('chatWith()', chatValue, chatavatar )
 									try { await chatWith(chatValue, chatavatar ) } 
 									catch (error) { Toast.fire('Error', error.message, "error"); }
 
@@ -1355,6 +1530,13 @@ async function init(signer){
                 }
             }
     
+
+            function veryshortAddressETH(address) {
+        if (typeof address !== 'string' || address.length < 42) {
+            throw new Error('Invalid Ethereum address');
+        }
+        return "..." + address.substring(38, 42);
+    }
     function shortAddressETH(address) {
         if (typeof address !== 'string' || address.length < 42) {
             throw new Error('Invalid Ethereum address');
@@ -1459,30 +1641,59 @@ async function init(signer){
               let ew = JSON.parse(encryptedjson);
               console.log('pub key of wallet in localstorage:', ew.address);
     
+
               try {
-                return ethers.Wallet.fromEncryptedJson(encryptedjson, result.value).then(async (localWallet) => {
-                  console.log('localWallet.publicKey:', localWallet.publicKey);
-                  let provider = new ethers.JsonRpcProvider(`${optionsList[0].API}`); //v6
-                  const signer = localWallet.connect(provider);
-                  console.log('SIGNER:', signer);
-                // await loadDID( signer)
-                  return signer;
-                });
-              } catch (error) {
-                console.error('Error during wallet decryption:', error);
-                Toast.fire('Error', error.message, "error");
-                Swal.fire({
-                  icon: "error",
-                  title: "Error",
-                  text: error.message,
-                });
-                return null;
-              }
+                    // Decrypt the wallet
+                    const localWallet = await ethers.Wallet.fromEncryptedJson(encryptedjson, result.value);
+                    
+                    // Log the public key
+                    console.log('localWallet.publicKey:', localWallet.publicKey);
+                    
+                    // Connect to the Ethereum provider
+                    const provider = new ethers.JsonRpcProvider(`${optionsList[0].API}`);
+                    
+                    // Connect wallet to provider (signer)
+                    const signer = localWallet.connect(provider);
+                    
+                    // Log and return the signer
+                    console.log('SIGNER:', signer);
+                    return signer;
+                } catch (error) {
+                    console.error('Error during wallet decryption:', error);
+                    
+                    // Display error messages
+
+                    Swal.fire({
+    icon: "error",
+    title: "Error 🚨",
+    text: error.message,
+}).then((result) => {
+    if (result.isConfirmed) {
+        // Actions to take when the OK button is clicked
+        console.log('OK button clicked');
+        // Add any additional logic here, e.g., redirect, reload page, etc.
+        // BLOCK AGAIN
+        lockscreen.style.display='flex'
+    }
+});
+
+
+
+
+                    // REMOVE PASSWORD FROM SESSION 
+                    sessionStorage.removeItem("password");
+
+                    
+                    return null;
+                }
+ 
+
+
             }
             return null;
           }).catch(error => {
             console.error('Error during Swal prompt:', error.reason);
-            Toast.fire('Error', error.message, "error");
+            Toast.fire('Error 🚨🚨', error.message, "error");
             Swal.fire({
               icon: "error",
               title: "Error",
@@ -1662,22 +1873,24 @@ catch (error) {
 
     console.warn('EVM ADDRESS (getSigner): ', signer.address)
     setAddress(signer.address)
-    let balance= await checkERC20Balance(signer.address) 
-    let gasBalance= await checkGasBalance(signer.address) 
-    // <svg  class="rounded rounded-circle " width="40px"  height="40px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" onclick="event.stopPropagation();openModalId('#defaultTokenModal')" style=" position: absolute; left: 0; "> <path fill='#d17c78' d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"/></svg>
-    userData.innerHTML = `		
-        <a id="" target="_blank" rel="noopener noreferrer" href="${optionsList[0].EXPLORER}/address/${optionsList[0].ERC20_TOKEN_ADDRESS }">Balance: ${balance}
-            </a>
-            <svg class='hoverIcon' xmlns="http://www.w3.org/2000/svg"  width="18" height="16" viewBox="0 0 512 512" id='reloadBalance'  onclick="event.stopPropagation();reloadBalance()"> <path  fill='#d17c78' d="M463.5 224H472c13.3 0 24-10.7 24-24V72c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2L413.4 96.6c-87.6-86.5-228.7-86.2-315.8 1c-87.5 87.5-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3c62.2-62.2 162.7-62.5 225.3-1L327 183c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H463.5z"/></svg> 
-    <br>
-    <div id="miniversion">
-    <a  target="_blank" rel="noopener noreferrer" href="${optionsList[0].EXPLORER}/address/${signer.address}">gas: ${gasBalance}
-        </a>
-    </div>
-    `;
+
+    // if storedTokenType==erc20 the checkERC20 balance
+    
+    // let balance= await checkERC20Balance(signer.address) 
+    // let gasBalance= await checkGasBalance(signer.address) 
+    // userData.innerHTML = `		
+    //     <a id="" target="_blank" rel="noopener noreferrer" href="${optionsList[0].EXPLORER}/address/${optionsList[0].ERC20_TOKEN_ADDRESS }">Balance: ${balance}
+    //         </a>
+    //         <svg class='hoverIcon' xmlns="http://www.w3.org/2000/svg"  width="18" height="16" viewBox="0 0 512 512" id='reloadBalance'  onclick="event.stopPropagation();reloadBalance()"> <path  fill='#d17c78' d="M463.5 224H472c13.3 0 24-10.7 24-24V72c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2L413.4 96.6c-87.6-86.5-228.7-86.2-315.8 1c-87.5 87.5-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3c62.2-62.2 162.7-62.5 225.3-1L327 183c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H463.5z"/></svg> 
+    // <br>
+    // <div id="miniversion">
+    // <a  target="_blank" rel="noopener noreferrer" href="${optionsList[0].EXPLORER}/address/${signer.address}">gas: ${gasBalance}
+    //     </a>
+    // </div>
+    // `;
 
  
-    await loadDID( signer)
+    // await loadDID( signer)
     
     return signer	
  
@@ -1900,7 +2113,8 @@ catch (error) {
                             }
     
                             // ACTIVATE BUTTON TO MINT OR UPDATE
-                            document.getElementById('mintOrUpdate').disabled = false;
+                            document.getElementById('mintOrUpdate').disabled = true;
+                            // document.getElementById('mintOrUpdate').disabled = false;
     
                         }
                 }
@@ -1973,6 +2187,9 @@ catch (error) {
     
                 // let shortAddr = userAddress.substring(0, 6) + "..." + userAddress.substring(38, 42);
                 let shortAddr = shortAddressETH(userAddress)
+                let veryshortAddr = veryshortAddressETH(userAddress)
+               document.getElementById('avatarUserName').innerHTML= veryshortAddr;
+
                 var preElement = document.getElementById('yourAddress');
                 preElement.setAttribute('address', userAddress);
     
@@ -2174,6 +2391,9 @@ catch (error) {
                 window.chats= iusnaturalisxmtp.conversations
                 window.userAddress= userAddress
     
+
+            // HERE MAKE CONTACTS CLICKABLE
+            console.warn(' 🙊 XMTP IS READY TO USE')
                 return iusnaturalisxmtp
             }
     
@@ -2337,7 +2557,26 @@ catch (error) {
             // ------------------------------------
             // AVOID REOPENING COMS WITH ADDRESESS
             // SACAR/ si lo saco falla...
-            const allConversations = await iusnaturalisxmtp.conversations.list()
+            // const allConversations = await iusnaturalisxmtp.conversations.list()
+            let allConversations;
+            try {
+                 allConversations = await iusnaturalisxmtp.conversations.list();
+                console.log('Conversations fetched successfully:', allConversations);
+            } catch (error) {
+                // Handle any errors that occur while fetching conversations
+                console.error(' 💩 Failed to fetch conversations:', error);
+
+                if (error.code === 'NETWORK_ERROR') {
+                    console.error('Network issue, please check your connection.');
+                } else if (error.message.includes('timeout')) {
+                    console.error('Request timed out, try again later.');
+                } else {
+                    console.error('An unexpected error occurred:', error.message);
+                }
+            }
+
+            // // HERE MAKE CONTACTS CLICKABLE
+            // console.warn(' 🙊 MAKE CONTACTS CLICKABLE')
             console.log('available addresses:', allConversations.length)
             const customAddressToCheck = toAddr; // Replace this with the address you want to check
             let addressExists = false;
@@ -3160,7 +3399,7 @@ catch (error) {
         document.getElementById('chatBadge').style.display = 'inline'
         document.getElementById('chatBadge').innerText = '!'
         console.log(`New message from ${message.senderAddress}: ${message.content}`)
-        Toast.fire({ icon: 'info', title: `New message from ${message.senderAddress}`, text: message.content});
+        // Toast.fire({ icon: 'info', title: `New message from ${message.senderAddress}`, text: message.content});
     
         
         try{
@@ -3178,20 +3417,35 @@ catch (error) {
     // paymentReceived
     if (message.content.includes("paymentReceived0x21")) {
         console.log("You received a payment from: ", message.senderAddress);
+        console.log("message.content: ", message.content);
+        console.log("message: ", message);
+        m =message
     
     
+    
+            const txLinkMatch = message.content.match(/txLink="([^"]+)"/);
+
+            // If the match is found, extract the link
+            let txLink;
+            if (txLinkMatch && txLinkMatch[1]) {
+             txLink = txLinkMatch[1];
+            console.log("Transaction Link:", txLink);
+            } else {
+            console.log("txLink not found.");
+            }
+
             // Swal.fire({ title: "Your gas is being payed by your peer!", width: 600, padding: "3em", background: "lightgreen ", backdrop: ` rgba(0,123,123,0.4) url("./nyan-cat.gif") left top no-repeat ` });
         Swal.fire({
                         icon: "success",
                         title: `Received!🤑`,
-                        html:`<span class ="tx"> Here is the tx  <a href="asd" target="_blank">Link</a> ✨✨✨</span>`
+                        html:`<span class ="tx"> Here is the tx  <a href="${txLink}" target="_blank">Link</a> ✨✨✨</span>`
                     });
             
-        }	
+        }
     
     
     // peerGasPaymentAccept
-        if (message.content.includes("peerGasPaymentAccepted0x21")) {
+        else if (message.content.includes("peerGasPaymentAccepted0x21")) {
             Swal.fire({ title: "Your gas is being payed by your peer!", width: 600, padding: "3em", background: "lightgreen ", backdrop: ` rgba(0,123,123,0.4) url("./nyan-cat.gif") left top no-repeat ` });
     
             setTimeout(() => {
@@ -3201,7 +3455,7 @@ catch (error) {
         }
     
         // peerGasPaymentRequest
-        if (message.content.includes("peerGasPaymentReques0x20")) {
+        else if (message.content.includes("peerGasPaymentReques0x20")) {
             console.log("You received a peerGasPamentRequest from: ", message.senderAddress);
             conversation = await iusnaturalisxmtp.conversations.newConversation(message.senderAddress)
             Swal.fire({
@@ -3225,7 +3479,13 @@ catch (error) {
                 }
             });
         }
-        else { console.log("(DIRTYFIX)The message does not contain the text: 'can you pay for the gas?'"); }
+        else { 
+            // console.log("(DIRTYFIX)The message does not contain the text: 'can you pay for the gas?'"); 
+        console.log(`ELSE: New message from ${message.senderAddress}: ${message.content}`)
+
+            Toast.fire({ icon: 'info', title: `New message from ${message.senderAddress}`, text: message.content});
+        
+        }
     
         // CHECK IF ADDRESS IS ALREADY IN YOUR CONTACTS (LOCALSTORAGE)
         var storedContacts = [];
@@ -4011,6 +4271,18 @@ catch (error) {
             async function settings() {
                 console.log('settings()')
                 openModalId('#settingsModal')
+
+// Optionally, you can also add an event listener to update localStorage when the checkbox is toggled
+document.getElementById('stealthAddressCheckbox').addEventListener('change', function() {
+  if (this.checked) {
+    localStorage.setItem('stealthAddressActive', 'true');
+    console.warn('Stealth Address enabled and stored in localStorage');
+  } else {
+    localStorage.setItem('stealthAddressActive', 'false');
+    console.warn('Stealth Address disabled and stored in localStorage');
+  }
+});
+
     
             }
     
@@ -4740,8 +5012,8 @@ catch (error) {
                                 // ------------------------------------
                                 // GET SIGNER
                                 let presigner = await getSigner()
-                                let provider = new ethers.JsonRpcProvider(`${optionsList[0].API}`); //v5
-                                let signer = presigner.connect(provider);
+                                let provider = new ethers.JsonRpcProvider(`${optionsList[0].API}`); // NOTE: maybe we dont need provider for this
+                                let signer = presigner.connect(provider);// NOTE: maybe we dont need provider for this
                                 console.log('SIGNER!:', signer);
                                 // let did = `did:ius:${signer.address}`
                                 let did = signer.address;
@@ -4942,39 +5214,78 @@ catch (error) {
             }
     
     
-            async function getRandomProvider(){
+            // async function getRandomProvider(){
     
-                let isCurrentProvider = localStorage.getItem('currentProvider');
+            //     let isCurrentProvider = localStorage.getItem('currentProvider');
     
-                    if (isCurrentProvider !== null) {
-                        console.log('currentProvider exists:', isCurrentProvider);
-                    } else {
-                        console.log('currentProvider does not exist');
-                    }
+            //         if (isCurrentProvider !== null) {
+            //             console.log('currentProvider exists:', isCurrentProvider);
+            //         } else {
+            //             console.log('currentProvider does not exist');
+            //             return null//fix?
+            //         }
     
     
-                    // get index
-                    let preferredIndex = localStorage.getItem('preferredTokenIndex');
-                    if (preferredIndex === null) {
-                    preferredIndex = 0;
-                    } else {
-                    preferredIndex = parseInt(preferredIndex, 10); // Convert the stored value to an integer
-                    }
+            //         // get index
+            //         let preferredIndex = localStorage.getItem('preferredTokenIndex');
+            //         if (preferredIndex === null) {
+            //         preferredIndex = 0;
+            //         } else {
+            //         preferredIndex = parseInt(preferredIndex, 10); // Convert the stored value to an integer
+            //         }
     
-                    // get token data
-                    let storedData = JSON.parse(localStorage.getItem('ERC20_TOKENS')) || [];
-                    let preferredToken = storedData[preferredIndex];
+            //         // get token data
+            //         let storedData = JSON.parse(localStorage.getItem('ERC20_TOKENS')) || [];
+            //         let preferredToken = storedData[preferredIndex];
     
-                    // get random provider
-                const length = preferredToken.rpcs.length;
-                const randomnumber = Math.floor(Math.random() * length);
-                const selectedProvider = preferredToken.rpcs[randomnumber];
-                console.log('selectedProvider:', selectedProvider, 'from ' , length , 'providers.');
+            //         // get random provider
+            //     const length = preferredToken.rpcs.length;
+            //     const randomnumber = Math.floor(Math.random() * length);
+            //     const selectedProvider = preferredToken.rpcs[randomnumber];
+            //     console.log('selectedProvider:', selectedProvider, 'from ' , length , 'providers.');
     
-                localStorage.setItem('currentProvider',selectedProvider )
-                return selectedProvider
-            } 
+            //     localStorage.setItem('currentProvider',selectedProvider )
+            //     return selectedProvider
+            // } 
+    async function getRandomProvider() {
+
+    // Check if currentProvider exists in localStorage
+    let isCurrentProvider = localStorage.getItem('currentProvider');
+
+    if (isCurrentProvider !== null) {
+        console.log('currentProvider exists:', isCurrentProvider);
+    } else {
+        console.log('currentProvider does not exist');
+        return null;  // This is fine for handling missing currentProvider
+    }
+
+    // Get preferred token index
+    let preferredIndex = localStorage.getItem('preferredTokenIndex');
+    preferredIndex = preferredIndex === null ? 0 : parseInt(preferredIndex, 10);  // Use default index 0 if null
+
+    // Get stored token data
+    let storedData = JSON.parse(localStorage.getItem('ERC20_TOKENS')) || [];
+    let preferredToken = storedData[preferredIndex];
+
+    // Check if preferredToken exists to avoid undefined errors
+    if (!preferredToken || !preferredToken.rpcs || preferredToken.rpcs.length === 0) {
+        console.error('Preferred token or RPCs not available');
+        return null;  // Return null if no valid token or RPCs are available
+    }
+
     
+    // Get random provider from token's RPCs
+    const length = preferredToken.rpcs.length;
+    const randomnumber = Math.floor(Math.random() * length);
+    const selectedProvider = preferredToken.rpcs[randomnumber];
+    
+    console.log('selectedProvider:', selectedProvider, 'from', length, 'providers.');
+
+    // Store selectedProvider in localStorage and return it
+    localStorage.setItem('currentProvider', selectedProvider);
+    return selectedProvider;
+}
+
     
     
             async function checkGasBalance(walletAddress) {
@@ -5136,15 +5447,63 @@ catch (error) {
       **********************************************************************************************/
       async function loadToken(addr){
           console.warn('loadToken()')
+
        
           const storedTokenType = localStorage.getItem('selectedTokenType');
           data.innerHTML = ''
          
           // if eth
-           if (storedTokenType === 'eth') {
-             console.warn('LOADING ETHEREUM ')
+        //    if (storedTokenType === 'eth') {
+        //      console.warn('LOADING ETHEREUM ')
+        //         // erc20Options.style.display = 'block';
+        //         // - hide gas balance
+        //     }
+        if (storedTokenType === 'arbitrumSepolia') {
+             console.log('🏄‍♂️ LOADING ARBITRUM SEPOLIA(ETH) ')
+       
+            if (!addr) {
+                        console.warn('No address provided to loadToken function');
+                            addr  =document.getElementById('yourAddress').getAttribute('address');
+                    }
+                    console.log(`🤹‍♀️ Loading token for address: ${addr}`);
+ 
+                    // GET PROVIDER
+                    let provider;
+                    try { provider = await new ethers.JsonRpcProvider(optionsList[0].API); } 
+                    catch (error) { 
+                        console.warn('error creating provider', error) 
+                        // store current provider  and store it to filter it before selecting a new one
+                    }
+    
+                    // CHECK GAS
+                    let gasBalance
+                    try {
+                    const balance = await provider.getBalance(addr);
+                    // b=balance
+                    console.log(`GAS bal (crudo) : ${balance} GAS`);
+                    //  gasBalance = ethers.formatEther(balance);
+                     gasBalance = Math.round(ethers.formatEther(balance)* 1000000) / 1000000; // Rounds to 6 decimal places
+    
+                    //  gasBalance = ethers.formatEther(balance).toFixed(5)
+    
+                    console.log(`GAS Balance : ${gasBalance} GAS`);
+                } catch (error) {
+                    console.error('Error checking gas  balance:', error.reason);
+                    return null;
+                }
+
+
                 // erc20Options.style.display = 'block';
                 // - hide gas balance
+                let explorer =optionsList[0].EXPLORER
+                    // let tokenAddress =preferredToken.contractAddr
+                    let tokenName ='ETH (arb-sep)'
+                    let userAddress= addr
+                    // <svg  class="rounded rounded-circle " width="40px"  height="40px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" onclick="event.stopPropagation();openModalId('#defaultTokenModal')" style=" position: absolute; left: 0; "> <path fill='#d17c78' d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"/></svg>
+                    userData.innerHTML = ` <a id="" target="_blank" rel="noopener noreferrer" href="${explorer}/address/${addr }">Balance: ${gasBalance} ${tokenName}</a> <svg class='hoverIcon' xmlns="http://www.w3.org/2000/svg"  width="18" height="16" viewBox="0 0 512 512" id='reloadBalance'  onclick="event.stopPropagation();reloadBalance()"> <path  fill='#d17c78' d="M463.5 224H472c13.3 0 24-10.7 24-24V72c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2L413.4 96.6c-87.6-86.5-228.7-86.2-315.8 1c-87.5 87.5-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3c62.2-62.2 162.7-62.5 225.3-1L327 183c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H463.5z"/></svg> 
+                     `;
+                    
+                // fin eth arbitrum sepolia
             }
             // else if erc-20
             else if (storedTokenType === 'erc20') {
@@ -5172,8 +5531,17 @@ catch (error) {
     
     
                     // SELECT RANDOM PROVIDER
-                    let selectedProvider =  await getRandomProvider()
+                    // let selectedProvider =  await getRandomProvider()
                  
+                    const selectedProvider = await getRandomProvider();
+
+                    if (selectedProvider === null) {
+                        console.log('Provider is null, no valid provider found.');
+                        return
+                    } else {
+                        console.log('Provider is valid:', selectedProvider);
+                    }
+                    
                     
                     // GET PROVIDER
                     let provider;
@@ -5399,7 +5767,7 @@ catch (error) {
     
         document.addEventListener('DOMContentLoaded', function () {
             console.warn('listen DOMContentLoaded')
-            alert('listen DOMContentLoaded')
+            // alert('listen DOMContentLoaded')
           const erc20Option = document.getElementById('erc20Option');
           const erc20Options = document.getElementById('erc20Options');
           const addErc20Address = document.getElementById('addErc20Address');
@@ -5408,43 +5776,119 @@ catch (error) {
           const infoErc20Address = document.getElementById('infoErc20Address');
     
     
+
+
+          const stealthAddressActive = localStorage.getItem('stealthAddressActive');
+
+if (!stealthAddressActive) {
+  // If not present in localStorage, check the box and add to localStorage
+  document.getElementById('stealthAddressCheckbox').checked = false;
+  localStorage.setItem('stealthAddressActive', 'false');
+  console.warn('Stealth Address set to active by default and stored in localStorage');
+} else {
+  // If stealthAddressActive is present in localStorage
+  if (stealthAddressActive === 'true') {
+    console.log('Stealth Address is already active.');
+    // Perform actions if stealth address is active
+    document.getElementById('stealthAddressCheckbox').checked = true;
+    // Add any additional actions for when stealth address is active
+  } else if (stealthAddressActive === 'false') {
+    console.log('Stealth Address is inactive.');
+    // Perform actions if stealth address is inactive
+    document.getElementById('stealthAddressCheckbox').checked = false;
+    // Add any additional actions for when stealth address is inactive
+  }
+}
+
+// Optionally, handle changes in the checkbox
+document.getElementById('stealthAddressCheckbox').addEventListener('change', function() {
+  if (this.checked) {
+    localStorage.setItem('stealthAddressActive', 'true');
+    console.log('Stealth Address activated.');
+    // Perform actions when the checkbox is checked (stealth address activated)
+  } else {
+    localStorage.setItem('stealthAddressActive', 'false');
+    console.log('Stealth Address deactivated.');
+    // Perform actions when the checkbox is unchecked (stealth address deactivated)
+  }
+});
+
+
+
+
         // Retrieve the stored token type from localStorage
         const storedTokenType = localStorage.getItem('selectedTokenType');
+
+// If a token type was previously selected, set it accordingly
+if (storedTokenType) {
+    document.querySelector(`input[name="tokenType"][value="${storedTokenType}"]`).checked = true;
+
+    if (storedTokenType === 'arbitrumSepolia') {
+        console.warn('arbitrumSepolia selected');
+    } else if (storedTokenType === 'inactive') {
+        console.warn('inactive selected (wallet is off)');
+    } else if (storedTokenType === 'erc20') {
+        console.warn('ERC20 selected');
+        erc20Options.style.display = 'block';
+    } else if (storedTokenType === 'eth') {
+        console.warn('ETHEREUM selected');
+        // - hide gas balance
+    }
+} else {
+    console.warn('No token type selected in localStorage, setting default to arbitrumSepolia');
     
-          // If a token type was previously selected, set it accordingly
-        if (storedTokenType) {
-            document.querySelector(`input[name="tokenType"][value="${storedTokenType}"]`).checked = true;
+    document.querySelector('input[name="tokenType"][value="arbitrumSepolia"]').checked = true;
+    localStorage.setItem('selectedTokenType', 'arbitrumSepolia');  // Optionally store the default
+    erc20Options.style.display = 'none';
+
+    populateSelectInput()
+    populateSelectInput('tokenType');//populate selec input inside wallet send
+
+}
+
+        // const storedTokenType = localStorage.getItem('selectedTokenType');
+    
+        //   // If a token type was previously selected, set it accordingly
+        // if (storedTokenType) {
+        //     document.querySelector(`input[name="tokenType"][value="${storedTokenType}"]`).checked = true;
           
-            if (storedTokenType === 'inactive') {
-              console.warn('inactive selected (wallet is off)')
+        //     if (storedTokenType === 'arbitrumSepolia') {
+        //       console.warn('arbitrumSepolia selected ')
     
-            }
-            if (storedTokenType === 'erc20') {
-              console.warn('ERC20 selected')
-              erc20Options.style.display = 'block';
+        //     }
+        //     if (storedTokenType === 'inactive') {
+        //       console.warn('inactive selected (wallet is off)')
     
-            }
+        //     }
+        //     if (storedTokenType === 'erc20') {
+        //       console.warn('ERC20 selected')
+        //       erc20Options.style.display = 'block';
     
-            // ETHEREUM
-           else if (storedTokenType === 'eth') {
-                // erc20Options.style.display = 'block';
-                console.warn('ETHEREUM selected')
-                // - hide gas balance
+        //     }
     
-            }
+        //     // ETHEREUM
+        //    else if (storedTokenType === 'eth') {
+        //         // erc20Options.style.display = 'block';
+        //         console.warn('ETHEREUM selected')
+        //         // - hide gas balance
     
+        //     }
     
-    
-        }
+        // }
     
           // Show or hide ERC-20 options based on the selected radio button
           document.querySelectorAll('input[name="tokenType"]').forEach( function (input) {
             input.addEventListener('change', async function () {
-              console.log('tokenType CHANGED!')
+              console.log('🎏 tokenType CHANGED!')
+
+
               localStorage.setItem('selectedTokenType', input.value);
     
               if (erc20Option.checked) {
                 erc20Options.style.display = 'block';
+              populateSelectInput()
+              populateSelectInput('tokenType');//populate selec input inside wallet send
+
     
               } else {
                 erc20Options.style.display = 'none';
@@ -5657,6 +6101,9 @@ catch (error) {
     
           // repopupulate select
          populateSelectInput()
+        //  populateSelectInput('tokenType');//populate selec input inside wallet send
+       // POPULATE TOKEN SELECTORS
+    //    populateSelectInput()
     
     
         }
@@ -5739,32 +6186,51 @@ catch (error) {
     
     
         function populateSelectInput(selectId) {
-          console.log('populateSelectInput()')
+          console.log('👨‍👩‍👦‍👦 populateSelectInput()')
+
+      
+
+
+          const storedTokenType = localStorage.getItem('selectedTokenType');
+       
+       if (storedTokenType === 'arbitrumSepolia') {
+        console.log('🧸 do something if arbitrumSepolia')
+
+        document.getElementById('tokenType').style.display = 'none'
+        document.getElementById('fixedtokenType').style.display = 'block'
+        document.getElementById('fixedtokenType').innerHTML= optionsList[0].SYMBOL
+
+    
+
+
+       }
+       // else if erc-20
+       else if (storedTokenType === 'erc20') {
+        console.log('🧩do something if erc20')
+        document.getElementById('tokenType').style.display = 'block'
+        document.getElementById('fixedtokenType').style.display = 'none'
+
+
+    //    }
+
           // Retrieve the stored data from localStorage
           let storedData = JSON.parse(localStorage.getItem('ERC20_TOKENS')) || [];
     
           // DEFAULT TOKEN
           // Check if no tokens are stored, and add a default token if necessary
           if (storedData.length === 0) {
-            console.log('There are no tokens (ERC20_TOKENS)  in localstorage')
+            console.log('🤷 There are no tokens (ERC20_TOKENS)  in localstorage we  add USDC(arbitrum sepolia) as default ')
             
-                const defaultToken = {
+            const defaultToken = {
                 tokenName: "USDC",
                 chainName: "Arbitrum Sepolia",
                 chainId: 421614,
                 contractAddr: "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d",  // Example contract address
-                rpcs: ["https://sepolia-rollup.arbitrum.io/rpc"],   // Example RPC endpoint
+                rpcs: ["https://arbitrum-sepolia.infura.io/v3/9219faae2bac4d24b95c2d967b22005a"],   // Example RPC endpoint
                 explorers: [{ "name": "Arbitrum Sepolia Rollup Testnet Explorer", "url": "https://sepolia-explorer.arbitrum.io", "standard": "EIP3091" }] // Example explorer
               };
           
-            // const defaultToken = {
-            //   tokenName: "TROK",
-            //   chainName: "Arbitrum Sepolia",
-            //   chainId: 421614,
-            //   contractAddr: "0x3723A0d04ABDFA902d47426973E0cb49C2fC3B86",  // Example contract address
-            //   rpcs: ["https://sepolia-rollup.arbitrum.io/rpc"],   // Example RPC endpoint
-            //   explorers: [{ "name": "Arbitrum Sepolia Rollup Testnet Explorer", "url": "https://sepolia-explorer.arbitrum.io", "standard": "EIP3091" }] // Example explorer
-            // };
+           
             storedData.push(defaultToken);
             localStorage.setItem('ERC20_TOKENS', JSON.stringify(storedData));
           }
@@ -5796,6 +6262,8 @@ catch (error) {
             
             
           });
+       }
+
         }
     
     
@@ -5846,12 +6314,10 @@ catch (error) {
     
     
         /*********************************************************************************************
-            .)  SEND / RECEIVE TOKENS ERC20
-            **********************************************************************************************/
-    
-    
-    
-            async function openSend(addr) {
+        .)  SEND / RECEIVE TOKENS ERC20
+        **********************************************************************************************/
+
+    async function openSend(addr) {
                 console.warn('openSend', addr)
     
                 if (addr) {
@@ -5860,7 +6326,7 @@ catch (error) {
                 else {
                     console.log('there is not addr')
                 }
-    
+
     
                 // // open modal
                 openModalId('#walletSend')
@@ -5868,20 +6334,54 @@ catch (error) {
                 // get recipient address
                 document.getElementById("recipientAddress").value = addr;
                 
+
+
+        //   PONER AQUI LOGICA THE VER STEALTH ADDRESS
+        const stealthAddressActive = localStorage.getItem('stealthAddressActive');
+
+        // Perform some action if stealth address is active
+        if (stealthAddressActive === 'true') {
+        console.log('Stealth address is active. Performing related actions...');
+        document.getElementById('stealthInfo').style.display = 'block'; // Example action
+       
+    
+
+            // get peer publickey
+            let peerAddr = document.getElementById('peerAddr').getAttribute('data-address')
+            console.log('🤼‍♀️ peerAddr: ', peerAddr)
+            let didData = await fetchDID(peerAddr)
+            let peerPublicKey = didData.data.publicKey 
+            console.log('🤸‍♀️ peerPublicKey: ', peerPublicKey)
+
+
+
+
+            // let stealthAddress = await generateStealthAddress(alicePrivateKey, bobPublicKey)
+            let stealthAddress = await generateStealthAddress(alicePrivateKey, peerPublicKey)
+            // generateStealthAddress() Uint8Array(32) [228, 99, 130, 151, 186, 35, 218, 118, 142, 231, 245, 68, 194, 162, 134, 193, 69, 228, 247, 160, 233, 2, 43, 36, 231, 188, 47, 211, 234, 126, 45, 171, buffer: ArrayBuffer(32), byteLength: 32, byteOffset: 0, length: 32, Symbol(Symbol.toStringTag): 'Uint8Array'] Uint8Array(33) [3, 174, 190, 61, 78, 111, 8, 75, 112, 113, 43, 174, 118, 70, 8, 25, 144, 151, 82, 71, 139, 218, 162, 171, 16, 89, 66, 46, 68, 123, 203, 33, 219, buffer: ArrayBuffer(33), byteLength: 33, byteOffset
+            console.log(`<br>👩👻Stealth address (generated by Alice to Bob): ${stealthAddress.stealthAddress}
+            <br>👫sharedSecret: ${stealthAddress.sharedSecret}`)
+            document.getElementById('sarecipientAddress').value  = stealthAddress
+
+// FIN LOGICA STEALTH ADDRESS 
+    
+    
+    } else {
+        console.log('Stealth address is inactive.');
+        // Handle the case when stealth address is not active
+        document.getElementById('stealthInfo').style.display = 'none'; // Example action
+}
+
                 // fill token selector (tokenType)
                 // populateSelectInput('tokenType');
-    
                 // get token balance
-    
-                
-    
     
             }
     
     
     
             document.getElementById('tokenType').addEventListener('change', function() {
-                console.log('TOKEN TYPE CHANGED')
+                console.log('🔀🚧 ⚖️ TOKEN TYPE CHANGED')
     
                 const selectedType = this.value;
         const erc20Selector = document.getElementById('erc20Selector');
@@ -5898,12 +6398,14 @@ catch (error) {
     
     
     /////////////
-    // 1. SEND
+    // 1. SEND (erc20)
     /////////////
     
     document.getElementById('sendTransactionBtn').addEventListener('click', async function(event) {
-    console.log('CLICKED sendTransactionBtn')
+    console.log('CLICKED 💸 sendTransactionBtn')
     
+    document.getElementById('transactionDetails').innerHTML = ``;
+
         const recipientAddress = document.getElementById('recipientAddress').value;
         
         // disable button until gas estimation is loaded
@@ -5923,49 +6425,83 @@ catch (error) {
           // Proceed with your logic here (e.g., sending the transaction)
         }
     
+
+    // --------------------
+    // GENERAL get signer and connect to the provider
+    // --------------------
+    let signer = await getSigner() 
+                // let s = signer.connect(provider);//signer(wallet connected to provider)
+                // const amountToSend = ethers.parseUnits(amountInput.value, decimals);  // 18 is the number of decimals for Ether
+                // console.log('amountToSend:',amountToSend);
+    
         
+                
+
+    // --------------------
+    // ^^^^^^^^^^^^^^^^^^^^^^^
+    // SET TOADDRESS
+    // ^^^^^^^^^^^^^^^^^^^^^^^
+
+    let  addr  = document.getElementById('yourAddress').getAttribute('address');
+        let  toAddress;
+        console.log(' ‼️ SELECTING TOADDRESS ♨️ ♨️ ♨️')
+        // poner condicional aqui para stealth address
+        const stealthAddressActive = localStorage.getItem('stealthAddressActive');
+            if (stealthAddressActive === 'true') {
+                console.log('Stealth Address is already active.');
+                toAddress  = document.getElementById('sarecipientAddress').value  
+
+            } else if (stealthAddressActive === 'false') {
+                console.log('Stealth Address is inactive.');
+                toAddress  =document.getElementById('peerAddr').getAttribute('data-address')
+
+            }
+
+
+
+    // -----------------------
     
-        const tokenType = document.getElementById('tokenType').value;
-    
+        // const tokenType = document.getElementById('tokenType').value;// estaba mal????
+        const tokenType = localStorage.getItem('selectedTokenType')
         let transactionDetails = `Recipient: ${recipientAddress}\nAmount: ${amount} ${tokenType === 'eth' ? 'ETH' : 'Tokens'}`;
+
+// let s;
+// let provider;
+        // 
+        // pqpqpqppqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqppqpqpqpqpqppqpqpqpqpqp
+        //  LOGICA SI ES UN TOKEN ERC20
+        // pqpqpqppqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqppqpqpqpqpqppqpqpqpqpqp
         if (tokenType === 'erc20') {
+            console.log('LOGICA SI ES UN TOKEN ERC20')
             const contractAddress = document.getElementById('erc20ContractAddress').value;
             transactionDetails += `\nERC-20 Contract: ${contractAddress}`;
-        }
-    
-        document.getElementById('transactionDetails').innerText = transactionDetails;
-    
-        // Switch to confirmation tab
-        const tab = new bootstrap.Tab(document.getElementById('confirmation-tab'));
-        tab.show();
-    
-    
-        let  addr  =document.getElementById('yourAddress').getAttribute('address');
-        let  toAddress  =document.getElementById('peerAddr').getAttribute('data-address')
-    
-    // ----------------
-    let preferredIndex = localStorage.getItem('preferredTokenIndex');
-                    // Set the default index to 0 if no preferred index is stored
+        
+        
+                
+                
+                // ----------------
+            // ERC20
+            // Set the default index to 0 if no preferred index is stored
+                let preferredIndex = localStorage.getItem('preferredTokenIndex');
                     if (preferredIndex === null) {
                     preferredIndex = 0;
                     } else {
                     preferredIndex = parseInt(preferredIndex, 10); // Convert the stored value to an integer
                     }
-    
-                     // Retrieve the stored data from localStorage
-                     let storedData = JSON.parse(localStorage.getItem('ERC20_TOKENS')) || [];
-    
+            console.log('preferredIndex:',preferredIndex)
+            // ----------------
+                // Retrieve the stored data from localStorage
+                let storedData = JSON.parse(localStorage.getItem('ERC20_TOKENS')) || [];
                     // If the preferred index is within the range of stored tokens, return the corresponding token details
                     if (storedData[preferredIndex]) {
-                         preferredToken = storedData[preferredIndex];
-                         pref= preferredToken
+                            preferredToken = storedData[preferredIndex];
+                            // pref= preferredToken
                     } else {
                         console.log('some problem in checkERC20Balance')
                     // Handle the case where the index is out of range
-                    // storedData[0];
                     return
                 }
-    
+            
                 const length = preferredToken.rpcs.length;
                 const randomnumber = Math.floor(Math.random() * length);
                 const selectedProvider = preferredToken.rpcs[randomnumber];
@@ -5974,7 +6510,9 @@ catch (error) {
                 try { provider = await new ethers.JsonRpcProvider(selectedProvider); } 
                 catch (error) { console.warn('error creating provider', error) }
                 
-                
+                // --------------------
+                // PREPARE CONTRACT
+                // --------------------
                 console.log('PREPARING CONTRACT ...:');
                 let contractAddr = preferredToken.contractAddr
                 const tokenContract = await new ethers.Contract(contractAddr, erc20Abi, provider);
@@ -6002,24 +6540,28 @@ catch (error) {
                 
                 console.warn(`ERC-20 Balance of ${preferredToken.tokenName}: ${formatedBalance} `);
     
-                document.getElementById('txbal').innerHTML = `ERC-20 balance: ✅ ${formatedBalance}`;
-                document.getElementById('transactionDetails').innerHTML += `<br><span id="estgas"> Estimating gas 
-                    <div class="dots-container"> <span class="dot">.</span> <span class="dot">.</span> <span class="dot">.</span> </div> 
-                    </span> `;
-    
-    
-                let signer = await getSigner() 
-                let s = signer.connect(provider);//signer(wallet connected to provider)
-                const cws = await tokenContract.connect(s);// connect tokenContract to signer(contract with signer)
-    
-                const amountToSend = ethers.parseUnits(amountInput.value, decimals);  // 18 is the number of decimals for Ether
+                // -----------------------------
+                // display amount with decimals
+                // const amountToSend = ethers.parseUnits(amountInput.value, decimals);  // 18 is the number of decimals for Ether
+                 amountToSend = ethers.parseUnits(amountInput.value, decimals);  // 18 is the number of decimals for Ether
                 console.log('amountToSend:',amountToSend);
+                // -----------------------------
+
+
+    // ADD INFORMATION TO UI
+                document.getElementById('txbal').innerHTML = `ERC-20 balance: ✅ ${formatedBalance}`;
+                document.getElementById('transactionDetails').innerHTML += `<br><span id="estgas"> Estimating gas <div class="dots-container"> <span class="dot">.</span> <span class="dot">.</span> <span class="dot">.</span> </div> </span> `;
     
+                // --------------------
+                // ESTIMAGE GAS
+                // CONNECT SIGNER TO PROVIDER
+                // --------------------
+                 let s = signer.connect(provider);//signer(wallet connected to provider)
+
+                const cws = await tokenContract.connect(s);// connect tokenContract to signer(contract with signer)
                 const txGasEstimage = await cws.transfer.estimateGas(toAddress, amountToSend);
                 console.log(`Estimated Gas: ${txGasEstimage.toString()}`);
                 document.getElementById('estgas').innerHTML = `Estimated gas: ⛽${txGasEstimage} `;
-    
-    // --------------------
                 const feeData = await provider.getFeeData();
                     const gasPrice = feeData.gasPrice;
                     if (!gasPrice) {
@@ -6031,7 +6573,6 @@ catch (error) {
                     const gasCostInEth = gasPrice * txGasEstimage;
                     const gasCostInEthFormatted = ethers.formatUnits(gasCostInEth, 'ether');
                     console.log(`Gas Cost in ETH: ${gasCostInEthFormatted}`);
-                    // 0.00067340854877952
                     // Get the ETH to USD conversion rate
                     const ethUsdPrice = await getEthUsdPrice();
                     console.log(`ETH to USD: $${ethUsdPrice}`);
@@ -6048,8 +6589,124 @@ catch (error) {
                     document.getElementById('confirmTransactionBtn').disabled = false
                     document.getElementById('confirmTransactionBtn').innerHTML = `Confirm`
     
-                // ---------------------
+
+                    
+                    
+                    // FIN  LOGICA SI ES UN TOKEN ERC20
+                    // ---------------------
+        
+        } 
+        else{
+    console.log('NATIVE- ETH token type...')
+    console.log('LOGICA ELSE')
+
+
+        // pqpqpqppqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqppqpqpqpqpqppqpqpqpqpqp
+        // LOGICA SI ES TOKEN NATIVO ( ETH, eth sepolia, etc)
+        // pqpqpqppqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqppqpqpqpqpqppqpqpqpqpqp
+
+                 // Switch to confirmation tab
+        const tab = new bootstrap.Tab(document.getElementById('confirmation-tab'));
+        tab.show(); 
     
+                // --------------------
+                // ESTIMATE GAS
+                // --------------------
+                // get provider
+                let provider = await new ethers.JsonRpcProvider(optionsList[0].API);
+                let s = signer.connect(provider);//signer(wallet connected to provider)
+
+
+                document.getElementById('transactionDetails').innerText += transactionDetails;
+
+                // GET balance for NATIVE TOKEN
+               let balance = await provider.getBalance(signer.address);
+                console.log("native token balance:", ethers.formatEther(balance));
+                let formatedBalance = ethers.formatEther(balance)
+
+                // +++++++++
+                document.getElementById('transactionDetails').innerHTML += `<br><span id="estgas"> Estimating gas <div class="dots-container"> <span class="dot">.</span> <span class="dot">.</span> <span class="dot">.</span> </div> </span> `;
+                
+                document.getElementById('transactionDetails').innerHTML += `<br>
+                <span id="txbal"> Native token balance:  <div class="dots-container"> <span class="dot">.</span> <span class="dot">.</span> <span class="dot">.</span> </div> </span> `;
+                
+            console.warn('🎃 IS toAddress correctly set?? ',toAddress  )
+            const tx = {
+                to: toAddress,
+                value: ethers.parseEther(amountInput.value), // Amount in ETH
+            };
+
+            console.log('about to send ', tx)
+
+                // const txGasEstimage = await provider.estimateGas(tx);
+                txGasEstimage = await provider.estimateGas(tx);
+                console.log(`Estimated Gas: ${txGasEstimage.toString()}`);
+                document.getElementById('estgas').innerHTML = `Estimated gas: ⛽${txGasEstimage} `;
+                const feeData = await provider.getFeeData();
+                const gasPrice = feeData.gasPrice;
+                if (!gasPrice) {
+                    throw new Error('Gas price is not available');
+                }
+                console.log(`Gas Price: ${ethers.formatUnits(gasPrice, 'gwei')} gwei`);
+
+                // Calculate the total gas cost in ETH
+                const gasCostInEth = gasPrice * txGasEstimage;
+                const gasCostInEthFormatted = ethers.formatUnits(gasCostInEth, 'ether');
+                console.log(`Gas Cost in ETH: ${gasCostInEthFormatted}`);
+
+                // Get the ETH to USD conversion rate
+                const ethUsdPrice = await getEthUsdPrice();
+                console.log(`ETH to USD: $${ethUsdPrice}`);
+
+                // Convert gas cost to USD
+                const gasCostInUsd = parseFloat(gasCostInEthFormatted) * ethUsdPrice;
+                console.log(`Estimated Gas Cost in USD: $${gasCostInUsd.toFixed(6)}`);
+
+                // txbuilder.style.display = 'none';
+                document.getElementById('estgas').innerHTML += `(Gas Cost in USD: 💵 $${gasCostInUsd.toFixed(6)})`
+
+             
+
+                // ((((((((((((((((((((((((()))))))))))))))))))))))))
+                const totalTransactionCost = ethers.parseEther(amountInput.value) + gasCostInEth;
+                     // Step 6: Compare the balance with the total transaction cost
+                    if (balance >= totalTransactionCost) {
+                        console.log(" ✅ Sufficient balance to cover transaction and gas fees!");
+                        document.getElementById('txbal').innerHTML = `Native token balance: ✅ ${formatedBalance}`;
+                
+                    } else {
+                        console.log("❌Insufficient balance to cover transaction and gas fees.");
+                        document.getElementById('txbal').innerHTML = `Native token balance: ${formatedBalance} ❌Insufficient balance  `;
+                        document.getElementById('confirmTransactionBtn').innerHTML = `Confirm`
+                        return
+                    }
+                    // ((((((((((((((((((((((((()))))))))))))))))))))))))
+
+
+
+                // return
+
+                    // disable button until gas estimation is loaded
+                document.getElementById('confirmTransactionBtn').disabled = false
+                document.getElementById('confirmTransactionBtn').innerHTML = `Confirm`
+
+// --------------------------
+// fin estmate gas for native token tx
+// ---------------------- ----
+
+
+                
+
+}
+ 
+
+
+
+
+
+
+
+
     
         ///////////////////////////////////////
         // 2. CONFIRM
@@ -6072,12 +6729,62 @@ catch (error) {
                     <div class="dots-container"> <span class="dot">.</span> <span class="dot">.</span> <span class="dot">.</span> </div> 
              </span>`;
     
+
+
+             //  console.log('DO WE STILL GOT  tokenType?: ',tokenType)
+             
+             //  const tokenType = document.getElementById('tokenType').value;
+             const tokenType = localStorage.getItem('selectedTokenType')
+             console.log(' GOT  tokenType?: ',tokenType)
+             
+             const amountInput = document.getElementById('amount');
+             const amount = document.getElementById('amount').value;
+            let amountInNative  = await ethers.parseEther(amountInput.value)
+             
+             let signer = await getSigner() 
+             let provider = await new ethers.JsonRpcProvider(optionsList[0].API);
+             let s = signer.connect(provider);//signer(wallet connected to provider)
+             
+             
+             let tx;
+             // pqpqpqppqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqppqpqpqpqpqppqpqpqpqpqp
+             //  LOGICA SI ES UN TOKEN ERC20
+             // pqpqpqppqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqppqpqpqpqpqppqpqpqpqpqp
+             
+             if (tokenType === 'erc20') {
+            console.log('LOGIC FOR erc20 ')
+             tx = await s.transfer(toAddress, amountToSend, { txGasEstimage });
+
+        }
+        else if (tokenType === 'arbitrumSepolia') {
+            console.log('LOGIC FOR arbitrumSepolia ')
+            // tx = await s.estimateGas(tx);
+            console.log('signer with prov:', s)
+            console.log('provider:', provider)
+
+            // console.log("TX: ",toAddress, amountInNative, txGasEstimage);
+
+            const txinfo = {
+                    to: toAddress,
+                    value: amountInNative, // Maximum ETH we can send
+                    gasLimit: txGasEstimage // Use the estimated gas limit
+                };
+
+                console.log('Sending transaction:', txinfo);
+            tx = await s.sendTransaction(txinfo);
+
+
+        }//arbitrumSepolia
+        // if (tokenType === 'native') {}//arbitrumSepolia
+        // return 
+
             //  ---------------------------
             // SEND
                 try {
                         // Attempt to send the transaction
-                        const tx = await cws.transfer(toAddress, amountToSend, { txGasEstimage });
-    
+                        // if erc20
+                        // const tx = await s.transfer(toAddress, amountToSend, { txGasEstimage });
+
                         console.log(`Transaction hash: ${tx.hash}`);
                         document.getElementById('resultMessage').innerHTML = `<span class ="tx">Transaction hash:  ${tx.hash} ✅</span>`;
                         document.getElementById('resultMessage').innerHTML += `<span class ="txdone">waiting for confirmation
@@ -6090,9 +6797,24 @@ catch (error) {
                         document.getElementById('resultMessage').innerHTML = `<span class ="tx">Transaction was mined in block ${receipt.blockNumber} ✅</span>`;
     
                         // -------------
-                        let preferredToken = await recallStoredToken();
-                        let tokenName =preferredToken.tokenName;
-                        let tokenExplorer =preferredToken.explorers[0].url
+                        // iferc20
+                        console.log('stiill got tokenType/???', tokenType)
+
+                        let tokenName;
+                        let tokenExplorer;
+             if (tokenType === 'erc20') {
+             
+                 let preferredToken = await recallStoredToken();
+                  tokenName =preferredToken.tokenName;
+                  tokenExplorer =preferredToken.explorers[0].url
+
+             }
+             if (tokenType === 'arbitrumSepolia') {
+                 tokenExplorer = optionsList[0].EXPLORER
+                tokenName = optionsList[0].TOKEN_NAME
+
+
+             }
                         let txLink = `${tokenExplorer}/tx/${tx.hash}`;
                         console.log(`Transaction link: ${txLink}`);
                         document.getElementById('resultMessage').innerHTML += `✅<br><span class ="tx"> SUCCESS 🎉🎉🎉!!! Here is the tx  <a href="${txLink}" target="_blank">Link</a> ✨✨✨</span>`
@@ -6109,15 +6831,14 @@ catch (error) {
                         html:`<span class ="tx">Transaction was mined in block ${receipt.blockNumber} ✅</span><br><span class ="tx"> Here is the tx  <a href="${txLink}" target="_blank">Link</a> ✨✨✨</span>`
                     });
     
+                    
                     // ------------------------------
                     // send tx information via chat
                     const conversation = await iusnaturalisxmtp.conversations.newConversation(toAddress)
-                    // let message = `sent you ${amount} ${tokenName}`
-                    let message = `sent you ${amount} ${tokenName}<pre style="display: none;">paymentReceived0x21</pre> `
-    
+                    let message = `sent you ${amount} ${tokenName}<pre style="display: none;" txLink="${txLink}" >paymentReceived0x21</pre> `
                     await conversation.send(`${message}`, { })
-                    // <button onclick="event.stopPropagation();addCoin(${optionsList[GLOBALCHAIN].TOKEN_NAME})"></button>
-                
+
+
                     // UPDATE BALANCE
                     await loadToken(addr)
     
@@ -6190,6 +6911,53 @@ catch (error) {
     }
     
     
+
+
+
+
+        // -----------------------------------------
+        // NEW STEALTH ADDRESS FUNCTIONS
+        // -----------------------------------------
+    
+
+        async function generateStealthAddress(privateKey, publicKey) {
+            console.warn('🏰 generateStealthAddress()')
+            const privateKeyHex = `0x${toHexString(privateKey)}`;
+            const pubPoint = secp.ProjectivePoint.fromHex(publicKey);
+            const sharedSecret = pubPoint.multiply(BigInt(privateKeyHex)).toHex();
+            console.log('👫sharedSecret( at generateStealthAddress):', sharedSecret);
+            const hashedSecret = ethers.keccak256('0x' + sharedSecret).slice(0, 42);
+
+            // 1.Multiply hs by the curve generator point (G): You can use the secp256k1 generator point (which is a constant) to compute the point hs * G.
+            const G = secp.ProjectivePoint.BASE;  // Generator point G
+            const hsBigInt = BigInt(hashedSecret);  // hs should already be in hex or BigInt format
+            const hsPoint = G.multiply(hsBigInt);  // hs * G
+            hsp = hsPoint
+
+            // 2.Add Bob’s public key: You now add Bob’s public key as an elliptic curve point to hs * G. Ensure Bob's public key is in the correct format for the addition.
+            const point = secp.ProjectivePoint.fromHex(publicKey);  // Bob's public key point
+            const stealthPubPoint = hsPoint.add(point);  // hs * G + Bob's public key
+            p1 = point
+            p2 = stealthPubPoint
+
+            // 3.Convert the resulting point to an Ethereum address: Finally, you convert the resulting elliptic curve point to an Ethereum address. This is typically done by compressing the point to its x-coordinate, hashing it, and then converting it to an Ethereum address.
+            const stealthPubKey = stealthPubPoint.toHex();  // Convert to hex
+            const stealthAddress = ethers.computeAddress('0x' + stealthPubKey);  // Convert to Ethereum address
+            console.log('👻Stealth Address:', stealthAddress);
+            return { stealthAddress, sharedSecret }
+        }
+
+        function removeHexPrefix(hexString) {
+            // Check if the hex string starts with '0x' and remove it
+            if (hexString.startsWith('0x')) {
+                return hexString.slice(2);
+            }
+            return hexString;
+        }
+
+
+
+
 </script>
 	</body>
 </html>

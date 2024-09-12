@@ -23,8 +23,9 @@ firebase deploy --only hosting:stealthchat-x
 
 # RUN
 ```
-yarn parcel src/index.html  --port 6161 --https
+yarn parcel src/index.html  src/stealthG.html --port 6161 --https
 ```
+<!-- yarn parcel src/index.html  --port 6161 --https -->
 <!-- yarn parcel  src/test.html  src/p2pencrypt.html src/stealth.html  --port 6161 --https -->
 <!-- yarn parcel  src/index.html  src/p2pencrypt.html src/permitEthers6.html  src/stealthG.html  --port 6161 --https -->
 ## Description
@@ -52,5 +53,10 @@ b + hs
 ```
 
 # log
-v1.1 
+v1.6 ui and tx fixes.
+v1.5 logic from erc20 load moved from getSigner() to loadToken()
+v1.4 avatar upload fix
+v1.3 stealth default false
+v1.2 https for google fonts
+v1.1 launch
 v1.0 chat works
