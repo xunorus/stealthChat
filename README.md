@@ -53,6 +53,8 @@ b + hs
 ```
 
 # log
+v2.0 claim stealth address balances
+v1.9 check stealth address balances
 v1.8 send to stealth address
 v1.7 fix send erc20
 v1.6 ui and tx fixes.
