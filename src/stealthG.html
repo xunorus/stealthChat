@@ -413,7 +413,11 @@
         async function generateStealthAddress(privateKey, publicKey) {
             console.warn('🏰 generateStealthAddress()',privateKey, publicKey)
             const privateKeyHex = `0x${toHexString(privateKey)}`;
+            a = privateKeyHex
+            b=publicKey
+            c= privateKey
             const pubPoint = secp.ProjectivePoint.fromHex(publicKey);
+            ppoint= pubPoint
             const sharedSecret = pubPoint.multiply(BigInt(privateKeyHex)).toHex();
             console.log('👫sharedSecret( at generateStealthAddress):', sharedSecret);
             const hashedSecret = ethers.keccak256('0x' + sharedSecret).slice(0, 42);
@@ -450,6 +454,32 @@
         // -----------------------------------------
         // STEALTH ADDRESS FUNCTIONS
         // -----------------------------------------
+
+
+        // async function computePrivKey(bobprivateKey, alicepublicKey) {
+            async function computePrivKey(privateKey, publicKey) {
+
+                console.warn('computePrivKey()', privateKey, publicKey)
+                const publicKeyHexWithoutPrefix = removeHexPrefix(publicKey);
+                const pubPoint = secp.ProjectivePoint.fromHex(publicKeyHexWithoutPrefix);
+                const sharedSecret = pubPoint.multiply(BigInt(privateKey)).toHex();
+                console.log('👫sharedSecret  (at createStealthWallet ):', sharedSecret);
+                const hashedSecret = ethers.keccak256('0x' + sharedSecret).slice(0, 42);
+
+
+                // BOB can comput the private key to the stealth addres
+                // b +hs
+                const hprivkeyBigInt = BigInt(privateKey);  // hs should already be in hex or BigInt format
+                b = hprivkeyBigInt
+
+                const hsBigInt = BigInt(hashedSecret);  // hs should already be in hex or BigInt format
+                hs = hsBigInt
+
+                computedPrivKey = hprivkeyBigInt + hsBigInt
+
+                console.warn('🛰️ computedPrivKey: ', computedPrivKey)
+                return computedPrivKey
+        }
 
 
 

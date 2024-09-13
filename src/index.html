@@ -134,7 +134,7 @@
 <header class="codrops-header main-wrap">
 		
 	
-	<h1 >StealthChat <span id="userData">A sovereign chat  v1.7</span> </h1>
+	<h1 >StealthChat <span id="userData">A sovereign chat  v1.8</span> </h1>
 		 
 					<div id="address"></div>
 					<div id="data"></div>
@@ -5881,17 +5881,23 @@ if (storedTokenType) {
             input.addEventListener('change', async function () {
               console.log('🎏 tokenType CHANGED!')
 
-
+              
+              
               localStorage.setItem('selectedTokenType', input.value);
+              populateSelectInput()
+              populateSelectInput('tokenType');//populate selec input inside wallet send
     
               if (erc20Option.checked) {
                 erc20Options.style.display = 'block';
-              populateSelectInput()
-              populateSelectInput('tokenType');//populate selec input inside wallet send
+            //   populateSelectInput()
+            //   populateSelectInput('tokenType');//populate selec input inside wallet send
 
     
               } else {
                 erc20Options.style.display = 'none';
+            //     populateSelectInput()
+            //   populateSelectInput('tokenType');//populate selec input inside wallet send
+
               }
               try {
                 await loadToken()
@@ -6316,6 +6322,10 @@ if (storedTokenType) {
         /*********************************************************************************************
         .)  SEND / RECEIVE TOKENS ERC20
         **********************************************************************************************/
+// Helper function to convert Base64 URL to Base64
+function base64UrlToBase64(base64Url) {
+  return base64Url.replace(/-/g, '+').replace(/_/g, '/').padEnd(base64Url.length + (base64Url.length % 4), '=');
+}
 
     async function openSend(addr) {
                 console.warn('openSend', addr)
@@ -6357,15 +6367,105 @@ if (storedTokenType) {
             let peerPublicKey = didData.data.publicKey 
             console.log('🤸‍♀️ peerPublicKey: ', peerPublicKey)
 
+            // convert public key
+
+                // Public key in JWK format
+                // const publicKeyJWK = {
+                // alg: "ES256K",
+                // crv: "secp256k1",
+                // kty: "EC",
+                // use: "sig",
+                // x: "QSWy2s669kULCu9xftLnv7nXjMMa72ha4I7WmyyYAsQ=",
+                // y: "ZQpLqxwzmm9EFUBCAR3_hLf6w3Z9LXcXlPxuKQm8yA8="
+                // };
+            ppk=  peerPublicKey 
+
+                const publicKeyJWK = peerPublicKey
+                // Step 1: Convert Base64 URL to Base64
+                const xBase64 = base64UrlToBase64(publicKeyJWK.x);
+                const yBase64 = base64UrlToBase64(publicKeyJWK.y);
+                
+                // Step 2: Decode base64 to raw bytes using ethers.decodeBase64 for Ethers.js v6
+                const xBytes = ethers.decodeBase64(xBase64);
+                const yBytes = ethers.decodeBase64(yBase64);
+                
+                console.log("Decoded xBytes:", xBytes);
+                console.log("Decoded yBytes:", yBytes);
+
+
+                // Step 3: Concatenate x and y bytes
+                const publicKeyBytes = ethers.concat([xBytes, yBytes]);
+
+
+                // ---
+                // Public Key as BigInt
+                // ---
+                // Step 4: Convert concatenated bytes to a BigInt
+                const publicKeyBigInt = BigInt(ethers.hexlify(publicKeyBytes));
+                console.log("Public Key as BigInt:", publicKeyBigInt);
+                // return
+
+
+
+
+                
+                // ---
+                // uncompressedPublicKey
+                // ---
+                // Step 2: Concatenate x and y to form the uncompressed public key
+                // const publicKeyBytes = ethers.concat([xBytes, yBytes]);
+                // Step 3: Optionally add the 0x04 prefix for uncompressed keys
+                const uncompressedPublicKey = ethers.hexlify(ethers.concat([new Uint8Array([0x04]), publicKeyBytes]));
+                uncomp = uncompressedPublicKey
+                console.log("Uncompressed Public Key:", uncompressedPublicKey);
+                // return
+
+
+
+                // ---
+                // compressedPublicKey
+                // ---
+                // Step 2: Convert yBytes to a BigInt to check if it's even or odd
+                const yBigInt = BigInt(ethers.hexlify(yBytes));//quizas no es necesario bigint..
+                // Step 3: Determine the prefix: 0x02 if y is even, 0x03 if y is odd
+                const prefix = yBigInt % 2n === 0n ? 0x02 : 0x03;
+                // Step 4: Compress the public key (prefix + x coordinate)
+                const precompressedPublicKey = ethers.concat([new Uint8Array([prefix]), xBytes]);
+                console.log("PRE Compressed Public Key:", precompressedPublicKey);
+                const compressedPublicKey = ethers.hexlify(precompressedPublicKey);
+                comp = compressedPublicKey
+                // const compressedPublicKey = ethers.hexlify(ethers.concat([new Uint8Array([prefix]), xBytes]));
+                console.log("Compressed Public Key:", compressedPublicKey);
+
+//                 const bytes = ethers.decodeBase64(base64String);
+// const validHex = ethers.hexlify(bytes);  // correctly converts bytes to a valid hex string
+
+
+                // ---
+                // PRIVKEY
+                // ---
+             let signer = await getSigner() 
+             let alicePrivateKey  = signer.privateKey
+             privk = alicePrivateKey
+             pubK = signer.publicKey
+            // return
+
 
 
 
             // let stealthAddress = await generateStealthAddress(alicePrivateKey, bobPublicKey)
-            let stealthAddress = await generateStealthAddress(alicePrivateKey, peerPublicKey)
+            let stealthAddress = await generateStealthAddress(alicePrivateKey, compressedPublicKey)
+            // let stealthAddress = await generateStealthAddress(signer.publicKey, compressedPublicKey)
+            // let stealthAddress = await generateStealthAddress(aprivkey, bpubkey)
+
+            // let stealthAddress = await generateStealthAddress(alicePrivateKey, peerPublicKey)
             // generateStealthAddress() Uint8Array(32) [228, 99, 130, 151, 186, 35, 218, 118, 142, 231, 245, 68, 194, 162, 134, 193, 69, 228, 247, 160, 233, 2, 43, 36, 231, 188, 47, 211, 234, 126, 45, 171, buffer: ArrayBuffer(32), byteLength: 32, byteOffset: 0, length: 32, Symbol(Symbol.toStringTag): 'Uint8Array'] Uint8Array(33) [3, 174, 190, 61, 78, 111, 8, 75, 112, 113, 43, 174, 118, 70, 8, 25, 144, 151, 82, 71, 139, 218, 162, 171, 16, 89, 66, 46, 68, 123, 203, 33, 219, buffer: ArrayBuffer(33), byteLength: 33, byteOffset
             console.log(`<br>👩👻Stealth address (generated by Alice to Bob): ${stealthAddress.stealthAddress}
             <br>👫sharedSecret: ${stealthAddress.sharedSecret}`)
-            document.getElementById('sarecipientAddress').value  = stealthAddress
+
+            staddr = stealthAddress
+            document.getElementById('sarecipientAddress').value  = stealthAddress.stealthAddress
+
 
 // FIN LOGICA STEALTH ADDRESS 
             
@@ -6468,7 +6568,8 @@ if (storedTokenType) {
     // -----------------------
         // const tokenType = document.getElementById('tokenType').value;// estaba mal????
         const tokenType = localStorage.getItem('selectedTokenType')
-        let transactionDetails = `Recipient: ${recipientAddress}\nAmount: ${amount} ${tokenType === 'eth' ? 'ETH' : 'Tokens'}`;
+        let transactionDetails = `Recipient: ${toAddress}\nAmount: ${amount} ${tokenType === 'eth' ? 'ETH' : 'Tokens'}`;
+        // let transactionDetails = `Recipient: ${recipientAddress}\nAmount: ${amount} ${tokenType === 'eth' ? 'ETH' : 'Tokens'}`;
 
 
 
@@ -6926,11 +7027,81 @@ if (storedTokenType) {
         // NEW STEALTH ADDRESS FUNCTIONS
         // -----------------------------------------
     
+        const toHexString = (bytes) => {
+            return Array.from(bytes, byte => byte.toString(16).padStart(2, '0')).join('');
+        };
 
-        async function generateStealthAddress(privateKey, publicKey) {
+        async function pubk2addr(publicKey) {
+            // ex '0x03314a369d7cebb2a28b9a2ee4c2fae8443d6012d37ef2068f659781dd9156a2c4'
+    // Decompress the public key using ethers
+    const decompressedKey = ethers.SigningKey.computePublicKey(publicKey, false); // false = uncompressed
+
+    // Remove the '0x04' prefix and hash the decompressed public key using keccak256
+    const publicKeyWithoutPrefix = decompressedKey.slice(4); // Skip the first byte ('0x04')
+    const addressHash = ethers.keccak256('0x' + publicKeyWithoutPrefix);
+
+    // Take the last 20 bytes (40 characters) of the hash to form the address
+    const ethereumAddress = '0x' + addressHash.slice(-40);
+
+    console.log("Ethereum Address:", ethereumAddress);
+    return ethereumAddress;
+}
+
+   // async function computePrivKey(bobprivateKey, alicepublicKey) {
+    async function computePrivKey(privateKey, publicKey) {
+
+        console.warn('computePrivKey()', privateKey, publicKey)
+        const publicKeyHexWithoutPrefix = removeHexPrefix(publicKey);
+        const pubPoint = secp.ProjectivePoint.fromHex(publicKeyHexWithoutPrefix);
+        const sharedSecret = pubPoint.multiply(BigInt(privateKey)).toHex();
+        console.log('👫sharedSecret  (at createStealthWallet ):', sharedSecret);
+        const hashedSecret = ethers.keccak256('0x' + sharedSecret).slice(0, 42);
+        // BOB can comput the private key to the stealth addres
+        const hprivkeyBigInt = BigInt(privateKey);  // hs should already be in hex or BigInt format
+        const hsBigInt = BigInt(hashedSecret);  // hs should already be in hex or BigInt format
+
+        computedPrivKey = hprivkeyBigInt + hsBigInt
+
+        console.warn('🛰️ computedPrivKey: ', computedPrivKey)
+        return computedPrivKey
+        // ex 57151083653893128432108010007198500539630003152254240647735220401247156685624n
+}
+
+
+/**
+ * Compute the Ethereum address from a BigInt private key
+ * @param {BigInt} privateKeyBigInt - The private key as a BigInt
+ * @returns {string} - The checksummed Ethereum address
+ */
+ function getEthereumAddressFromBigIntPrivateKey(privateKeyBigInt) {
+    // Step 1: Convert the BigInt private key to a hex string (32 bytes, padded)
+    let privateKeyHex = privateKeyBigInt.toString(16).padStart(64, '0'); // ensures 64 hex chars
+
+    // Step 2: Compute the public key from the private key
+    const publicKey = secp.getPublicKey(privateKeyHex, false); // false for uncompressed key
+
+    // Step 3: Hash the public key using Keccak-256 (exclude the first byte)
+    const publicKeyHash =ethers.keccak256(publicKey.slice(1)); // remove first byte (0x04 for uncompressed)
+
+    // Step 4: Take the last 20 bytes (40 hex characters) to get the Ethereum address
+    const address = `0x${publicKeyHash.slice(-40)}`;
+    console.warn('🛰️ address: ', address)
+
+    // Step 5: Optionally, convert to a checksummed address
+    return toChecksumAddress(address);
+}
+ 
+
+
+        async function generateStealthAddress(privateKeyHex, publicKey) {
+            a= privateKeyHex
+            b=publicKey
             console.warn('🏰 generateStealthAddress()')
-            const privateKeyHex = `0x${toHexString(privateKey)}`;
-            const pubPoint = secp.ProjectivePoint.fromHex(publicKey);
+         
+            const hexPublicKey = publicKey.startsWith('0x') ? publicKey.slice(2) : publicKey;
+            const pubPoint = secp.ProjectivePoint.fromHex(hexPublicKey);
+            console.log('pubPoint:',pubPoint)
+
             const sharedSecret = pubPoint.multiply(BigInt(privateKeyHex)).toHex();
             console.log('👫sharedSecret( at generateStealthAddress):', sharedSecret);
             const hashedSecret = ethers.keccak256('0x' + sharedSecret).slice(0, 42);
@@ -6939,13 +7110,9 @@ if (storedTokenType) {
             const G = secp.ProjectivePoint.BASE;  // Generator point G
             const hsBigInt = BigInt(hashedSecret);  // hs should already be in hex or BigInt format
             const hsPoint = G.multiply(hsBigInt);  // hs * G
-            hsp = hsPoint
 
             // 2.Add Bob’s public key: You now add Bob’s public key as an elliptic curve point to hs * G. Ensure Bob's public key is in the correct format for the addition.
-            const point = secp.ProjectivePoint.fromHex(publicKey);  // Bob's public key point
-            const stealthPubPoint = hsPoint.add(point);  // hs * G + Bob's public key
-            p1 = point
-            p2 = stealthPubPoint
+            const stealthPubPoint = hsPoint.add(pubPoint);  // hs * G + Bob's public key
 
             // 3.Convert the resulting point to an Ethereum address: Finally, you convert the resulting elliptic curve point to an Ethereum address. This is typically done by compressing the point to its x-coordinate, hashing it, and then converting it to an Ethereum address.
             const stealthPubKey = stealthPubPoint.toHex();  // Convert to hex
