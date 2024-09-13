@@ -53,6 +53,7 @@ b + hs
 ```
 
 # log
+v1.7 fix send erc20
 v1.6 ui and tx fixes.
 v1.5 logic from erc20 load moved from getSigner() to loadToken()
 v1.4 avatar upload fix

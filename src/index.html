@@ -134,7 +134,7 @@
 <header class="codrops-header main-wrap">
 		
 	
-	<h1 >StealthChat <span id="userData">A sovereign chat  v1.6</span> </h1>
+	<h1 >StealthChat <span id="userData">A sovereign chat  v1.7</span> </h1>
 		 
 					<div id="address"></div>
 					<div id="data"></div>
@@ -6330,6 +6330,10 @@ if (storedTokenType) {
     
                 // // open modal
                 openModalId('#walletSend')
+
+                // clear modal and reset state
+                const formTab = new bootstrap.Tab(document.getElementById('form-tab'));
+                formTab.show();
                 
                 // get recipient address
                 document.getElementById("recipientAddress").value = addr;
@@ -6364,42 +6368,44 @@ if (storedTokenType) {
             document.getElementById('sarecipientAddress').value  = stealthAddress
 
 // FIN LOGICA STEALTH ADDRESS 
-    
-    
-    } else {
-        console.log('Stealth address is inactive.');
-        // Handle the case when stealth address is not active
-        document.getElementById('stealthInfo').style.display = 'none'; // Example action
-}
+            
+            
+            } else {
+                console.log('Stealth address is inactive.');
+                // Handle the case when stealth address is not active
+                document.getElementById('stealthInfo').style.display = 'none'; // Example action
+        }
 
-                // fill token selector (tokenType)
-                // populateSelectInput('tokenType');
-                // get token balance
+                        // fill token selector (tokenType)
+                        // populateSelectInput('tokenType');
+                        // get token balance
+            
+                    }
     
-            }
     
+
+                        
     
+        /*********************************************************************************************
+        .)  LISTEN tokenType CHANGE
+        **********************************************************************************************/
     
             document.getElementById('tokenType').addEventListener('change', function() {
                 console.log('🔀🚧 ⚖️ TOKEN TYPE CHANGED')
-    
                 const selectedType = this.value;
-        const erc20Selector = document.getElementById('erc20Selector');
+                const erc20Selector = document.getElementById('erc20Selector');
+                const erc20Details = document.getElementById('erc20Details');
+                if (this.value === 'erc20') {
+                    erc20Details.classList.remove('d-none');
+                } else {
+                    erc20Details.classList.add('d-none');
+                }
+            });
+            
     
-    
-    
-        const erc20Details = document.getElementById('erc20Details');
-        if (this.value === 'erc20') {
-            erc20Details.classList.remove('d-none');
-        } else {
-            erc20Details.classList.add('d-none');
-        }
-    });
-    
-    
-    /////////////
+    //////////////////////////
     // 1. SEND (erc20)
-    /////////////
+    //////////////////////////
     
     document.getElementById('sendTransactionBtn').addEventListener('click', async function(event) {
     console.log('CLICKED 💸 sendTransactionBtn')
@@ -6408,11 +6414,7 @@ if (storedTokenType) {
 
         const recipientAddress = document.getElementById('recipientAddress').value;
         
-        // disable button until gas estimation is loaded
-        document.getElementById('confirmTransactionBtn').disabled = true
-        document.getElementById('confirmTransactionBtn').innerHTML = `<div class="dots-container"> <span class="dot">.</span> <span class="dot">.</span> <span class="dot">.</span> </div> `
-    
-    
+     
         const amountInput = document.getElementById('amount');
         const amount = document.getElementById('amount').value;
         
@@ -6426,18 +6428,22 @@ if (storedTokenType) {
         }
     
 
+                // Switch to confirmation tab
+                const tab = new bootstrap.Tab(document.getElementById('confirmation-tab'));
+        tab.show(); 
+    
+   // disable button until gas estimation is loaded
+   document.getElementById('confirmTransactionBtn').disabled = true
+        document.getElementById('confirmTransactionBtn').innerHTML = `<div class="dots-container"> <span class="dot">.</span> <span class="dot">.</span> <span class="dot">.</span> </div> `
+    
+    
+        
     // --------------------
     // GENERAL get signer and connect to the provider
     // --------------------
     let signer = await getSigner() 
-                // let s = signer.connect(provider);//signer(wallet connected to provider)
-                // const amountToSend = ethers.parseUnits(amountInput.value, decimals);  // 18 is the number of decimals for Ether
-                // console.log('amountToSend:',amountToSend);
-    
-        
-                
 
-    // --------------------
+
     // ^^^^^^^^^^^^^^^^^^^^^^^
     // SET TOADDRESS
     // ^^^^^^^^^^^^^^^^^^^^^^^
@@ -6460,23 +6466,19 @@ if (storedTokenType) {
 
 
     // -----------------------
-    
         // const tokenType = document.getElementById('tokenType').value;// estaba mal????
         const tokenType = localStorage.getItem('selectedTokenType')
         let transactionDetails = `Recipient: ${recipientAddress}\nAmount: ${amount} ${tokenType === 'eth' ? 'ETH' : 'Tokens'}`;
 
-// let s;
-// let provider;
-        // 
-        // pqpqpqppqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqppqpqpqpqpqppqpqpqpqpqp
-        //  LOGICA SI ES UN TOKEN ERC20
-        // pqpqpqppqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqppqpqpqpqpqppqpqpqpqpqp
+
+
+// pqpqpqppqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqppqpqpqpqpqppqpqpqpqpqp
+//  LOGICA SI ES UN TOKEN ERC20
+// pqpqpqppqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqppqpqpqpqpqppqpqpqpqpqp
         if (tokenType === 'erc20') {
             console.log('LOGICA SI ES UN TOKEN ERC20')
             const contractAddress = document.getElementById('erc20ContractAddress').value;
             transactionDetails += `\nERC-20 Contract: ${contractAddress}`;
-        
-        
                 
                 
                 // ----------------
@@ -6515,7 +6517,8 @@ if (storedTokenType) {
                 // --------------------
                 console.log('PREPARING CONTRACT ...:');
                 let contractAddr = preferredToken.contractAddr
-                const tokenContract = await new ethers.Contract(contractAddr, erc20Abi, provider);
+                // const tokenContract = await new ethers.Contract(contractAddr, erc20Abi, provider);
+                tokenContract = await new ethers.Contract(contractAddr, erc20Abi, provider);
                 console.log('CONTRACT READY!');
                 console.log('GETTING ERC20 BALANCE ...');
                 document.getElementById('transactionDetails').innerHTML += `<br><span id="txbal"> ERC-20 balance:  <div class="dots-container"> <span class="dot">.</span> <span class="dot">.</span> <span class="dot">.</span> </div> </span> `;
@@ -6548,7 +6551,7 @@ if (storedTokenType) {
                 // -----------------------------
 
 
-    // ADD INFORMATION TO UI
+                // ADD INFORMATION TO UI
                 document.getElementById('txbal').innerHTML = `ERC-20 balance: ✅ ${formatedBalance}`;
                 document.getElementById('transactionDetails').innerHTML += `<br><span id="estgas"> Estimating gas <div class="dots-container"> <span class="dot">.</span> <span class="dot">.</span> <span class="dot">.</span> </div> </span> `;
     
@@ -6557,9 +6560,9 @@ if (storedTokenType) {
                 // CONNECT SIGNER TO PROVIDER
                 // --------------------
                  let s = signer.connect(provider);//signer(wallet connected to provider)
-
                 const cws = await tokenContract.connect(s);// connect tokenContract to signer(contract with signer)
-                const txGasEstimage = await cws.transfer.estimateGas(toAddress, amountToSend);
+                // const txGasEstimage = await cws.transfer.estimateGas(toAddress, amountToSend);
+                 txGasEstimage = await cws.transfer.estimateGas(toAddress, amountToSend);
                 console.log(`Estimated Gas: ${txGasEstimage.toString()}`);
                 document.getElementById('estgas').innerHTML = `Estimated gas: ⛽${txGasEstimage} `;
                 const feeData = await provider.getFeeData();
@@ -6594,20 +6597,20 @@ if (storedTokenType) {
                     
                     // FIN  LOGICA SI ES UN TOKEN ERC20
                     // ---------------------
-        
-        } 
-        else{
-    console.log('NATIVE- ETH token type...')
-    console.log('LOGICA ELSE')
+                    
+                    } 
+                    else{
+                console.log('NATIVE- ETH token type...')
+                console.log('LOGICA ELSE')
 
 
-        // pqpqpqppqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqppqpqpqpqpqppqpqpqpqpqp
-        // LOGICA SI ES TOKEN NATIVO ( ETH, eth sepolia, etc)
-        // pqpqpqppqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqppqpqpqpqpqppqpqpqpqpqp
+// pqpqpqppqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqppqpqpqpqpqppqpqpqpqpqp
+// LOGICA SI ES TOKEN NATIVO ( ETH, eth sepolia, etc)
+// pqpqpqppqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqppqpqpqpqpqppqpqpqpqpqp
 
-                 // Switch to confirmation tab
-        const tab = new bootstrap.Tab(document.getElementById('confirmation-tab'));
-        tab.show(); 
+        // Switch to confirmation tab
+        // const tab = new bootstrap.Tab(document.getElementById('confirmation-tab'));
+        // tab.show(); 
     
                 // --------------------
                 // ESTIMATE GAS
@@ -6708,16 +6711,14 @@ if (storedTokenType) {
 
 
     
-        ///////////////////////////////////////
-        // 2. CONFIRM
-        // - do the tx
-        ///////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////
+    // 2. CONFIRM
+    // - do the tx
+    //////////////////////////////////////////////////////////////////////
+
         document.getElementById('confirmTransactionBtn').addEventListener('click', async function() {
             console.log('confirmTransactionBtn CLICKED!')
     
-        // Switch to confirmation tab
-        // const tab = new bootstrap.Tab(document.getElementById('result-tab'));
-        // tab.show();
     
         //  Show result tab
         const resultTab = new bootstrap.Tab(document.getElementById('result-tab'));
@@ -6730,10 +6731,6 @@ if (storedTokenType) {
              </span>`;
     
 
-
-             //  console.log('DO WE STILL GOT  tokenType?: ',tokenType)
-             
-             //  const tokenType = document.getElementById('tokenType').value;
              const tokenType = localStorage.getItem('selectedTokenType')
              console.log(' GOT  tokenType?: ',tokenType)
              
@@ -6744,18 +6741,26 @@ if (storedTokenType) {
              let signer = await getSigner() 
              let provider = await new ethers.JsonRpcProvider(optionsList[0].API);
              let s = signer.connect(provider);//signer(wallet connected to provider)
-             
+            //  let s = signer.connect(provider);//signer(wallet connected to provider)
+
+// const cws = await tokenContract.connect(s);// connect tokenContract to signer(contract with signer)
              
              let tx;
-             // pqpqpqppqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqppqpqpqpqpqppqpqpqpqpqp
-             //  LOGICA SI ES UN TOKEN ERC20
-             // pqpqpqppqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqppqpqpqpqpqppqpqpqpqpqp
+// pqpqpqppqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqppqpqpqpqpqppqpqpqpqpqp
+//  LOGICA SI ES UN TOKEN ERC20
+// pqpqpqppqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqppqpqpqpqpqppqpqpqpqpqp
              
              if (tokenType === 'erc20') {
             console.log('LOGIC FOR erc20 ')
-             tx = await s.transfer(toAddress, amountToSend, { txGasEstimage });
+            const cws = await tokenContract.connect(s);// connect tokenContract to signer(contract with signer)
+             tx = await cws.transfer(toAddress, amountToSend, { txGasEstimage });
 
         }
+
+// pqpqpqppqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqppqpqpqpqpqppqpqpqpqpqp
+//  LOGICA SI ES UN TOKEN NATIVO
+// pqpqpqppqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqpqpqpqpqpqppqpqpqpqpqpqppqpqpqpqppqpqpqpqpqppqpqpqpqpqp
+
         else if (tokenType === 'arbitrumSepolia') {
             console.log('LOGIC FOR arbitrumSepolia ')
             // tx = await s.estimateGas(tx);
@@ -6771,6 +6776,8 @@ if (storedTokenType) {
                 };
 
                 console.log('Sending transaction:', txinfo);
+
+                // es cws
             tx = await s.sendTransaction(txinfo);
 
 
