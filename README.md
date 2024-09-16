@@ -53,7 +53,9 @@ b + hs
 ```
 
 # log
-v2.0 claim stealth address balances
+v2.2 send and receive stealth address txs!
+v2.1 fix unlock 
+v2.0 claim/manage stealth address balances
 v1.9 check stealth address balances
 v1.8 send to stealth address
 v1.7 fix send erc20

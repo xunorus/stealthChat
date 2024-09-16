@@ -28,12 +28,22 @@
 }
 
 .menu__inner {
-	width: calc(100% + 25px);
+	/* width: calc(100% + 25px);
 	padding: 0 140px 2em 0;
 	overflow-y: auto;
 	height: 100%;
 	position: relative;
+	z-index: 100; */
+
+
+	/* TEST NUEVO */
+
 	z-index: 100;
+    width: calc(100% + -121px);
+    position: relative;
+    overflow-y: auto;
+    background: radial-gradient(black, transparent);
+	height: 100%;
 }
 
 .menu ul {

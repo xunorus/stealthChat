@@ -425,7 +425,7 @@ a,
 
 .btn--search-close {
 	font-size: 2em;
-	position: absolute;
+	/* position: absolute; */
 	top: 1.25em;
 	right: 1.25em;
 	display: none;
@@ -1480,8 +1480,47 @@ button {
 } */
 
 #actionButtons{
-  display: flex
+  display: flex;
+  flex-direction: row;
+
+  /* FIX? */
+  flex-wrap: wrap; /* This allows items to move to the next line if they don't fit */
+  gap: 10px; 
+  /* Optional: adds spacing between elements */
+  justify-content: flex-end; /* Aligns items to the right */
+
 }
+
+.item {
+	/* flex: 1 1 auto;
+	min-width: 100px; */
+  }
+  /* Hide button text on smaller screens */
+@media (max-width: 600px) {
+	.item span {
+	  display: none; 
+	  /* Hides the text inside the buttons */
+	}
+  
+	.item svg {
+	  margin-right: 0; /* Removes any extra space between the icon and text */
+	}
+  
+	#actionButtons {
+	  justify-content: flex-end;
+	  gap: 0;
+	}
+  }
+/* Switch to column layout when the container width is too small */
+/* @media (max-width: 600px) {
+	.container {
+	  flex-direction: column;
+	  align-items: flex-end; 
+	}
+} */
+/* Aligns all buttons to the right in the column */
+  
+ 
 
 address{
   cursor: pointer;
@@ -1896,3 +1935,13 @@ body.swal2-height-auto {
 	height: 100vh;
 	overflow: hidden;
    } */
+
+   .responsive-svg {
+	display: flex !important;
+    flex-direction: column;
+    align-items: center;
+   }
+
+   .wwrap{
+	word-wrap: break-word;
+   }

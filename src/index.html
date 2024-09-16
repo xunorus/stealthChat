@@ -134,7 +134,7 @@
 <header class="codrops-header main-wrap">
 		
 	
-	<h1 >StealthChat <span id="userData">A sovereign chat  v1.9</span> </h1>
+	<h1 >StealthChat <span id="userData">A sovereign chat  v2.2</span> </h1>
 		 
 					<div id="address"></div>
 					<div id="data"></div>
@@ -203,11 +203,14 @@
 .) CHAT
 **********************************************************************************************/ -->
    <div class="search" id="chatContainer">
-	<button id="btn-search-close" class="btn btn--search-close" aria-label="Close search form" onclick="event.stopPropagation();deleteChat((this.parentElement))"><svg class="icon icon--cross"><use xlink:href="#icon-cross"></use></svg></button>
+	<!-- <button id="btn-search-close" class="btn btn--search-close" aria-label="Close search form" onclick="event.stopPropagation();deleteChat((this.parentElement))"><svg class="icon icon--cross"><use xlink:href="#icon-cross"></use></svg></button> -->
 
 	<div id="chatheader" class="">
 		<span id="chatAddress"></span>
-		<span class="alignright " id="actionButtons"> </span>
+		<span class="alignright " id="actionButtons"> 
+            
+            <!-- <button id="btn-search-close" class="btn btn--search-close" aria-label="Close search form" onclick="event.stopPropagation();deleteChat((this.parentElement))"><svg class="icon icon--cross"><use xlink:href="#icon-cross"></use></svg></button> -->
+        </span>
 	</div>
 
 
@@ -667,6 +670,83 @@
 
 	<!-- fin Modal DID MANAGER -->
 
+    <!-- walletReceive -->
+<!-- Modal WALLET RECEIVE/-->
+<div class="modal fade" id="walletReceive" tabindex="-1" aria-labelledby="walletReceiveLabel" aria-hidden="true" data-bs-backdrop="static" >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="walletReceiveLabel">ReceiveTransaction</h5>
+          <button type="button"  id="walletReceiveXClose" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+
+        <div class="modal-body">
+
+
+            <div id="qrtreceive" class="">
+                <div class="responsive-svg" id="receivecanvas"></div>
+            </div>
+
+
+
+          <ul class="nav nav-tabs" id="myReceiveTab" role="tablist" style="display: none;">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="Receiveform-tab" data-bs-toggle="tab" data-bs-target="#form" type="button" role="tab" aria-controls="form" aria-selected="true">Form</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="Receiveconfirmation-tab" data-bs-toggle="tab" data-bs-target="#confirmation" type="button" role="tab" aria-controls="confirmation" aria-selected="false">Confirmation</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="Receiveresult-tab" data-bs-toggle="tab" data-bs-target="#result" type="button" role="tab" aria-controls="result" aria-selected="false">Result</button>
+            </li>
+          </ul>
+
+
+
+          <div class="tab-content" id="walletReceiveContent">
+            <div class="tab-pane fade show active" id="form" role="tabpanel" aria-labelledby="form-tab">
+             
+                <form id="ReceivetransactionForm">
+
+
+ 
+                <div id="ReceivestealthInfo"  class=" mb-3 list-group-item list-group-item-warning" >
+                    <label for="receivesarecipientAddress" class="form-label">Stealth Address Balance </label>                    
+                    <div id="ReceivesarecipientAddress" class="wwrap"></div>
+                    <div id="ReceivestaddrInfo" class=""></div>
+                </div>
+                  
+             
+              </form>
+            </div>
+
+            <!-- Confirmation Screen -->
+            <div class="tab-pane fade" id="Receiveconfirmation" role="tabpanel" aria-labelledby="confirmation-tab">
+              <h5>Confirm Transaction</h5>
+              <p id="ReceivetransactionDetails"></p>
+              <button type="button" class="btn btn-secondary" id="cancelReceiveTransactionBtn">Cancel</button>
+              <button type="button" class="btn btn-primary" id="confirmReceiveTransactionBtn">Confirm</button>
+            </div>
+
+            <!-- Result Screen -->
+            <div class="tab-pane fade" id="Receiveresult" role="tabpanel" aria-labelledby="result-tab">
+              <h5>Receive Transaction Result</h5>
+              <p id="ReceiveresultMessage"></p>
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="walletReceiveClose">Close</button>
+            </div>
+          </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<!-- fin RECEIVE WALLET-->
+
 
 
 	
@@ -699,20 +779,22 @@
 				  <div class="tab-content" id="walletSendContent">
 					<!-- Form Screen -->
 					<div class="tab-pane fade show active" id="form" role="tabpanel" aria-labelledby="form-tab">
-					  <form id="transactionForm">
+					 
+                        <form id="transactionForm">
 						<div class="mb-3">
 						  <label for="recipientAddress" class="form-label">Recipient Address</label>
-						  <!-- <input type="text" class="form-control" id="recipientAddress" placeholder="0x..." required> -->
                           <input type="text" class="form-control" id="recipientAddress" placeholder="0x..." required readonly>
 
 						</div>
                        
-                        <div class="mb-3" id="stealthInfo" >
+                        <div id="stealthInfo"  class=" mb-3 list-group-item list-group-item-warning" >
                             <label for="sarecipientAddress" class="form-label">Stealth Address Recipient </label>
-                            <input type="text" class="form-control" id="sarecipientAddress" placeholder="0x..." readonly>
-                          </div>
-
-                          <div id="staddrInfo"></div>
+                            <!-- <input type="text" class="form-control" id="sarecipientAddress" placeholder="0x..." readonly> -->
+                            
+                            <div id="sarecipientAddress" class="wwrap"></div>
+                            <div id="staddrInfo" class=""></div>
+                        </div>
+                          
 						<div class="mb-3">
 						  <label for="amount" class="form-label">Amount</label>
 						  <input type="number" class="form-control" id="amount" placeholder="Amount to send" step="0.01" min="0" required="">
@@ -1661,29 +1743,23 @@ async function init(signer){
                     return signer;
                 } catch (error) {
                     console.error('Error during wallet decryption:', error);
-                    
-                    // Display error messages
-
                     Swal.fire({
-    icon: "error",
-    title: "Error 🚨",
-    text: error.message,
-}).then((result) => {
-    if (result.isConfirmed) {
-        // Actions to take when the OK button is clicked
-        console.log('OK button clicked');
-        // Add any additional logic here, e.g., redirect, reload page, etc.
-        // BLOCK AGAIN
-        lockscreen.style.display='flex'
-    }
-});
+                        icon: "error",
+                        title: "Error 🚨",
+                        text: error.message,
+                    })
+                    .then((result) => {
+                        if (result.isConfirmed) {
+                            console.log('OK button clicked');
+                            lockscreen.style.display='flex'
+                        }
 
 
+                    });
 
 
                     // REMOVE PASSWORD FROM SESSION 
                     sessionStorage.removeItem("password");
-
                     
                     return null;
                 }
@@ -1691,19 +1767,30 @@ async function init(signer){
 
 
             }
-            return null;
-          }).catch(error => {
-            console.error('Error during Swal prompt:', error.reason);
-            Toast.fire('Error 🚨🚨', error.message, "error");
-            Swal.fire({
-              icon: "error",
-              title: "Error",
-              text: error.message,
-            });
+            // else if (result.isDenied) {
+                
+                // 3. display UI in lock mode
+            //     document.getElementById("loader").style.display = "none";//flex
+            //     document.getElementById('lockscreen').style.display='flex'
+            //     console.log('user cancelled wallet unlocking')
+            // Toast.fire('Error 🚨🚨', 'ups...', "error");
+                    // return null;
+                    // return
+            // }
+            // return null;
+          })
+        //   .catch(error => {
+        //     console.error('Error during Swal prompt:', error.reason);
+        //     Toast.fire('Error 🚨🚨', error.message, "error");
+        //     Swal.fire({
+        //       icon: "error",
+        //       title: "Error",
+        //       text: error.message,
+        //     });
     
     
-            return null;
-          });
+        //     return null;
+        //   });
         }
     
     // ---------------------------------------------
@@ -1721,14 +1808,31 @@ async function init(signer){
       // LOAD CHAT
           let signer;
       console.log('there is no signer')
-      try {
-          signer = await getLocalWalletSigner();
+    //   try {
+    //       signer = await getLocalWalletSigner();
         
-      } catch (error) {
-            console.log('error at getLocalWalletSigner() ', error.message); 
-        
-      }
-      lockscreen.style.display='none'
+    //   } catch (error) {
+    //         console.log('error at getLocalWalletSigner() ', error.message); 
+    //     return
+    //   }
+        try {
+            signer = await getLocalWalletSigner();
+
+            if (!signer || !signer.address) {
+                throw new Error("Signer is undefined or does not have an address");
+            document.getElementById('lockscreen').style.display='block'
+
+            }
+
+            // Use signer.address here safely
+            console.log('Signer address:', signer.address);
+
+            } catch (error) {
+            console.log('Error at getLocalWalletSigner():', error.message);
+            return;
+            }
+      console.log('SOMETHINGS unlockLocalwallet', signer )
+      document.getElementById('lockscreen').style.display='none'
     
     
       await loadDID( signer)
@@ -2522,33 +2626,64 @@ catch (error) {
     
             // -------------------
     
-            actionButtons.innerHTML = `
-            <button type="button" id="peerSend" class="btn btn-approve" style="display: none;"
-                    onclick="event.stopPropagation(); openSend('${toAddr.toString()}')" disabled>
-                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="20" viewBox="0 0 512 512">
-                        <path fill="currentColor"
-                            d="M498.1 5.6c10.1 7 15.4 19.1 13.5 31.2l-64 416c-1.5 9.7-7.4 18.2-16 23s-18.9 5.4-28 1.6L284 427.7l-68.5 74.1c-8.9 9.7-22.9 12.9-35.2 8.1S160 493.2 160 480V396.4c0-4 1.5-7.8 4.2-10.7L331.8 202.8c5.8-6.3 5.6-16-.4-22s-15.7-6.4-22-.7L106 360.8 17.7 316.6C7.1 311.3 .3 300.7 0 288.9s5.9-22.8 16.1-28.7l448-256c10.7-6.1 23.9-5.5 34 1.4z" />
-                        </svg>
-                    SEND</button>
+    //         actionButtons.innerHTML = `
+    //         <button type="button" id="peerSend" class="btn btn-approve item" style="display: none;"
+    //                 onclick="event.stopPropagation(); openSend('${toAddr.toString()}')" disabled>
+    //                 <svg xmlns="http://www.w3.org/2000/svg" height="16" width="20" viewBox="0 0 512 512">
+    //                     <path fill="currentColor"
+    //                         d="M498.1 5.6c10.1 7 15.4 19.1 13.5 31.2l-64 416c-1.5 9.7-7.4 18.2-16 23s-18.9 5.4-28 1.6L284 427.7l-68.5 74.1c-8.9 9.7-22.9 12.9-35.2 8.1S160 493.2 160 480V396.4c0-4 1.5-7.8 4.2-10.7L331.8 202.8c5.8-6.3 5.6-16-.4-22s-15.7-6.4-22-.7L106 360.8 17.7 316.6C7.1 311.3 .3 300.7 0 288.9s5.9-22.8 16.1-28.7l448-256c10.7-6.1 23.9-5.5 34 1.4z" />
+    //                     </svg>
+    //                 SEND</button>
     
-                    <button type="button" id="peerReceive" class="btn btn-reject" style="display: none;"
-                    onclick="event.stopPropagation(); openSend('${toAddr.toString()}')"  disabled>
-                    <svg height="16" width="20" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
-                        <path fill="currentColor"
-                            d="m 506.43491,498.16358 c -7,10.1 -19.1,15.4 -31.2,13.5 l -416.000001,-64 c -9.7,-1.5 -18.2,-7.4 -23,-16 -4.8,-8.6 -5.4,-18.9 -1.6,-28 l 49.7,-119.6 -74.1,-68.5 c -9.70000029,-8.9 -12.9000003,-22.9 -8.1000003,-35.2 4.8,-12.3 16.7000003,-20.3 29.9000003,-20.3 h 83.600001 c 4,0 7.8,1.5 10.7,4.2 l 182.9,167.6 c 6.3,5.8 16,5.6 22,-0.4 6,-6 6.4,-15.7 0.7,-22 l -180.7,-203.4 44.2,-88.300001 c 5.3,-10.5999996 15.9,-17.39999965 27.7,-17.69999965 11.8,-0.3 22.8,5.90000005 28.7,16.09999965 l 256,448.000001 c 6.1,10.7 5.5,23.9 -1.4,34 z"
-                            id="path992" />
-                        </svg>
-                    RECEIVE</button>
-                <button class="honorloanbutton btn btn-secondary" onclick="sendHonorloanRequest(${toAddr.toString()})"
-                    style='display:none'>Loan
-                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="20" viewBox="0 0 640 512" style=" fill: #7cfc00; ">
-                        <path
-                            d="M80 104c0-22.1-17.9-40-40-40S0 81.9 0 104v56 64V325.5c0 25.5 10.1 49.9 28.1 67.9L128 493.3c12 12 28.3 18.7 45.3 18.7H240c26.5 0 48-21.5 48-48V385.1c0-29.7-11.8-58.2-32.8-79.2l-25.3-25.3 0 0-15.2-15.2-32-32c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l32 32 15.2 15.2c11 11 9.2 29.2-3.7 37.8c-9.7 6.5-22.7 5.2-31-3.1L98.7 309.5c-12-12-18.7-28.3-18.7-45.3V224 144 104zm480 0v40 80 40.2c0 17-6.7 33.3-18.7 45.3l-51.1 51.1c-8.3 8.3-21.3 9.6-31 3.1c-12.9-8.6-14.7-26.9-3.7-37.8l15.2-15.2 32-32c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-32 32-15.2 15.2 0 0-25.3 25.3c-21 21-32.8 49.5-32.8 79.2V464c0 26.5 21.5 48 48 48h66.7c17 0 33.3-6.7 45.3-18.7l99.9-99.9c18-18 28.1-42.4 28.1-67.9V224 160 104c0-22.1-17.9-40-40-40s-40 17.9-40 40z">
-                        </path>
-                    </svg> 
-                </button>
-                `
-         
+    //                 <button type="button" id="peerReceive" class="btn btn-reject item" style="display: none;"
+    //                 onclick="event.stopPropagation(); openReceive('${toAddr.toString()}')"  disabled>
+    //                 <svg height="16" width="20" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+    //                     <path fill="currentColor"
+    //                         d="m 506.43491,498.16358 c -7,10.1 -19.1,15.4 -31.2,13.5 l -416.000001,-64 c -9.7,-1.5 -18.2,-7.4 -23,-16 -4.8,-8.6 -5.4,-18.9 -1.6,-28 l 49.7,-119.6 -74.1,-68.5 c -9.70000029,-8.9 -12.9000003,-22.9 -8.1000003,-35.2 4.8,-12.3 16.7000003,-20.3 29.9000003,-20.3 h 83.600001 c 4,0 7.8,1.5 10.7,4.2 l 182.9,167.6 c 6.3,5.8 16,5.6 22,-0.4 6,-6 6.4,-15.7 0.7,-22 l -180.7,-203.4 44.2,-88.300001 c 5.3,-10.5999996 15.9,-17.39999965 27.7,-17.69999965 11.8,-0.3 22.8,5.90000005 28.7,16.09999965 l 256,448.000001 c 6.1,10.7 5.5,23.9 -1.4,34 z"
+    //                         id="path992" />
+    //                     </svg>
+    //                 RECEIVE</button>
+            
+
+	// <button id="btn-search-close" class="btn btn--search-close item " aria-label="Close search form" onclick="event.stopPropagation();deleteChat((this.parentElement))"><svg class="icon icon--cross"><use xlink:href="#icon-cross"></use></svg></button>
+
+    //             `
+
+                actionButtons.innerHTML = `
+                <button type="button" id="peerSend" class="btn btn-approve item" style="display: none;"
+        onclick="event.stopPropagation(); openSend('${toAddr.toString()}')" disabled>
+        <svg xmlns="http://www.w3.org/2000/svg" height="16" width="20" viewBox="0 0 512 512">
+            <path fill="currentColor"
+                d="M498.1 5.6c10.1 7 15.4 19.1 13.5 31.2l-64 416c-1.5 9.7-7.4 18.2-16 23s-18.9 5.4-28 1.6L284 427.7l-68.5 74.1c-8.9 9.7-22.9 12.9-35.2 8.1S160 493.2 160 480V396.4c0-4 1.5-7.8 4.2-10.7L331.8 202.8c5.8-6.3 5.6-16-.4-22s-15.7-6.4-22-.7L106 360.8 17.7 316.6C7.1 311.3 .3 300.7 0 288.9s5.9-22.8 16.1-28.7l448-256c10.7-6.1 23.9-5.5 34 1.4z"/>
+        </svg>
+        <span>SEND</span>
+</button>
+
+<button type="button" id="peerReceive" class="btn btn-reject item" style="display: none;"
+        onclick="event.stopPropagation(); openReceive('${toAddr.toString()}')"  disabled>
+        <svg height="16" width="20" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+            <path fill="currentColor"
+                d="m 506.43491,498.16358 c -7,10.1 -19.1,15.4 -31.2,13.5 l -416.000001,-64 c -9.7,-1.5 -18.2,-7.4 -23,-16 -4.8,-8.6 -5.4,-18.9 -1.6,-28 l 49.7,-119.6 -74.1,-68.5 c -9.70000029,-8.9 -12.9000003,-22.9 -8.1000003,-35.2 4.8,-12.3 16.7000003,-20.3 29.9000003,-20.3 h 83.600001 c 4,0 7.8,1.5 10.7,4.2 l 182.9,167.6 c 6.3,5.8 16,5.6 22,-0.4 6,-6 6.4,-15.7 0.7,-22 l -180.7,-203.4 44.2,-88.300001 c 5.3,-10.5999996 15.9,-17.39999965 27.7,-17.69999965 11.8,-0.3 22.8,5.90000005 28.7,16.09999965 l 256,448.000001 c 6.1,10.7 5.5,23.9 -1.4,34 z"/>
+        </svg>
+        <span>RECEIVE</span>
+</button>
+
+<button id="btn-search-close" class="btn btn--search-close item" aria-label="Close search form"
+        onclick="event.stopPropagation(); deleteChat(this.parentElement)">
+        <svg class="icon icon--cross">
+            <use xlink:href="#icon-cross"></use>
+        </svg>
+</button>
+`
+
+                // <button class="honorloanbutton btn btn-secondary" onclick="sendHonorloanRequest(${toAddr.toString()})"
+                //     style='display:none'>Loan
+                //     <svg xmlns="http://www.w3.org/2000/svg" height="16" width="20" viewBox="0 0 640 512" style=" fill: #7cfc00; ">
+                //         <path
+                //             d="M80 104c0-22.1-17.9-40-40-40S0 81.9 0 104v56 64V325.5c0 25.5 10.1 49.9 28.1 67.9L128 493.3c12 12 28.3 18.7 45.3 18.7H240c26.5 0 48-21.5 48-48V385.1c0-29.7-11.8-58.2-32.8-79.2l-25.3-25.3 0 0-15.2-15.2-32-32c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l32 32 15.2 15.2c11 11 9.2 29.2-3.7 37.8c-9.7 6.5-22.7 5.2-31-3.1L98.7 309.5c-12-12-18.7-28.3-18.7-45.3V224 144 104zm480 0v40 80 40.2c0 17-6.7 33.3-18.7 45.3l-51.1 51.1c-8.3 8.3-21.3 9.6-31 3.1c-12.9-8.6-14.7-26.9-3.7-37.8l15.2-15.2 32-32c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-32 32-15.2 15.2 0 0-25.3 25.3c-21 21-32.8 49.5-32.8 79.2V464c0 26.5 21.5 48 48 48h66.7c17 0 33.3-6.7 45.3-18.7l99.9-99.9c18-18 28.1-42.4 28.1-67.9V224 160 104c0-22.1-17.9-40-40-40s-40 17.9-40 40z">
+                //         </path>
+                //     </svg> 
+                // </button>
                 // activate buttons
             peerSend.style.display = 'inline';
             peerReceive.style.display = 'inline'
@@ -5466,6 +5601,8 @@ document.getElementById('stealthAddressCheckbox').addEventListener('change', fun
                         console.warn('No address provided to loadToken function');
                             addr  =document.getElementById('yourAddress').getAttribute('address');
                     }
+
+                    
                     console.log(`🤹‍♀️ Loading token for address: ${addr}`);
  
                     // GET PROVIDER
@@ -5509,6 +5646,9 @@ document.getElementById('stealthAddressCheckbox').addEventListener('change', fun
             // else if erc-20
             else if (storedTokenType === 'erc20') {
             console.log('LOADING ERC20 ')
+
+            // IF STEALTH ADDRESS IS ACTIVE , desactivate it (only for native tokens for now)
+            
                     // ..............................
                     // Carga el token
                     // ..............................
@@ -6195,87 +6335,69 @@ if (storedTokenType) {
         function populateSelectInput(selectId) {
           console.log('👨‍👩‍👦‍👦 populateSelectInput()')
 
-      
-
-
           const storedTokenType = localStorage.getItem('selectedTokenType');
-       
-       if (storedTokenType === 'arbitrumSepolia') {
-        console.log('🧸 do something if arbitrumSepolia')
-
-        document.getElementById('tokenType').style.display = 'none'
-        document.getElementById('fixedtokenType').style.display = 'block'
-        document.getElementById('fixedtokenType').innerHTML= optionsList[0].SYMBOL
-
-    
-
-
-       }
-       // else if erc-20
-       else if (storedTokenType === 'erc20') {
-        console.log('🧩do something if erc20')
-        document.getElementById('tokenType').style.display = 'block'
-        document.getElementById('fixedtokenType').style.display = 'none'
-
-
-    //    }
-
-          // Retrieve the stored data from localStorage
-          let storedData = JSON.parse(localStorage.getItem('ERC20_TOKENS')) || [];
-    
-          // DEFAULT TOKEN
-          // Check if no tokens are stored, and add a default token if necessary
-          if (storedData.length === 0) {
-            console.log('🤷 There are no tokens (ERC20_TOKENS)  in localstorage we  add USDC(arbitrum sepolia) as default ')
             
-            const defaultToken = {
-                tokenName: "USDC",
-                chainName: "Arbitrum Sepolia",
-                chainId: 421614,
-                contractAddr: "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d",  // Example contract address
-                rpcs: ["https://arbitrum-sepolia.infura.io/v3/9219faae2bac4d24b95c2d967b22005a"],   // Example RPC endpoint
-                explorers: [{ "name": "Arbitrum Sepolia Rollup Testnet Explorer", "url": "https://sepolia-explorer.arbitrum.io", "standard": "EIP3091" }] // Example explorer
-              };
-          
-           
-            storedData.push(defaultToken);
-            localStorage.setItem('ERC20_TOKENS', JSON.stringify(storedData));
-          }
-    
-          // Retrieve the preferred selection from localStorage or default to 0
-          let preferredIndex = localStorage.getItem('preferredTokenIndex');
-          preferredIndex = preferredIndex !== null ? parseInt(preferredIndex, 10) : 0;
-    
-          // Find the select element
-    
-          // Set default value if no argument is passed
-            selectId = selectId || 'erc20Selector';
-            const selectElement = document.getElementById(selectId);
-    
-     
-          // Clear the existing options
-          selectElement.innerHTML = '';
-     
-          // Populate the select input with the stored data
-          storedData.forEach((token, index) => {
-            const option = document.createElement('option');
-            option.value = index;
-            option.textContent = `${token.tokenName} ${token.chainName} (${token.chainId})`;
-            if (preferredIndex === index) {
-              option.selected = true; // Set the preferred item as selected
+            if (storedTokenType === 'arbitrumSepolia') {
+                console.log('🧸 do something if arbitrumSepolia')
+
+                document.getElementById('tokenType').style.display = 'none'
+                document.getElementById('fixedtokenType').style.display = 'block'
+                document.getElementById('fixedtokenType').innerHTML= optionsList[0].SYMBOL
             }
-            selectElement.appendChild(option);
-        
             
+            else if (storedTokenType === 'erc20') {
+                console.log('🧩do something if erc20')
+                document.getElementById('tokenType').style.display = 'block'
+                document.getElementById('fixedtokenType').style.display = 'none'
+
+
+                // Retrieve the stored data from localStorage
+                let storedData = JSON.parse(localStorage.getItem('ERC20_TOKENS')) || [];
             
-          });
-       }
+                // DEFAULT TOKEN
+                // Check if no tokens are stored, and add a default token if necessary
+                if (storedData.length === 0) {
+                    console.log('🤷 There are no tokens (ERC20_TOKENS)  in localstorage we  add USDC(arbitrum sepolia) as default ')
+                    
+                    const defaultToken = {
+                        tokenName: "USDC",
+                        chainName: "Arbitrum Sepolia",
+                        chainId: 421614,
+                        contractAddr: "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d",  // Example contract address
+                        rpcs: ["https://arbitrum-sepolia.infura.io/v3/9219faae2bac4d24b95c2d967b22005a"],   // Example RPC endpoint
+                        explorers: [{ "name": "Arbitrum Sepolia Rollup Testnet Explorer", "url": "https://sepolia-explorer.arbitrum.io", "standard": "EIP3091" }] // Example explorer
+                    };
+                
+                
+                    storedData.push(defaultToken);
+                    localStorage.setItem('ERC20_TOKENS', JSON.stringify(storedData));
+                }
+            
+                // Retrieve the preferred selection from localStorage or default to 0
+                let preferredIndex = localStorage.getItem('preferredTokenIndex');
+                preferredIndex = preferredIndex !== null ? parseInt(preferredIndex, 10) : 0;
+            
+                // Set default value if no argument is passed
+                    selectId = selectId || 'erc20Selector';
+                    const selectElement = document.getElementById(selectId);
+            
+                // Clear the existing options
+                selectElement.innerHTML = '';
+            
+                // Populate the select input with the stored data
+                storedData.forEach((token, index) => {
+                    const option = document.createElement('option');
+                    option.value = index;
+                    option.textContent = `${token.tokenName} ${token.chainName} (${token.chainId})`;
+                    if (preferredIndex === index) {
+                    option.selected = true; // Set the preferred item as selected
+                    }
+                    selectElement.appendChild(option);
+                    
+                });
+            }
 
         }
-    
-    
-    
-    
     
         // Event listener to store the selected option
           document.getElementById('erc20Selector').addEventListener('change', async function () {
@@ -6287,7 +6409,6 @@ if (storedTokenType) {
           data.innerHTML = ''
     
           await loadToken()
-           
     
         });
     
@@ -6323,23 +6444,415 @@ if (storedTokenType) {
         /*********************************************************************************************
         .)  SEND / RECEIVE TOKENS ERC20
         **********************************************************************************************/
-// Helper function to convert Base64 URL to Base64
-function base64UrlToBase64(base64Url) {
-  return base64Url.replace(/-/g, '+').replace(/_/g, '/').padEnd(base64Url.length + (base64Url.length % 4), '=');
-}
+        // Helper function to convert Base64 URL to Base64
+        function base64UrlToBase64(base64Url) {
+        return base64Url.replace(/-/g, '+').replace(/_/g, '/').padEnd(base64Url.length + (base64Url.length % 4), '=');
+        }
 
-    async function openSend(addr) {
-                console.warn('openSend', addr)
-    
-                if (addr) {
+
+async function openReceive(addr){
+    console.warn('openReceive', addr)
+
+    if (addr) {
                     console.log('there is address', addr)
                 }
                 else {
                     console.log('there is not addr')
                 }
 
-    
-                // // open modal
+        // open modal
+        openModalId('#walletReceive')
+
+// clear ui
+
+document.getElementById('receivecanvas').innerHTML =''
+document.getElementById('ReceivestaddrInfo').innerHTML =''
+document.getElementById('ReceivesarecipientAddress').innerHTML =''
+
+
+
+                //   PONER AQUI LOGICA THE VER STEALTH ADDRESS
+                const stealthAddressActive = localStorage.getItem('stealthAddressActive');
+
+                // Perform some action if stealth address is active
+                if (stealthAddressActive === 'true') {
+                console.log('Stealth address is active. Performing related actions...');
+
+
+
+                // FIRST COMPUTE THIS USER STEALTH ADDRESS WITH THE PEER PUBLIC KEY
+
+
+                // get peer publickey
+                let peerAddr = document.getElementById('peerAddr').getAttribute('data-address')
+                console.log('🤼‍♀️ peerAddr: ', peerAddr)
+                let didData = await fetchDID(peerAddr)
+                let peerPublicKey = didData.data.publicKey 
+                console.log('🤸‍♀️ peerPublicKey: ', peerPublicKey)
+                const publicKeyJWK = peerPublicKey
+                const xBase64 = base64UrlToBase64(publicKeyJWK.x);
+                const yBase64 = base64UrlToBase64(publicKeyJWK.y);
+                const xBytes = ethers.decodeBase64(xBase64);
+                const yBytes = ethers.decodeBase64(yBase64);
+                const yBigInt = BigInt(ethers.hexlify(yBytes));//quizas no es necesario bigint..
+                const prefix = yBigInt % 2n === 0n ? 0x02 : 0x03;
+                const precompressedPublicKey = ethers.concat([new Uint8Array([prefix]), xBytes]);
+                const peerCompressedPublicKey = ethers.hexlify(precompressedPublicKey);
+                console.log("Compressed Public Key:", peerCompressedPublicKey);
+
+                // ---
+                // PRIVKEY
+                // ---
+                let signer = await getSigner() 
+                // let userPrivateKey  = signer.privateKey// your priv key
+
+
+
+            let stealthWallet = await createStealthWallet(signer.privateKey, peerCompressedPublicKey)
+            stw = stealthWallet
+            let stealthAddress = stealthWallet.address
+            console.log( `<br><br>👻🧔💳 BOB'S STEALTH WALLET ==>  ADDRESS 💳🧔👻  (to receive from Alice)  : ${stealthAddress}` ) 
+
+            // result.innerHTML += `<br><br>👻🧔💳 BOB'S STEALTH WALLET ==>  ADDRESS 💳🧔👻  (to receive from Alice)  : ${bobstWallet.address}`
+// return
+                // generateStealthAddress(alicePrivateKey, bobPublicKey)
+                // generateStealthAddress(alicePrivateKey, bobPublicKey)
+                // let stealthAddress = await generateStealthAddress(alicePrivateKey, compressedPublicKey)
+                // console.log(`<br>👩👻Stealth address (generated by Alice to Bob): ${stealthAddress.stealthAddress} <br>👫sharedSecret: ${stealthAddress.sharedSecret}`)
+                document.getElementById('ReceivesarecipientAddress').innerHTML  = stealthAddress
+
+
+                // .....................
+                // show qr
+                // .....................
+                const qrColor = getComputedStyle(document.body).getPropertyValue('--qr');
+                var isMobile = window.matchMedia("only screen and (max-width: 768px)");
+                if (isMobile.matches) { console.log("Mobile screen detected"); qrSize = 310; window.scrollTo(0, 0); } 
+                else { console.log("Not a mobile screen"); qrSize = 370 }
+                
+                let data= addr
+                console.log('displayQR(data)', stealthAddress)
+                const qrCode = new QRCodeStyling({
+                    width: `${qrSize}`, height: `${qrSize}`, type: "png", data: stealthAddress , image: `./LOGOSTEALTHCHATv3.png`,
+                    dotsOptions: { color: "#1568B0", type: "extra-rounded" },
+                    backgroundOptions: { color: "var(--qrbackground)", },
+                    imageOptions: { crossOrigin: "anonymous", margin: 3 }
+                });
+                qrCode.append(document.getElementById("receivecanvas"));
+                // .....................
+
+                document.getElementById('ReceivestealthInfo').style.display = 'block'; 
+
+
+ 
+                // CHECK STEALTH ADDRESS BALANCE (FOR NATIVE ONLY!)
+                let provider = await new ethers.JsonRpcProvider(optionsList[0].API);
+                let staddrBalance = await provider.getBalance(stealthAddress);
+                console.log("native token balance:", ethers.formatEther(staddrBalance));
+                let stddrformatedBalance = ethers.formatEther(staddrBalance)
+                document.getElementById('ReceivestaddrInfo').innerHTML  = `Stealth Balance: ${stddrformatedBalance} `
+
+                // FIN LOGICA STEALTH ADDRESS 
+            
+
+                // CHECK BALANCE AND ADD CLAIM BUTTON IF THERE IS SOME
+                  /**********************
+             .) claim?
+             ************************/
+            // Example: Bob checks and claims the transaction
+            // const checkResult = await checkStealthTransaction(bobPrivKey, stealthAddress.stealthAddress);
+
+// Assuming checkResult returns a balance value
+if (staddrBalance === 0) {
+    // Action to take if balance is 0
+    console.log("Balance is 0, no funds available.");
+    console.log("⛔⛔⛔💸No funds available or no action was taken.");
+    ReceivestaddrInfo.innerHTML +=" <br><br>⛔⛔⛔💸No funds available or no action was taken.";
+    // You can add any other logic here for when the balance is 0
+} else if (staddrBalance > 0) {
+    // Action to take if there is a balance
+    console.log(`Balance is ${ethers.formatEther(staddrBalance)}, funds available.`);
+    console.warn("💰💰💰 Funds are ready to be claimed from the stealth address.");
+    ReceivestaddrInfo.innerHTML +=`<br><br> <p>${ethers.formatEther(staddrBalance)}💰💰💰 Funds are available from the stealth address.</p>`
+    document.getElementById('ReceivestaddrInfo').innerHTML +=`<br><button class="button-primary" type="button" onclick="claimStealthAddrFunds()">Claim ${ethers.formatEther(staddrBalance)}</button>`;
+    document.getElementById('ReceivestaddrInfo').innerHTML +=`<br><button class="button-primary" type="button" onclick="sendStAdrrFunds()">Send ${ethers.formatEther(staddrBalance)}</button>`;
+
+} else {
+    console.log("Unexpected balance value.");
+}
+
+            
+            } else {
+
+                console.log('Stealth address is inactive.');
+                // Handle the case when stealth address is not active
+                
+                
+                // .....................
+                // show qr
+                // .....................
+                const qrColor = getComputedStyle(document.body).getPropertyValue('--qr');
+                var isMobile = window.matchMedia("only screen and (max-width: 768px)");
+                if (isMobile.matches) { console.log("Mobile screen detected"); qrSize = 310; window.scrollTo(0, 0); } 
+                else { console.log("Not a mobile screen"); qrSize = 370 }
+                
+                let data= addr
+                console.log('displayQR(data)', addr)
+                const qrCode = new QRCodeStyling({
+                    width: `${qrSize}`, height: `${qrSize}`, type: "png", data: addr, image: `./LOGOSTEALTHCHATv3.png`,
+                    dotsOptions: { color: "#1568B0", type: "extra-rounded" },
+                    backgroundOptions: { color: "var(--qrbackground)", },
+                    imageOptions: { crossOrigin: "anonymous", margin: 3 }
+                });
+                qrCode.append(document.getElementById("receivecanvas"));
+                // .....................
+                
+                document.getElementById('ReceivestealthInfo').style.display = 'none'; // Example action
+
+        }
+
+}
+
+
+
+
+
+
+        //  createStealthWallet(privateKey, publicKey) 
+        async function createStealthWallet(privateKey, publicKey) {
+
+            console.warn('🦸‍♂️createStealthWallet()', privateKey, publicKey)
+            const publicKeyHexWithoutPrefix = removeHexPrefix(publicKey);
+            const pubPoint = secp.ProjectivePoint.fromHex(publicKeyHexWithoutPrefix);
+            const sharedSecret = pubPoint.multiply(BigInt(privateKey)).toHex();
+            console.log('👫sharedSecret  (at createStealthWallet ):', sharedSecret);
+            const hashedSecret = ethers.keccak256('0x' + sharedSecret).slice(0, 42);
+
+
+            // BOB can comput the private key to the stealth addres
+            // b +hs
+            const hprivkeyBigInt = BigInt(privateKey);  // hs should already be in hex or BigInt format
+            b = hprivkeyBigInt
+
+            const hsBigInt = BigInt(hashedSecret);  // hs should already be in hex or BigInt format
+            hs = hsBigInt
+
+            computedPrivKey = hprivkeyBigInt + hsBigInt
+
+            console.warn('🛰️ computedPrivKey: ', computedPrivKey)
+
+
+            eth2bigint = ethers.toBigInt(computedPrivKey)
+
+            const stealthPrivateKey = ethers.zeroPadValue(ethers.toBeHex(computedPrivKey), 32);
+            console.warn(' 🚁 stealthPrivateKey: ', stealthPrivateKey)
+            const stealthwallet = new ethers.Wallet(stealthPrivateKey);
+            const derivedStealthPubKey = stealthwallet.publicKey;
+            console.warn(' 🪂🦹‍♂️ stealthPrivateKey: ', stealthPrivateKey)
+            console.warn(' 🪂 stealthAddress: ', stealthwallet.address)
+
+
+            return stealthwallet
+
+}
+
+
+
+
+
+
+
+// claim stealth address funds to self wallet
+// claimStealthAddrFunds()
+// async function claimBob(destAddress){
+    async function claimStealthAddrFunds(destAddress){
+    console.log('claimStealthAddrFunds()')
+
+
+
+    // 0 get user  priv key and peer pub key
+                // --------------
+                // PEER COMPRESSED PUB KEY
+                // ---
+
+                let peerAddr = document.getElementById('peerAddr').getAttribute('data-address')
+                console.log('🤼‍♀️ peerAddr: ', peerAddr)
+                let didData = await fetchDID(peerAddr)
+                let peerPublicKey = didData.data.publicKey 
+                console.log('🤸‍♀️ peerPublicKey: ', peerPublicKey)
+                const publicKeyJWK = peerPublicKey
+                const xBase64 = base64UrlToBase64(publicKeyJWK.x);
+                const yBase64 = base64UrlToBase64(publicKeyJWK.y);
+                const xBytes = ethers.decodeBase64(xBase64);
+                const yBytes = ethers.decodeBase64(yBase64);
+                const yBigInt = BigInt(ethers.hexlify(yBytes));//quizas no es necesario bigint..
+                const prefix = yBigInt % 2n === 0n ? 0x02 : 0x03;
+                const precompressedPublicKey = ethers.concat([new Uint8Array([prefix]), xBytes]);
+                const peerCompressedPublicKey = ethers.hexlify(precompressedPublicKey);
+                console.log("Compressed Public Key:", peerCompressedPublicKey);
+
+                // --------------
+                // USER PRIVKEY
+                // ---
+                let signer = await getSigner() 
+                // let userPrivateKey  = signer.privateKey// your priv key
+
+
+ // 1 generate bob stealthWallet
+            // alicePublicKeyHex
+            // let bobStealthWallet = await createStealthWallet(bobPrivateKeyHex, alicePublicKeyHex)
+            console.log('createStealthWallet', signer.privateKey, peerCompressedPublicKey)
+            let userStealthWallet = await createStealthWallet(signer.privateKey, peerCompressedPublicKey)
+
+            let stealthAddress = userStealthWallet.address
+            // 2. move funds to bob original wallet
+
+                // Attach a provider to the stealth wallet so it can interact with the network
+            let provider = await new ethers.JsonRpcProvider(optionsList[0].API);
+
+            let userStealthWalletwithProvider = userStealthWallet.connect(provider);
+
+
+
+
+        // If no destAddress is passed, perform some logic to set it
+        if (!destAddress) {
+        // Your logic to set the address goes here
+        // Example: Prompt user for the address or derive it programmatically
+        // destAddress = prompt("Enter recipient Ethereum address:"); // Replace with your logic
+        
+                        // const bobAddress = bobwallet.address; // Replace with Bob's actual address
+                         destAddress = signer.address; // Replace with Bob's actual address
+                        console.log(`CLAIM TO SEND to ${destAddress}  `);
+         
+    }
+                let  balance = await provider.getBalance(stealthAddress);
+                console.log("Stealth wallet balance:", ethers.formatEther(balance));
+                let formatedBalance = ethers.formatEther(balance)
+
+              
+
+                // SEND MAXIMUM MINUS ESTIMATED GAS
+                // Create transaction object
+                const pretx = {
+                    to: destAddress,          // Bob's current address
+                    value: balance,          // Amount of ETH to send (here it's all balance)SEND MAXIMUM MINUS ESTIMATED GAS
+                    gasLimit: undefined      // Will be estimated next
+                };
+
+            // pppppppppp
+
+                // Estimate gas required for the transaction
+                const gasLimit = await provider.estimateGas(pretx);
+                console.log("⛽ Estimated gas:", gasLimit.toString());
+
+                // Get the current gas price
+                const feeData = await provider.getFeeData();
+                let gasPrice = feeData.gasPrice;
+                if (!gasPrice) {
+                    throw new Error('Gas price is not available');
+                }
+                console.log(`⛽ Gas Price: ${ethers.formatUnits(gasPrice, 'gwei')} gwei`);
+
+                
+                // Convert gasLimit and gasPrice to BigInt for arithmetic
+                const gasLimitBigInt = BigInt(gasLimit);
+                const gasPriceBigInt = BigInt(gasPrice);
+
+                // 5. Calculate the gas fee in wei (gas limit * gas price)
+                const gasFee = gasLimitBigInt * gasPriceBigInt;
+                console.log("⛽ Gas Fee (wei):", gasFee.toString());
+
+                // 6. Calculate the maximum amount of ETH to send after deducting gas fees
+                 maxAmountToSend = BigInt(balance) - gasFee;
+                if (maxAmountToSend <= 0) {
+                    console.log("Not enough funds to cover gas fees.");
+                    return;
+                }
+                console.log(`💸 Max amount to send: ${ethers.formatEther(maxAmountToSend)} ETH`);
+
+
+                   // 6b. Apply a margin to the maxAmountToSend (e.g., reduce by 2%)
+                const marginPercentage = 0.01; // 1% margin
+                // const marginPercentage = 0.02; // 2% margin
+                const marginAmount = maxAmountToSend * BigInt(marginPercentage * 100) / 100n;
+                const adjustedAmountToSend = maxAmountToSend - marginAmount;
+
+                document.getElementById('ReceivestealthInfo').innerHTML += `💸 Max amount to send with margin: ${ethers.formatEther(adjustedAmountToSend)} ETH`;
+                console.log(`💸 Max amount to send with margin: ${ethers.formatEther(adjustedAmountToSend)} ETH`);
+
+                // return 
+
+                // 7. Update the transaction object with the correct amount
+                const tx = {
+                    to: destAddress,
+                    value: adjustedAmountToSend, // Maximum ETH we can send
+                    gasLimit: gasLimit // Use the estimated gas limit
+                };
+
+                console.log('Sending transaction:', tx);
+                try {
+                    // 8. Send the transaction
+                    const txResponse = await userStealthWalletwithProvider.sendTransaction(tx);
+                    console.log("Transaction sent:", txResponse.hash);
+
+                    // 9. Wait for the transaction to be mined
+                    const receipt = await txResponse.wait();
+                    let txLink = `<a target="_blank" rel="noopener noreferrer" href="${optionsList[0].EXPLORER}/tx/${txResponse.hash}">Tx link</a>`;
+                    console.log("Transaction confirmed:", receipt);
+
+                    document.getElementById('ReceivestealthInfo').innerHTML += `✅ TRANSACTION SUCCESSFUL <a target="_blank" rel="noopener noreferrer" href="${optionsList[0].EXPLORER}/tx/${txResponse.hash}">Tx link</a>`;
+                } catch (error) {
+                    console.error("Transaction error:", error);
+                }
+
+
+            }
+
+
+
+// Function triggered by the initial button click
+function sendStAdrrFunds() {
+    // Check if the input and send button have already been added
+    if (!document.getElementById('sendFundsContainer')) {
+        // Add an input field for entering the recipient's Ethereum address and a "Send" button
+        document.getElementById('ReceivestaddrInfo').innerHTML += `
+            <div id="sendFundsContainer">
+                <br>
+                <input type="text" id="customrecipientAddress" placeholder="Enter recipient address" class="input-primary" required>
+                <button class="button-primary" type="button" onclick="confirmSend()">Send Funds</button>
+            </div>
+        `;
+    }
+}
+
+
+// Function to handle the confirmation and transaction sending
+function confirmSend() {
+    const recipientAddress = document.getElementById('customrecipientAddress').value;
+
+    if (ethers.isAddress(recipientAddress)) {
+        // Add your logic to send funds to the recipient address here
+        console.log(`Sending funds to: ${recipientAddress}`);
+        
+        // Example of sending funds logic (replace with your transaction logic)
+        // await signer.sendTransaction({ to: recipientAddress, value: ethers.parseEther('0.01') });
+
+        alert(`Sending fundsto ${recipientAddress}`);
+        claimStealthAddrFunds(recipientAddress)
+        // send
+    } else {
+        alert('Invalid Ethereum address');
+    }
+}
+
+
+    async function openSend(addr) {
+                console.warn('openSend', addr)
+                if (addr) { console.log('there is address', addr) }
+                else { console.log('there is not addr') }
+
+                // open modal
                 openModalId('#walletSend')
 
                 // clear modal and reset state
@@ -6348,17 +6861,20 @@ function base64UrlToBase64(base64Url) {
                 
                 // get recipient address
                 document.getElementById("recipientAddress").value = addr;
-                
 
 
-        //   PONER AQUI LOGICA THE VER STEALTH ADDRESS
-        const stealthAddressActive = localStorage.getItem('stealthAddressActive');
 
-        // Perform some action if stealth address is active
-        if (stealthAddressActive === 'true') {
-        console.log('Stealth address is active. Performing related actions...');
-        document.getElementById('stealthInfo').style.display = 'block'; // Example action
-       
+
+
+
+                //   PONER AQUI LOGICA THE VER STEALTH ADDRESS
+                const stealthAddressActive = localStorage.getItem('stealthAddressActive');
+
+                // Perform some action if stealth address is active
+                if (stealthAddressActive === 'true') {
+                console.log('Stealth address is active. Performing related actions...');
+                document.getElementById('stealthInfo').style.display = 'block'; // Example action
+            
     
 
             // get peer publickey
@@ -6369,17 +6885,6 @@ function base64UrlToBase64(base64Url) {
             console.log('🤸‍♀️ peerPublicKey: ', peerPublicKey)
 
             // convert public key
-
-                // Public key in JWK format
-                // const publicKeyJWK = {
-                // alg: "ES256K",
-                // crv: "secp256k1",
-                // kty: "EC",
-                // use: "sig",
-                // x: "QSWy2s669kULCu9xftLnv7nXjMMa72ha4I7WmyyYAsQ=",
-                // y: "ZQpLqxwzmm9EFUBCAR3_hLf6w3Z9LXcXlPxuKQm8yA8="
-                // };
-            ppk=  peerPublicKey 
 
                 const publicKeyJWK = peerPublicKey
                 // Step 1: Convert Base64 URL to Base64
@@ -6395,20 +6900,14 @@ function base64UrlToBase64(base64Url) {
 
 
                 // Step 3: Concatenate x and y bytes
-                const publicKeyBytes = ethers.concat([xBytes, yBytes]);
-
+                // const publicKeyBytes = ethers.concat([xBytes, yBytes]);
 
                 // ---
                 // Public Key as BigInt
                 // ---
                 // Step 4: Convert concatenated bytes to a BigInt
-                const publicKeyBigInt = BigInt(ethers.hexlify(publicKeyBytes));
-                console.log("Public Key as BigInt:", publicKeyBigInt);
-                // return
-
-
-
-
+                // const publicKeyBigInt = BigInt(ethers.hexlify(publicKeyBytes));
+                // console.log("Public Key as BigInt:", publicKeyBigInt);
                 
                 // ---
                 // uncompressedPublicKey
@@ -6416,11 +6915,8 @@ function base64UrlToBase64(base64Url) {
                 // Step 2: Concatenate x and y to form the uncompressed public key
                 // const publicKeyBytes = ethers.concat([xBytes, yBytes]);
                 // Step 3: Optionally add the 0x04 prefix for uncompressed keys
-                const uncompressedPublicKey = ethers.hexlify(ethers.concat([new Uint8Array([0x04]), publicKeyBytes]));
-                uncomp = uncompressedPublicKey
-                console.log("Uncompressed Public Key:", uncompressedPublicKey);
-                // return
-
+                // const uncompressedPublicKey = ethers.hexlify(ethers.concat([new Uint8Array([0x04]), publicKeyBytes]));
+                // console.log("Uncompressed Public Key:", uncompressedPublicKey);
 
 
                 // ---
@@ -6434,42 +6930,26 @@ function base64UrlToBase64(base64Url) {
                 const precompressedPublicKey = ethers.concat([new Uint8Array([prefix]), xBytes]);
                 console.log("PRE Compressed Public Key:", precompressedPublicKey);
                 const compressedPublicKey = ethers.hexlify(precompressedPublicKey);
-                comp = compressedPublicKey
-                // const compressedPublicKey = ethers.hexlify(ethers.concat([new Uint8Array([prefix]), xBytes]));
                 console.log("Compressed Public Key:", compressedPublicKey);
-
-//                 const bytes = ethers.decodeBase64(base64String);
-// const validHex = ethers.hexlify(bytes);  // correctly converts bytes to a valid hex string
-
 
                 // ---
                 // PRIVKEY
                 // ---
              let signer = await getSigner() 
              let alicePrivateKey  = signer.privateKey
-            //  privk = alicePrivateKey
-            //  pubK = signer.publicKey
-            // return
 
-            // let stealthAddress = await generateStealthAddress(alicePrivateKey, bobPublicKey)
+             // let stealthAddress = await generateStealthAddress(alicePrivateKey, bobPublicKey)
             let stealthAddress = await generateStealthAddress(alicePrivateKey, compressedPublicKey)
             console.log(`<br>👩👻Stealth address (generated by Alice to Bob): ${stealthAddress.stealthAddress}
             <br>👫sharedSecret: ${stealthAddress.sharedSecret}`)
-            document.getElementById('sarecipientAddress').value  = stealthAddress.stealthAddress
+            document.getElementById('sarecipientAddress').innerHTML  = stealthAddress.stealthAddress
 
             // CHECK STEALTH ADDRESS BALANCE (FOR NATIVE ONLY!)
             let provider = await new ethers.JsonRpcProvider(optionsList[0].API);
-            let staddrBalance = await provider.getBalance(signer.address);
-                console.log("native token balance:", ethers.formatEther(staddrBalance));
-                let stddrformatedBalance = ethers.formatEther(staddrBalance)
-            document.getElementById('staddrInfo').innerHTML  = `Stealth Balance: ${stddrformatedBalance} `
-
-            // IF 0 hide
-            // if >0 show claim button
-
-
-            
-            // staddr = stealthAddress
+            let staddrBalance = await provider.getBalance(stealthAddress.stealthAddress);
+            console.log("native token balance:", ethers.formatEther(staddrBalance));
+            let stddrformatedBalance = ethers.formatEther(staddrBalance)
+            document.getElementById('staddrInfo').innerHTML  = `Peer Stealth's Balance: ${stddrformatedBalance} `
 
 
 // FIN LOGICA STEALTH ADDRESS 
@@ -6560,7 +7040,8 @@ function base64UrlToBase64(base64Url) {
         const stealthAddressActive = localStorage.getItem('stealthAddressActive');
             if (stealthAddressActive === 'true') {
                 console.log('Stealth Address is already active.');
-                toAddress  = document.getElementById('sarecipientAddress').value  
+                toAddress  = document.getElementById('sarecipientAddress').innerHTML  
+                // toAddress  = document.getElementById('sarecipientAddress').value  
 
             } else if (stealthAddressActive === 'false') {
                 console.log('Stealth Address is inactive.');
@@ -7099,8 +7580,10 @@ function base64UrlToBase64(base64Url) {
 
 
         async function generateStealthAddress(privateKeyHex, publicKey) {
-            a= privateKeyHex
-            b=publicKey
+            // a= privateKeyHex
+            // b=publicKey
+            // privkey sender, pubkey recipient
+
             console.warn('🏰 generateStealthAddress()')
          
             const hexPublicKey = publicKey.startsWith('0x') ? publicKey.slice(2) : publicKey;
